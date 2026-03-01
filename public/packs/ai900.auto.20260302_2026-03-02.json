@@ -1,0 +1,323 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.auto.20260302",
+    "version": "2026-03-02",
+    "title": "苦手克服パック #1",
+    "description": "Workloads・CV・GenAI・matchタイプ・orderタイプの弱点を集中的に強化する15問パック。",
+    "language": "ja-JP",
+    "createdAt": "2026-03-02T00:00:00Z",
+    "domains": ["Workloads", "ML", "CV", "NLP", "GenAI"]
+  },
+  "questions": [
+    {
+      "id": "AW-001",
+      "domain": "Workloads",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "責任あるAIの各原則と、その原則に違反しているシナリオを対応させてください。",
+      "left": [
+        "公平性",
+        "透明性",
+        "プライバシーとセキュリティ",
+        "包括性"
+      ],
+      "right": [
+        "AIチャットボットが視覚障害者向けの代替手段を提供していない",
+        "採用AIが特定の出身大学の応募者を一律に低評価している",
+        "AIモデルが意思決定の根拠を一切開示しない",
+        "顧客データが暗号化されずに外部サーバーに保存されている"
+      ],
+      "answerMap": {
+        "公平性": "採用AIが特定の出身大学の応募者を一律に低評価している",
+        "透明性": "AIモデルが意思決定の根拠を一切開示しない",
+        "プライバシーとセキュリティ": "顧客データが暗号化されずに外部サーバーに保存されている",
+        "包括性": "AIチャットボットが視覚障害者向けの代替手段を提供していない"
+      },
+      "explanation": "公平性は特定のグループを不当に不利にしないこと、透明性はAIの判断根拠を説明可能にすること、プライバシーとセキュリティはデータを安全に管理すること、包括性はすべてのユーザーがAIの恩恵を受けられるようにすることを求めます。",
+      "tags": ["responsible-ai", "match-concepts", "fairness", "transparency", "privacy", "inclusiveness"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"]
+    },
+    {
+      "id": "AW-002",
+      "domain": "Workloads",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "異常検出（Anomaly Detection）のワークフローを正しい順序に並べてください。",
+      "items": [
+        "検出された異常に対してアラートや是正措置を実行する",
+        "正常時のデータパターンをモデルに学習させる",
+        "センサーやログなどのデータを収集する",
+        "新しいデータポイントを正常パターンと比較し逸脱を検出する"
+      ],
+      "answerOrder": [2, 1, 3, 0],
+      "explanation": "まずデータを収集し、正常パターンを学習させ、新データと比較して逸脱を検出し、最後にアラートや是正措置を実行します。",
+      "tags": ["anomaly-detection", "process"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/anomaly-detector/overview"]
+    },
+    {
+      "id": "AW-003",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "責任あるAIの原則のうち、自動運転車のAIシステムが予期しない状況（センサー故障など）でも安全に停止できることを求める原則はどれですか。",
+      "choices": [
+        "公平性（Fairness）",
+        "透明性（Transparency）",
+        "信頼性と安全性（Reliability & Safety）",
+        "アカウンタビリティ（Accountability）"
+      ],
+      "answer": [2],
+      "explanation": "信頼性と安全性（Reliability & Safety）は、AIシステムが想定どおりに動作し、予期しない状況でも安全に対処できることを求める原則です。自動運転車のフェールセーフ設計はこの原則に直接該当します。",
+      "tags": ["responsible-ai", "reliability-safety"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"]
+    },
+    {
+      "id": "AW-004",
+      "domain": "Workloads",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure Anomaly Detectorが対応できる異常検出のモードとして正しいものをすべて選んでください。",
+      "choices": [
+        "時系列データ全体からまとめて異常を検出する（バッチ検出）",
+        "最新のデータポイントが異常かどうかをリアルタイムで判定する",
+        "画像内の異常ピクセルを検出する",
+        "複数の変数間の相関関係の崩れから異常を検出する（多変量検出）"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "Azure Anomaly Detectorは、バッチ検出（全データの一括分析）、リアルタイム検出（最新ポイントの判定）、および多変量検出（複数変数間の相関異常）に対応しています。画像の異常ピクセル検出はComputer Visionの領域です。",
+      "tags": ["anomaly-detection", "azure-services"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/anomaly-detector/overview"]
+    },
+    {
+      "id": "AW-005",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下の機械学習の概念と、その正しい定義を対応させてください。",
+      "left": [
+        "特徴量（Feature）",
+        "ラベル（Label）",
+        "トレーニングデータ",
+        "検証データ"
+      ],
+      "right": [
+        "モデルの学習に使用するラベル付きデータセット",
+        "モデルの汎化性能を評価するために使用する未学習データ",
+        "モデルが予測の入力として使用する個々の属性や変数",
+        "教師あり学習でモデルが予測すべき正解の値"
+      ],
+      "answerMap": {
+        "特徴量（Feature）": "モデルが予測の入力として使用する個々の属性や変数",
+        "ラベル（Label）": "教師あり学習でモデルが予測すべき正解の値",
+        "トレーニングデータ": "モデルの学習に使用するラベル付きデータセット",
+        "検証データ": "モデルの汎化性能を評価するために使用する未学習データ"
+      },
+      "explanation": "特徴量はモデルへの入力変数、ラベルは予測対象の正解値、トレーニングデータは学習用データ、検証データはモデルの未知データへの性能を評価するためのデータです。",
+      "tags": ["ml-fundamentals", "match-concepts"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"]
+    },
+    {
+      "id": "AW-006",
+      "domain": "ML",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "機械学習モデルのトレーニングにおいて、過学習（Overfitting）を検出してから対処するまでのプロセスを正しい順序に並べてください。",
+      "items": [
+        "正則化やドロップアウトなどの手法を適用してモデルを再トレーニングする",
+        "トレーニングデータに対する精度が非常に高いことを確認する",
+        "再トレーニング後のモデルで検証データの精度が改善されたか確認する",
+        "検証データに対する精度がトレーニングデータより大幅に低いことを発見する"
+      ],
+      "answerOrder": [1, 3, 0, 2],
+      "explanation": "まずトレーニング精度が高いことを確認し、次に検証精度が低いことで過学習を発見、正則化などの対策を適用して再トレーニングし、最後に改善を確認します。",
+      "tags": ["overfitting", "ml-fundamentals", "process"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-manage-ml-pitfalls"]
+    },
+    {
+      "id": "AW-007",
+      "domain": "CV",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のAzure AI VisionのAPIと、その主な機能を対応させてください。",
+      "left": [
+        "Image Analysis（画像分析）",
+        "OCR（光学文字認識）",
+        "Face API",
+        "Custom Vision"
+      ],
+      "right": [
+        "独自の画像分類・物体検出モデルをノーコードで構築する",
+        "画像内のオブジェクト、シーン、タグを自動で識別する",
+        "画像や文書内のテキストを抽出する",
+        "画像内の人物の顔を検出し属性を分析する"
+      ],
+      "answerMap": {
+        "Image Analysis（画像分析）": "画像内のオブジェクト、シーン、タグを自動で識別する",
+        "OCR（光学文字認識）": "画像や文書内のテキストを抽出する",
+        "Face API": "画像内の人物の顔を検出し属性を分析する",
+        "Custom Vision": "独自の画像分類・物体検出モデルをノーコードで構築する"
+      },
+      "explanation": "Image Analysisは汎用的な画像理解、OCRは文字認識、Face APIは顔検出・分析、Custom Visionはカスタムモデル構築のためのサービスです。",
+      "tags": ["cv", "azure-services", "match-concepts"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview"]
+    },
+    {
+      "id": "AW-008",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Visionの画像分析で「物体検出（Object Detection）」と「画像分類（Image Classification）」の違いとして正しい説明はどれですか。",
+      "choices": [
+        "画像分類は画像全体にラベルを割り当て、物体検出は画像内の個々のオブジェクトの位置と種類を特定する",
+        "物体検出は画像全体にラベルを割り当て、画像分類は個々のオブジェクトの位置を特定する",
+        "画像分類はリアルタイム処理のみで、物体検出はバッチ処理のみで動作する",
+        "物体検出は教師あり学習のみだが、画像分類は教師なし学習でも可能である"
+      ],
+      "answer": [0],
+      "explanation": "画像分類は画像全体に1つ以上のラベルを付与するタスクで、物体検出は画像内の複数のオブジェクトをバウンディングボックスで特定し、それぞれの種類を判別するタスクです。",
+      "tags": ["cv", "object-detection", "image-classification"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/concept-object-detection"]
+    },
+    {
+      "id": "AW-009",
+      "domain": "CV",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure Custom Visionで、画像全体を「犬」や「猫」のようなカテゴリに振り分けるプロジェクトタイプは {{0}} であり、画像内の複数のオブジェクトをバウンディングボックスで囲んで識別するプロジェクトタイプは {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["画像分類（Classification）", "物体検出（Object Detection）", "セマンティックセグメンテーション"],
+          "answer": 0
+        },
+        {
+          "options": ["画像分類（Classification）", "物体検出（Object Detection）", "セマンティックセグメンテーション"],
+          "answer": 1
+        }
+      ],
+      "explanation": "Custom Visionでは、画像分類（Classification）は画像全体へのラベル付け、物体検出（Object Detection）はバウンディングボックスによるオブジェクトの位置と種類の識別をサポートしています。",
+      "tags": ["cv", "custom-vision", "image-classification", "object-detection"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/overview"]
+    },
+    {
+      "id": "AW-010",
+      "domain": "NLP",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Azure AI Language のテキスト分析パイプラインにおいて、生テキストから構造化された洞察を得るまでのステップを正しい順序に並べてください。",
+      "items": [
+        "抽出されたエンティティや感情スコアをもとにビジネスインサイトを導出する",
+        "入力テキストをAzure AI Languageのエンドポイントに送信する",
+        "言語検出でテキストの言語を自動判定する",
+        "感情分析・キーフレーズ抽出・エンティティ認識を実行する"
+      ],
+      "answerOrder": [1, 2, 3, 0],
+      "explanation": "まずテキストをAPIに送信し、言語を自動判定した後、感情分析やエンティティ認識などのNLPタスクを実行し、最後にその結果をビジネスインサイトとして活用します。",
+      "tags": ["nlp", "azure-language", "process"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/overview"]
+    },
+    {
+      "id": "AW-011",
+      "domain": "NLP",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure AI Languageの「固有表現認識（NER: Named Entity Recognition）」で抽出できるエンティティの種類として正しいものをすべて選んでください。",
+      "choices": [
+        "人名（Person）",
+        "組織名（Organization）",
+        "テキストの文法的な正しさ（Grammar Score）",
+        "日時表現（DateTime）",
+        "住所・場所（Location）"
+      ],
+      "answer": [0, 1, 3, 4],
+      "explanation": "NERは人名、組織名、日時、場所などの固有表現をテキストから自動抽出するタスクです。テキストの文法的正しさの評価はNERの機能ではありません。",
+      "tags": ["nlp", "ner", "azure-language"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/named-entity-recognition/overview"]
+    },
+    {
+      "id": "AW-012",
+      "domain": "GenAI",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI Serviceの以下の概念と、その正しい説明を対応させてください。",
+      "left": [
+        "プロンプト（Prompt）",
+        "トークン（Token）",
+        "Temperature",
+        "システムメッセージ"
+      ],
+      "right": [
+        "モデルがテキストを処理する際の最小単位で、課金の基準にもなる",
+        "モデルの出力のランダム性を制御するパラメータ",
+        "モデルに対する入力テキストや指示のこと",
+        "モデルの振る舞いや役割を事前に定義する指示"
+      ],
+      "answerMap": {
+        "プロンプト（Prompt）": "モデルに対する入力テキストや指示のこと",
+        "トークン（Token）": "モデルがテキストを処理する際の最小単位で、課金の基準にもなる",
+        "Temperature": "モデルの出力のランダム性を制御するパラメータ",
+        "システムメッセージ": "モデルの振る舞いや役割を事前に定義する指示"
+      },
+      "explanation": "プロンプトはモデルへの入力、トークンは処理の最小単位かつ課金基準、Temperatureは出力の多様性を制御、システムメッセージはモデルの動作を事前定義する仕組みです。",
+      "tags": ["genai", "azure-openai", "match-concepts"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/prompt-engineering"]
+    },
+    {
+      "id": "AW-013",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI ServiceでRAG（Retrieval-Augmented Generation）パターンを使用する主な目的はどれですか。",
+      "choices": [
+        "モデルのトレーニングコストを削減する",
+        "モデルの推論速度を大幅に高速化する",
+        "モデルの回答を自社データに基づいたものにし、正確性を向上させる",
+        "モデルのパラメータ数を減らしてデプロイサイズを小さくする"
+      ],
+      "answer": [2],
+      "explanation": "RAG（検索拡張生成）は、ユーザーの質問に関連する情報を外部データソースから検索し、その情報をコンテキストとしてモデルに提供することで、自社固有のデータに基づいた正確な回答を生成する手法です。",
+      "tags": ["genai", "rag", "azure-openai"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/retrieval-augmented-generation"]
+    },
+    {
+      "id": "AW-014",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "生成AIモデルが、もっともらしいが事実と異なる情報を生成する現象を何と呼びますか。",
+      "choices": [
+        "過学習（Overfitting）",
+        "ハルシネーション（Hallucination）",
+        "バイアス（Bias）",
+        "ドリフト（Drift）"
+      ],
+      "answer": [1],
+      "explanation": "ハルシネーション（Hallucination）とは、生成AIが事実に基づかない情報をあたかも事実であるかのように生成する現象です。これはLLMの既知の課題であり、RAGやグラウンディングによって軽減できます。",
+      "tags": ["genai", "hallucination", "responsible-ai"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/content-filter"]
+    },
+    {
+      "id": "AW-015",
+      "domain": "GenAI",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の項目のうち、Azure OpenAI Serviceの責任あるAIの安全機能として提供されているものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "コンテンツフィルタリング（有害コンテンツの検出・ブロック）",
+          "自動的なモデルの再トレーニング",
+          "不正利用の監視（Abuse Monitoring）",
+          "データの自動バックアップ",
+          "レート制限とクォータ管理",
+          "モデルの自動スケーリング"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "Azure OpenAI Serviceの責任あるAI安全機能には、コンテンツフィルタリング（有害な入出力の検出・ブロック）、不正利用の監視（Abuse Monitoring）、レート制限とクォータ管理が含まれます。自動再トレーニング、自動バックアップ、自動スケーリングは責任あるAIの安全機能ではなく、インフラ管理の機能です。",
+      "tags": ["genai", "responsible-ai", "azure-openai", "content-filtering"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/content-filter"]
+    }
+  ]
+}

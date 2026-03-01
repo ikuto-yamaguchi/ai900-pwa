@@ -1,6 +1,6 @@
 {
   "schema": "ai900-pack-index-v1",
-  "updatedAt": "2026-03-01T00:00:00Z",
+  "updatedAt": "2026-03-02T00:00:00Z",
   "packs": [
     {
       "id": "ai900.base",
@@ -10,6 +10,16 @@
       "questionCount": 80,
       "domains": ["Workloads", "ML", "CV", "NLP", "GenAI"],
       "types": ["single", "multi", "dropdown", "match", "order", "hotarea", "casestudy"],
+      "minAppVersion": "1.0.0"
+    },
+    {
+      "id": "ai900.auto.20260302",
+      "title": "苦手克服パック #1",
+      "version": "2026-03-02",
+      "url": "/packs/ai900.auto.20260302_2026-03-02.json",
+      "questionCount": 15,
+      "domains": ["Workloads", "ML", "CV", "NLP", "GenAI"],
+      "types": ["single", "multi", "dropdown", "match", "order", "hotarea"],
       "minAppVersion": "1.0.0"
     }
   ]
