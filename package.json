@@ -1,0 +1,15 @@
+{
+  "name": "ai900-pwa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-900 資格試験対策PWA",
+  "scripts": {
+    "validate": "node tools/validate_packs.mjs",
+    "build-index": "node tools/build_index.mjs",
+    "dedupe": "node tools/dedupe.mjs",
+    "serve": "npx -y serve public -p 3000"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

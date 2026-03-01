@@ -1,0 +1,16 @@
+{
+  "schema": "ai900-pack-index-v1",
+  "updatedAt": "2026-03-01T00:00:00Z",
+  "packs": [
+    {
+      "id": "ai900.base",
+      "title": "AI-900 基礎80問",
+      "version": "2026-03-01",
+      "url": "/packs/ai900.base_2026-03-01.json",
+      "questionCount": 80,
+      "domains": ["Workloads", "ML", "CV", "NLP", "GenAI"],
+      "types": ["single", "multi", "dropdown", "match", "order", "hotarea", "casestudy"],
+      "minAppVersion": "1.0.0"
+    }
+  ]
+}
