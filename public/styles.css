@@ -122,11 +122,15 @@ label{display:block;font-size:13px;color:var(--fg2);margin-bottom:4px;margin-top
 .q-number{font-size:13px;color:var(--fg2);margin-bottom:4px}
 .q-prompt{font-size:16px;line-height:1.6;margin-bottom:var(--gap);white-space:pre-wrap}
 /* ---- Session bottom bar ---- */
-.session-bar{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);display:flex;align-items:center;justify-content:space-around;height:var(--bottom-bar);padding-bottom:var(--safe-bottom);border-top:1px solid rgba(255,255,255,.08);z-index:100}
+.session-bar{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);display:flex;align-items:center;justify-content:space-around;height:calc(var(--bottom-bar) + 4px);padding-bottom:var(--safe-bottom);border-top:1px solid rgba(255,255,255,.08);z-index:100}
 .session-bar button{background:none;border:none;color:var(--fg2);font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 2px;min-width:48px;min-height:44px;cursor:pointer}
 .session-bar button.active{color:var(--accent)}
 .session-bar button.flag-on{color:var(--warn)}
 .session-bar button svg{width:20px;height:20px;fill:currentColor}
+.session-bar button.next-btn{background:var(--accent);color:#000;border-radius:var(--radius);padding:6px 16px;font-weight:700;font-size:13px;min-width:72px}
+.session-bar button.next-btn svg{fill:#000}
+.session-bar button.finish-btn{background:var(--ok);color:#fff;border-radius:var(--radius);padding:6px 16px;font-weight:700;font-size:13px;min-width:72px}
+.session-bar button.finish-btn svg{fill:#fff}
 /* ---- Toast ---- */
 .toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--bg3);color:var(--fg);padding:10px 20px;border-radius:var(--radius);font-size:14px;z-index:999;animation:toast-in .3s ease}
 @keyframes toast-in{from{opacity:0;transform:translateX(-50%) translateY(-10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}

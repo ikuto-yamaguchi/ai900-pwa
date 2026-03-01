@@ -15,7 +15,11 @@ const DEFAULT_SETTINGS = {
   typeMinimums: {match:6,order:4,dropdown:6,hotarea:3,casestudy:2},
   recentExclude: 100,
   weaknessBoostMax: 0.3,
-  weaknessDays: 7
+  weaknessDays: 7,
+  autoNext: true,
+  autoNextDelay: 600,
+  geminiApiKey: '',
+  aiGenerateCount: 10
 };
 
 /* ---------- Settings (localStorage) ---------- */
@@ -536,6 +540,71 @@ function generateWeaknessPrompt(weakDomains, weakTags, weakTypes, numQ) {
 - JSON全文のみ出力（コードブロックで囲む）。説明文不要。`;
 }
 
+/* ---------- AI Question Generation (Gemini API) ---------- */
+async function aiGenerateQuestions() {
+  const apiKey = settings.geminiApiKey;
+  if (!apiKey) {
+    toast('設定画面でGemini APIキーを入力してください');
+    navigate('settings');
+    return;
+  }
+
+  const history = await IDB.getRecentHistory(settings.weaknessDays);
+  const domainAgg = {}, typeAgg = {}, tagAgg = {};
+  for (const d of DOMAINS) domainAgg[d] = { correct: 0, total: 0 };
+  for (const t of TYPES) typeAgg[t] = { correct: 0, total: 0 };
+  for (const h of history) {
+    if (domainAgg[h.domain]) { domainAgg[h.domain].total++; if (h.correct) domainAgg[h.domain].correct++; }
+    if (typeAgg[h.type]) { typeAgg[h.type].total++; if (h.correct) typeAgg[h.type].correct++; }
+    for (const tag of (h.tags || [])) {
+      if (!tagAgg[tag]) tagAgg[tag] = { correct: 0, total: 0 };
+      tagAgg[tag].total++; if (h.correct) tagAgg[tag].correct++;
+    }
+  }
+  const weakDomains = Object.entries(domainAgg).filter(([,v]) => v.total > 0 && v.correct/v.total < 0.7).map(([d]) => d);
+  const weakTags = Object.entries(tagAgg).filter(([,v]) => v.total >= 2 && v.correct/v.total < 0.7).slice(0, 8).map(([t]) => t);
+  const weakTypes = Object.entries(typeAgg).filter(([,v]) => v.total > 0 && v.correct/v.total < 0.7).map(([t]) => t);
+  const numQ = settings.aiGenerateCount || 10;
+
+  const prompt = generateWeaknessPrompt(weakDomains, weakTags, weakTypes, numQ);
+
+  toast('AI問題生成中...（数十秒かかります）');
+
+  try {
+    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.7, maxOutputTokens: 16384 }
+      })
+    });
+
+    if (!resp.ok) {
+      const errText = await resp.text();
+      throw new Error(`API error ${resp.status}: ${errText.slice(0, 200)}`);
+    }
+
+    const data = await resp.json();
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!text) throw new Error('AIからの応答が空です');
+
+    // Extract JSON from response (might be wrapped in ```json ... ```)
+    let jsonStr = text;
+    const codeBlock = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+    if (codeBlock) jsonStr = codeBlock[1];
+    jsonStr = jsonStr.trim();
+
+    const packJson = JSON.parse(jsonStr);
+    const result = await importPack(packJson);
+    toast(`AI生成完了: ${result.added}問追加 / ${result.skipped}重複 / ${result.invalid}不正`);
+    render();
+  } catch (e) {
+    console.error('AI generation failed:', e);
+    toast('AI生成失敗: ' + e.message);
+  }
+}
+
 /* ========== RENDER ========== */
 function render() {
   const app = document.getElementById('app');
@@ -581,9 +650,19 @@ function renderHome(app) {
       el('button', { className: 'btn btn-primary btn-block', onClick: () => startSession('practice'), 'aria-label': '練習モード開始' }, '練習モード'),
       el('button', { className: 'btn btn-warn btn-block', onClick: () => startSession('exam'), 'aria-label': '模試モード開始' }, `模試 (${settings.timeLimit}分)`)
     ),
-    el('p', { className: 'text-muted mt-8' }, `${settings.questionCount}問出題 / 苦手補正あり`)
+    el('p', { className: 'text-muted mt-8' }, `${settings.questionCount}問出題 / 苦手補正あり / 左右スワイプで移動`)
   );
   page.appendChild(startCard);
+
+  // AI generate card
+  const aiCard = el('div', { className: 'card' },
+    el('h2', null, '苦手問題をAI生成'),
+    el('p', { className: 'text-muted mb-8' }, '直近の誤答傾向を分析し、弱い分野の問題を自動生成します。'),
+    el('button', { className: 'btn btn-primary btn-block', onClick: aiGenerateQuestions, 'aria-label': 'AI問題生成' },
+      `苦手${settings.aiGenerateCount}問を生成`),
+    !settings.geminiApiKey ? el('p', { className: 'text-muted mt-8', style: { color: 'var(--warn)' } }, '設定でGemini APIキーを入力してください') : null
+  );
+  page.appendChild(aiCard);
 
   // Quick stats
   IDB.getAllQuestions().then(qs => {
@@ -674,26 +753,39 @@ function renderSession(app) {
   app.appendChild(header);
   app.appendChild(page);
 
-  // Session bottom bar
-  const bar = el('div', { className: 'session-bar' },
-    el('button', { onClick: () => sessionNav(-1), disabled: currentIndex === 0, 'aria-label': '前の問題' },
-      el('span', { html: icons.prev }), el('span', null, '前へ')),
-    el('button', { className: sess.flags.has(qIndex) ? 'flag-on' : '', onClick: () => toggleFlag(qIndex), 'aria-label': 'フラグ切替' },
-      el('span', { html: icons.flag }), el('span', null, 'フラグ')),
-    !sess.finished
-      ? el('button', { onClick: () => { state.showExplanation = !state.showExplanation; render(); }, 'aria-label': '解説表示' },
-          el('span', { html: icons.explain }), el('span', null, '解説'))
-      : el('button', { onClick: () => showReviewMenu(), 'aria-label': '見直しメニュー' },
-          el('span', { html: icons.list }), el('span', null, '見直し')),
-    !sess.finished
-      ? el('button', { className: 'active', onClick: () => finishSession(), 'aria-label': '採点' },
-          el('span', { html: icons.check }), el('span', null, '採点'))
-      : el('button', { className: 'active', onClick: () => navigate('result'), 'aria-label': '結果' },
-          el('span', { html: icons.chart }), el('span', null, '結果')),
-    el('button', { onClick: () => sessionNav(1), disabled: currentIndex >= indices.length - 1, 'aria-label': '次の問題' },
-      el('span', { html: icons.next }), el('span', null, '次へ'))
-  );
+  // Session bottom bar - simplified, prominent next button
+  const isLast = currentIndex >= indices.length - 1;
+  const bar = el('div', { className: 'session-bar' });
+
+  bar.appendChild(el('button', { onClick: () => sessionNav(-1), disabled: currentIndex === 0, 'aria-label': '前の問題' },
+    el('span', { html: icons.prev }), el('span', null, '前へ')));
+
+  bar.appendChild(el('button', { className: sess.flags.has(qIndex) ? 'flag-on' : '', onClick: () => toggleFlag(qIndex), 'aria-label': 'フラグ切替' },
+    el('span', { html: icons.flag }), el('span', null, 'フラグ')));
+
+  if (!sess.finished) {
+    bar.appendChild(el('button', { onClick: () => { state.showExplanation = !state.showExplanation; render(); }, 'aria-label': '解説表示' },
+      el('span', { html: icons.explain }), el('span', null, '解説')));
+  } else {
+    bar.appendChild(el('button', { onClick: () => showReviewMenu(), 'aria-label': '見直しメニュー' },
+      el('span', { html: icons.list }), el('span', null, '見直し')));
+  }
+
+  if (!sess.finished && isLast) {
+    bar.appendChild(el('button', { className: 'active finish-btn', onClick: () => finishSession(), 'aria-label': '採点' },
+      el('span', { html: icons.check }), el('span', null, '採点')));
+  } else if (sess.finished) {
+    bar.appendChild(el('button', { className: 'active', onClick: () => navigate('result'), 'aria-label': '結果' },
+      el('span', { html: icons.chart }), el('span', null, '結果')));
+  } else {
+    bar.appendChild(el('button', { className: 'active next-btn', onClick: () => sessionNav(1), 'aria-label': '次の問題' },
+      el('span', { html: icons.next }), el('span', null, '次へ')));
+  }
+
   app.appendChild(bar);
+
+  // Swipe gesture support
+  setupSwipe(page);
 }
 
 function sessionNav(dir) {
@@ -705,6 +797,38 @@ function sessionNav(dir) {
     render();
     window.scrollTo(0, 0);
   }
+}
+
+/* -- Swipe gesture for session page -- */
+function setupSwipe(el) {
+  let startX = 0, startY = 0, tracking = false;
+  el.addEventListener('touchstart', e => {
+    if (e.touches.length !== 1) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    tracking = true;
+  }, { passive: true });
+  el.addEventListener('touchend', e => {
+    if (!tracking) return;
+    tracking = false;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx) * 0.7) return; // too short or too vertical
+    if (dx < 0) sessionNav(1);   // swipe left = next
+    else sessionNav(-1);         // swipe right = prev
+  }, { passive: true });
+}
+
+/* -- Auto-next after answering (single choice only, practice mode) -- */
+let _autoNextTimer = null;
+function triggerAutoNext() {
+  if (!settings.autoNext) return;
+  if (!state.session || state.session.finished) return;
+  if (state.session.mode === 'exam') return; // don't auto-next in exam
+  const indices = state.reviewIndices || state.session.questions.map((_, i) => i);
+  if (state.currentQ >= indices.length - 1) return;
+  clearTimeout(_autoNextTimer);
+  _autoNextTimer = setTimeout(() => sessionNav(1), settings.autoNextDelay);
 }
 
 function toggleFlag(qIndex) {
@@ -799,6 +923,7 @@ function renderSingleMulti(container, qData, qIndex, isMulti) {
       }
       setAnswer(qIndex, ans);
       render();
+      if (!isMulti) triggerAutoNext(); // auto-next for single choice
     }},
       el('div', { className: 'indicator' + (isMulti ? ' check' : '') }),
       el('div', { className: 'choice-text' }, choice)
@@ -1502,37 +1627,17 @@ function renderStats(app) {
 
         // Generate weakness-based question prompt
         const genCard = el('div', { className: 'card' },
-          el('h2', null, '苦手問題を追加生成'),
-          el('p', { className: 'text-muted mb-8' }, '苦手分野に特化した問題パックを生成するためのプロンプトをコピーできます。ChatGPT/Claude等に貼り付けてpack.jsonを生成し、アプリに取り込んでください。')
+          el('h2', null, '苦手問題を追加'),
+          el('p', { className: 'text-muted mb-8' }, '苦手分野に特化した問題を自動生成します。')
         );
 
-        const weakDomainsList = sortedDomains.filter(([,v]) => v.total > 0 && (v.correct/v.total) < 0.7).map(([d]) => d);
-        const weakTagsList = sortedTags.filter(([,v]) => (v.correct/v.total) < 0.7).slice(0, 8).map(([t]) => t);
+        // Direct AI generation button
+        genCard.appendChild(el('button', { className: 'btn btn-primary btn-block mb-8', onClick: aiGenerateQuestions },
+          settings.geminiApiKey ? `AIで${settings.aiGenerateCount}問を自動生成` : 'AI生成 (APIキー未設定)'));
 
-        // Type weakness from history
-        const typeAgg = {};
-        for (const h of history) {
-          if (!typeAgg[h.type]) typeAgg[h.type] = { correct: 0, total: 0 };
-          typeAgg[h.type].total++;
-          if (h.correct) typeAgg[h.type].correct++;
+        if (!settings.geminiApiKey) {
+          genCard.appendChild(el('p', { className: 'text-muted mb-8', style: { color: 'var(--warn)', fontSize: '13px' } }, '設定画面でGemini APIキーを入力すると使えます'));
         }
-        const weakTypesList = Object.entries(typeAgg).filter(([,v]) => v.total > 0 && (v.correct/v.total) < 0.7).map(([t]) => t);
-
-        const numQ = 20;
-        const prompt = generateWeaknessPrompt(weakDomainsList, weakTagsList, weakTypesList, numQ);
-
-        genCard.appendChild(el('button', { className: 'btn btn-primary btn-block', onClick: () => {
-          navigator.clipboard.writeText(prompt).then(() => toast('プロンプトをコピーしました')).catch(() => {
-            // Fallback: show in textarea
-            const ta = document.getElementById('gen-prompt-area');
-            if (ta) { ta.value = prompt; ta.style.display = 'block'; ta.select(); }
-          });
-        }}, 'プロンプトをコピー'));
-        genCard.appendChild(el('textarea', { id: 'gen-prompt-area', style: { display: 'none', marginTop: '8px' }, readonly: 'true' }));
-        genCard.appendChild(el('button', { className: 'btn btn-block mt-8', onClick: () => {
-          const ta = document.getElementById('gen-prompt-area');
-          if (ta) { ta.value = prompt; ta.style.display = 'block'; }
-        }}, 'プロンプトを表示'));
 
         page.appendChild(genCard);
       });
@@ -1596,6 +1701,35 @@ function renderSettings(app) {
   );
   page.appendChild(typeCard);
 
+  // AI generation settings
+  const aiCard = el('div', { className: 'card' },
+    el('h2', null, 'AI問題生成'),
+    el('p', { className: 'text-muted mb-8' }, 'Google Gemini APIで苦手問題を自動生成します。APIキーは端末内のみに保存されます。'),
+    el('label', null, 'Gemini APIキー'),
+    el('input', { type: 'text', id: 'set-gemini-key', value: settings.geminiApiKey || '', placeholder: 'AIza...' }),
+    el('p', { className: 'text-muted mt-8' }, el('a', { href: 'https://aistudio.google.com/apikey', target: '_blank', rel: 'noopener', style: { color: 'var(--accent)' } }, 'Google AI Studio でAPIキーを取得')),
+    el('label', null, '1回の生成問題数'),
+    el('input', { type: 'number', id: 'set-ai-count', value: settings.aiGenerateCount || 10, min: '3', max: '30' })
+  );
+  page.appendChild(aiCard);
+
+  // UX settings
+  const uxCard = el('div', { className: 'card' },
+    el('h2', null, '操作設定'),
+    el('div', { className: 'flex-between', style: { padding: '8px 0' } },
+      el('span', null, '単一選択で自動次へ'),
+      el('button', {
+        id: 'set-autonext',
+        className: `toggle ${settings.autoNext ? 'on' : ''}`,
+        onClick: e => { e.currentTarget.classList.toggle('on'); },
+        'aria-label': '自動次へ切替'
+      })
+    ),
+    el('label', null, '自動次への遅延 (ms)'),
+    el('input', { type: 'number', id: 'set-autonext-delay', value: settings.autoNextDelay || 600, min: '200', max: '3000', step: '100' })
+  );
+  page.appendChild(uxCard);
+
   // Save
   page.appendChild(el('button', { className: 'btn btn-primary btn-block mb-16', onClick: saveSettingsUI }, '設定を保存'));
 
@@ -1648,7 +1782,12 @@ function saveSettingsUI() {
     tm[t] = parseInt(document.getElementById(`set-tm-${t}`)?.value) || 0;
   }
 
-  settings = { questionCount: count, timeLimit: time, domainWeights: dw, typeMinimums: tm, recentExclude: recent, weaknessBoostMax: boost, weaknessDays: 7 };
+  const geminiKey = document.getElementById('set-gemini-key')?.value?.trim() || '';
+  const aiCount = parseInt(document.getElementById('set-ai-count')?.value) || 10;
+  const autoNext = document.getElementById('set-autonext')?.classList?.contains('on') ?? true;
+  const autoNextDelay = parseInt(document.getElementById('set-autonext-delay')?.value) || 600;
+
+  settings = { questionCount: count, timeLimit: time, domainWeights: dw, typeMinimums: tm, recentExclude: recent, weaknessBoostMax: boost, weaknessDays: 7, geminiApiKey: geminiKey, aiGenerateCount: aiCount, autoNext, autoNextDelay };
   saveSettings(settings);
   toast('設定を保存しました');
 }
