@@ -17,9 +17,7 @@ const DEFAULT_SETTINGS = {
   weaknessBoostMax: 0.3,
   weaknessDays: 7,
   autoNext: true,
-  autoNextDelay: 600,
-  geminiApiKey: '',
-  aiGenerateCount: 10
+  autoNextDelay: 600
 };
 
 /* ---------- Settings (localStorage) ---------- */
@@ -540,16 +538,13 @@ function generateWeaknessPrompt(weakDomains, weakTags, weakTypes, numQ) {
 - JSON全文のみ出力（コードブロックで囲む）。説明文不要。`;
 }
 
-/* ---------- AI Question Generation (Gemini API) ---------- */
-async function aiGenerateQuestions() {
-  const apiKey = settings.geminiApiKey;
-  if (!apiKey) {
-    toast('設定画面でGemini APIキーを入力してください');
-    navigate('settings');
-    return;
-  }
-
+/* ---------- Export weakness data for Claude Code ---------- */
+async function exportWeaknessData() {
   const history = await IDB.getRecentHistory(settings.weaknessDays);
+  if (history.length === 0) {
+    toast('まだ学習履歴がありません。先に何問か解いてください。');
+    return null;
+  }
   const domainAgg = {}, typeAgg = {}, tagAgg = {};
   for (const d of DOMAINS) domainAgg[d] = { correct: 0, total: 0 };
   for (const t of TYPES) typeAgg[t] = { correct: 0, total: 0 };
@@ -561,47 +556,36 @@ async function aiGenerateQuestions() {
       tagAgg[tag].total++; if (h.correct) tagAgg[tag].correct++;
     }
   }
-  const weakDomains = Object.entries(domainAgg).filter(([,v]) => v.total > 0 && v.correct/v.total < 0.7).map(([d]) => d);
-  const weakTags = Object.entries(tagAgg).filter(([,v]) => v.total >= 2 && v.correct/v.total < 0.7).slice(0, 8).map(([t]) => t);
-  const weakTypes = Object.entries(typeAgg).filter(([,v]) => v.total > 0 && v.correct/v.total < 0.7).map(([t]) => t);
-  const numQ = settings.aiGenerateCount || 10;
+  const data = {
+    exportedAt: new Date().toISOString(),
+    totalAnswered: history.length,
+    domain: Object.fromEntries(Object.entries(domainAgg).filter(([,v]) => v.total > 0).map(([k,v]) => [k, `${v.correct}/${v.total} (${Math.round(v.correct/v.total*100)}%)`])),
+    type: Object.fromEntries(Object.entries(typeAgg).filter(([,v]) => v.total > 0).map(([k,v]) => [k, `${v.correct}/${v.total} (${Math.round(v.correct/v.total*100)}%)`])),
+    weakTags: Object.entries(tagAgg).filter(([,v]) => v.total >= 2).sort((a,b) => (a[1].correct/a[1].total) - (b[1].correct/b[1].total)).slice(0, 10).map(([t,v]) => `${t}: ${v.correct}/${v.total} (${Math.round(v.correct/v.total*100)}%)`)
+  };
+  return JSON.stringify(data, null, 2);
+}
 
-  const prompt = generateWeaknessPrompt(weakDomains, weakTags, weakTypes, numQ);
-
-  toast('AI問題生成中...（数十秒かかります）');
-
+async function copyWeaknessForClaude() {
+  const data = await exportWeaknessData();
+  if (!data) return;
+  const text = `AI-900アプリの苦手データです。これに基づいて問題パックを生成・デプロイしてください。\n\n${data}`;
   try {
-    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.7, maxOutputTokens: 16384 }
-      })
+    await navigator.clipboard.writeText(text);
+    toast('苦手データをコピーしました。Claude Codeに貼り付けてください。');
+  } catch {
+    // fallback: show overlay
+    const overlay = el('div', {
+      style: { position:'fixed',top:0,left:0,right:0,bottom:0,background:'rgba(0,0,0,.85)',zIndex:200,display:'flex',alignItems:'center',justifyContent:'center',padding:'16px' },
+      onClick: e => { if (e.target === overlay) overlay.remove(); }
     });
-
-    if (!resp.ok) {
-      const errText = await resp.text();
-      throw new Error(`API error ${resp.status}: ${errText.slice(0, 200)}`);
-    }
-
-    const data = await resp.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!text) throw new Error('AIからの応答が空です');
-
-    // Extract JSON from response (might be wrapped in ```json ... ```)
-    let jsonStr = text;
-    const codeBlock = text.match(/```(?:json)?\s*([\s\S]*?)```/);
-    if (codeBlock) jsonStr = codeBlock[1];
-    jsonStr = jsonStr.trim();
-
-    const packJson = JSON.parse(jsonStr);
-    const result = await importPack(packJson);
-    toast(`AI生成完了: ${result.added}問追加 / ${result.skipped}重複 / ${result.invalid}不正`);
-    render();
-  } catch (e) {
-    console.error('AI generation failed:', e);
-    toast('AI生成失敗: ' + e.message);
+    const box = el('div', { className: 'card', style: { width: '100%', maxWidth: '400px' } },
+      el('h2', null, 'Claude Codeに貼り付けてください'),
+      el('textarea', { readonly: 'true', style: { minHeight: '200px', fontSize: '12px' }, value: text, onClick: e => e.target.select() }),
+      el('button', { className: 'btn btn-primary btn-block mt-8', onClick: () => overlay.remove() }, '閉じる')
+    );
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
   }
 }
 
@@ -654,13 +638,12 @@ function renderHome(app) {
   );
   page.appendChild(startCard);
 
-  // AI generate card
+  // Claude Code integration card
   const aiCard = el('div', { className: 'card' },
-    el('h2', null, '苦手問題をAI生成'),
-    el('p', { className: 'text-muted mb-8' }, '直近の誤答傾向を分析し、弱い分野の問題を自動生成します。'),
-    el('button', { className: 'btn btn-primary btn-block', onClick: aiGenerateQuestions, 'aria-label': 'AI問題生成' },
-      `苦手${settings.aiGenerateCount}問を生成`),
-    !settings.geminiApiKey ? el('p', { className: 'text-muted mt-8', style: { color: 'var(--warn)' } }, '設定でGemini APIキーを入力してください') : null
+    el('h2', null, '苦手問題を追加'),
+    el('p', { className: 'text-muted mb-8' }, '苦手データをコピー → Claude Codeに貼り付けるだけで、苦手に特化した問題を生成・デプロイしてもらえます。'),
+    el('button', { className: 'btn btn-primary btn-block', onClick: copyWeaknessForClaude, 'aria-label': '苦手データコピー' },
+      '苦手データをコピー')
   );
   page.appendChild(aiCard);
 
@@ -1628,17 +1611,9 @@ function renderStats(app) {
         // Generate weakness-based question prompt
         const genCard = el('div', { className: 'card' },
           el('h2', null, '苦手問題を追加'),
-          el('p', { className: 'text-muted mb-8' }, '苦手分野に特化した問題を自動生成します。')
+          el('p', { className: 'text-muted mb-8' }, '苦手データをClaude Codeに渡すと、弱い分野の問題を生成・デプロイしてくれます。'),
+          el('button', { className: 'btn btn-primary btn-block', onClick: copyWeaknessForClaude }, '苦手データをコピー')
         );
-
-        // Direct AI generation button
-        genCard.appendChild(el('button', { className: 'btn btn-primary btn-block mb-8', onClick: aiGenerateQuestions },
-          settings.geminiApiKey ? `AIで${settings.aiGenerateCount}問を自動生成` : 'AI生成 (APIキー未設定)'));
-
-        if (!settings.geminiApiKey) {
-          genCard.appendChild(el('p', { className: 'text-muted mb-8', style: { color: 'var(--warn)', fontSize: '13px' } }, '設定画面でGemini APIキーを入力すると使えます'));
-        }
-
         page.appendChild(genCard);
       });
 
@@ -1700,18 +1675,6 @@ function renderSettings(app) {
     ))
   );
   page.appendChild(typeCard);
-
-  // AI generation settings
-  const aiCard = el('div', { className: 'card' },
-    el('h2', null, 'AI問題生成'),
-    el('p', { className: 'text-muted mb-8' }, 'Google Gemini APIで苦手問題を自動生成します。APIキーは端末内のみに保存されます。'),
-    el('label', null, 'Gemini APIキー'),
-    el('input', { type: 'text', id: 'set-gemini-key', value: settings.geminiApiKey || '', placeholder: 'AIza...' }),
-    el('p', { className: 'text-muted mt-8' }, el('a', { href: 'https://aistudio.google.com/apikey', target: '_blank', rel: 'noopener', style: { color: 'var(--accent)' } }, 'Google AI Studio でAPIキーを取得')),
-    el('label', null, '1回の生成問題数'),
-    el('input', { type: 'number', id: 'set-ai-count', value: settings.aiGenerateCount || 10, min: '3', max: '30' })
-  );
-  page.appendChild(aiCard);
 
   // UX settings
   const uxCard = el('div', { className: 'card' },
@@ -1782,12 +1745,10 @@ function saveSettingsUI() {
     tm[t] = parseInt(document.getElementById(`set-tm-${t}`)?.value) || 0;
   }
 
-  const geminiKey = document.getElementById('set-gemini-key')?.value?.trim() || '';
-  const aiCount = parseInt(document.getElementById('set-ai-count')?.value) || 10;
   const autoNext = document.getElementById('set-autonext')?.classList?.contains('on') ?? true;
   const autoNextDelay = parseInt(document.getElementById('set-autonext-delay')?.value) || 600;
 
-  settings = { questionCount: count, timeLimit: time, domainWeights: dw, typeMinimums: tm, recentExclude: recent, weaknessBoostMax: boost, weaknessDays: 7, geminiApiKey: geminiKey, aiGenerateCount: aiCount, autoNext, autoNextDelay };
+  settings = { ...settings, questionCount: count, timeLimit: time, domainWeights: dw, typeMinimums: tm, recentExclude: recent, weaknessBoostMax: boost, weaknessDays: 7, autoNext, autoNextDelay };
   saveSettings(settings);
   toast('設定を保存しました');
 }
