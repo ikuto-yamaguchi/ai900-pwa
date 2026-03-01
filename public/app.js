@@ -453,8 +453,9 @@ async function finishSession() {
     tagStats: computeTagStats()
   });
 
-  // Auto-sync weakness data to server (background, non-blocking)
+  // Auto-sync weakness data + check pool health (background, non-blocking)
   syncWeaknessToServer().catch(e => console.warn('Weakness sync failed:', e));
+  checkPoolHealth().catch(e => console.warn('Pool health check failed:', e));
 
   navigate('result');
 }
@@ -469,6 +470,61 @@ async function syncWeaknessToServer() {
       headers: { 'Content-Type': 'application/json' },
       body: data
     });
+  } catch { /* silent fail - offline is fine */ }
+}
+
+/* -- Pool health: request new questions when unseen ratio drops -- */
+async function checkPoolHealth() {
+  const UNSEEN_THRESHOLD = 0.4; // Trigger generation when <40% unseen
+  const TARGET_UNSEEN = 0.5;    // Aim for 50% unseen after generation
+
+  const allQuestions = await IDB.getAllQuestions();
+  const totalQuestions = allQuestions.length;
+  if (totalQuestions === 0) return;
+
+  // Count unique question IDs user has ever answered
+  const allHistory = await IDB.getAllHistory();
+  const seenQids = new Set(allHistory.map(h => h.qid));
+  const uniqueSeen = seenQids.size;
+
+  const unseenRatio = (totalQuestions - uniqueSeen) / totalQuestions;
+
+  console.log(`Pool health: ${uniqueSeen}/${totalQuestions} seen (${Math.round((1 - unseenRatio) * 100)}%), unseen ratio: ${Math.round(unseenRatio * 100)}%`);
+
+  if (unseenRatio >= UNSEEN_THRESHOLD) return; // Pool is healthy
+
+  // Calculate how many questions needed to reach target
+  const needed = Math.ceil(uniqueSeen / TARGET_UNSEEN) - totalQuestions;
+  if (needed < 10) return; // Not worth generating less than 10
+
+  // Get weakness data for targeting
+  const weaknessJson = await exportWeaknessData();
+  const weakness = weaknessJson ? JSON.parse(weaknessJson) : null;
+
+  // Find which domains are under-represented
+  const domainCounts = {};
+  for (const q of allQuestions) domainCounts[q.domain] = (domainCounts[q.domain] || 0) + 1;
+
+  try {
+    const res = await fetch('/api/generate-request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        unseenRatio,
+        totalQuestions,
+        uniqueSeen,
+        needed,
+        weakness,
+        domains: DOMAINS,
+        domainCounts
+      })
+    });
+    const result = await res.json();
+    if (result.ok && result.status === 'queued') {
+      console.log(`Generation request queued: ${needed} questions needed (request: ${result.requestId})`);
+    } else if (result.status === 'already_pending') {
+      console.log('Generation request already pending');
+    }
   } catch { /* silent fail - offline is fine */ }
 }
 

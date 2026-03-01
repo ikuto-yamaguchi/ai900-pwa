@@ -1,17 +1,18 @@
 #!/bin/bash
-# generate_weakness_pack.sh
-# Claude Code が実行するスクリプト。
-# 1. Cloudflare KVから最新の苦手データを取得
-# 2. Claude Code (claude CLI) に問題生成を依頼
-# 3. 生成されたパックを検証
-# 4. git push → Cloudflare Pages 自動デプロイ
+# generate_weakness_pack.sh - Event-driven question generation
 #
-# 使い方:
-#   別のClaude Codeセッションで以下を実行:
+# Architecture:
+#   1. App tracks user's seen/total question ratio
+#   2. When ratio drops below threshold, app POSTs to /api/generate-request
+#   3. This script polls KV for pending requests
+#   4. Generates exactly the number of questions needed
+#   5. Validates, deploys, marks request as fulfilled
+#
+# Usage (separate Claude Code session):
 #   cd ~/ai900-pwa && bash tools/generate_weakness_pack.sh
 #
-# または cron で定期実行:
-#   */30 * * * * cd ~/ai900-pwa && bash tools/generate_weakness_pack.sh >> /tmp/ai900-gen.log 2>&1
+# As a watch loop:
+#   cd ~/ai900-pwa && bash tools/generate_weakness_pack.sh --watch
 
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -19,117 +20,180 @@ cd "$(dirname "$0")/.."
 APP_URL="https://ai900-pwa.pages.dev"
 PACKS_DIR="public/packs"
 LOCK_FILE="/tmp/ai900-gen.lock"
+WATCH_MODE=false
 
-# Prevent concurrent runs
-if [ -f "$LOCK_FILE" ]; then
-  echo "$(date): Another generation is running. Exiting."
-  exit 0
-fi
-trap "rm -f $LOCK_FILE" EXIT
-touch "$LOCK_FILE"
-
-echo "$(date): Fetching weakness data..."
-WEAKNESS=$(curl -sf "${APP_URL}/api/weakness" 2>/dev/null || echo '{"ok":false}')
-HAS_DATA=$(echo "$WEAKNESS" | node -e "const d=require('fs').readFileSync(0,'utf8');const j=JSON.parse(d);console.log(j.ok && j.data ? 'yes' : 'no')" 2>/dev/null || echo "no")
-
-if [ "$HAS_DATA" != "yes" ]; then
-  echo "$(date): No weakness data available yet. User hasn't completed any sessions."
-  exit 0
+if [ "${1:-}" = "--watch" ]; then
+  WATCH_MODE=true
 fi
 
-# Extract weakness summary
-WEAKNESS_DATA=$(echo "$WEAKNESS" | node -e "const d=require('fs').readFileSync(0,'utf8');console.log(JSON.stringify(JSON.parse(d).data,null,2))")
-echo "$(date): Weakness data: $WEAKNESS_DATA"
+run_once() {
+  # Prevent concurrent runs
+  if [ -f "$LOCK_FILE" ]; then
+    echo "$(date): Another generation is running. Skipping."
+    return 1
+  fi
+  trap "rm -f $LOCK_FILE" EXIT
+  touch "$LOCK_FILE"
 
-# Check if we already generated recently (within last 2 hours)
-LAST_GEN=$(cat /tmp/ai900-last-gen 2>/dev/null || echo "0")
-NOW=$(date +%s)
-DIFF=$(( NOW - LAST_GEN ))
-if [ "$DIFF" -lt 7200 ]; then
-  echo "$(date): Generated less than 2 hours ago. Skipping."
-  exit 0
-fi
+  echo "$(date): Checking for generation requests..."
 
-# Generate pack using Claude CLI (headless)
-PACK_ID="ai900.auto.$(date +%Y%m%d%H%M)"
-PACK_FILE="${PACKS_DIR}/${PACK_ID}_$(date +%Y-%m-%d).json"
-TIMESTAMP=$(date -Iseconds)
+  # Poll the generate-request endpoint for pending tasks
+  RESPONSE=$(curl -sf "${APP_URL}/api/generate-request" 2>/dev/null || echo '{"ok":false}')
 
-echo "$(date): Generating questions with Claude..."
-claude -p "以下の苦手データに基づいて、AI-900試験対策の問題パックJSONを生成してください。JSONのみ出力してください。
+  HAS_REQUEST=$(echo "$RESPONSE" | node -e "
+    const d=require('fs').readFileSync(0,'utf8');
+    const j=JSON.parse(d);
+    console.log(j.ok && j.pending ? 'yes' : 'no');
+  " 2>/dev/null || echo "no")
 
-苦手データ:
-${WEAKNESS_DATA}
+  if [ "$HAS_REQUEST" != "yes" ]; then
+    echo "$(date): No pending generation requests."
+    rm -f "$LOCK_FILE"
+    trap - EXIT
+    return 0
+  fi
 
-出力フォーマット (schema: ai900-pack-v1):
+  # Extract request details
+  REQUEST_DATA=$(echo "$RESPONSE" | node -e "
+    const d=require('fs').readFileSync(0,'utf8');
+    const j=JSON.parse(d);
+    console.log(JSON.stringify(j.request));
+  ")
+
+  NEEDED=$(echo "$REQUEST_DATA" | node -e "
+    const d=require('fs').readFileSync(0,'utf8');
+    const r=JSON.parse(d);
+    console.log(Math.min(Math.max(r.needed || 15, 10), 50));
+  ")
+  UNSEEN_RATIO=$(echo "$REQUEST_DATA" | node -e "
+    const d=require('fs').readFileSync(0,'utf8');
+    const r=JSON.parse(d);
+    console.log(Math.round((r.unseenRatio || 0) * 100));
+  ")
+  TOTAL_Q=$(echo "$REQUEST_DATA" | node -e "
+    const d=require('fs').readFileSync(0,'utf8');
+    const r=JSON.parse(d);
+    console.log(r.totalQuestions || 0);
+  ")
+  SEEN_Q=$(echo "$REQUEST_DATA" | node -e "
+    const d=require('fs').readFileSync(0,'utf8');
+    const r=JSON.parse(d);
+    console.log(r.uniqueSeen || 0);
+  ")
+
+  echo "$(date): Request found! Pool: ${SEEN_Q}/${TOTAL_Q} seen (${UNSEEN_RATIO}% unseen), need ${NEEDED} questions"
+
+  # Get weakness data for targeting
+  WEAKNESS=$(curl -sf "${APP_URL}/api/weakness" 2>/dev/null || echo '{"ok":false}')
+  WEAKNESS_DATA=$(echo "$WEAKNESS" | node -e "
+    const d=require('fs').readFileSync(0,'utf8');
+    const j=JSON.parse(d);
+    console.log(j.ok && j.data ? JSON.stringify(j.data, null, 2) : 'null');
+  " 2>/dev/null || echo "null")
+
+  # Generate pack
+  PACK_ID="ai900.auto.$(date +%Y%m%d%H%M)"
+  PACK_FILE="${PACKS_DIR}/${PACK_ID}_$(date +%Y-%m-%d).json"
+  TIMESTAMP=$(date -Iseconds)
+
+  # Build prompt with context
+  WEAKNESS_SECTION=""
+  if [ "$WEAKNESS_DATA" != "null" ]; then
+    WEAKNESS_SECTION="
+苦手データ（重点出題対象）:
+${WEAKNESS_DATA}"
+  fi
+
+  echo "$(date): Generating ${NEEDED} questions with Claude..."
+  claude -p "AI-900試験対策の問題パックJSONを生成してください。JSONのみ出力してください。
+
+■ 背景
+ユーザーが${TOTAL_Q}問中${SEEN_Q}問を既に解いています（未解答率${UNSEEN_RATIO}%）。
+新しい問題を${NEEDED}問追加して、問題プールを補充する必要があります。
+${WEAKNESS_SECTION}
+
+■ 出力フォーマット (schema: ai900-pack-v1):
 {
   \"schema\": \"ai900-pack-v1\",
   \"pack\": {
     \"id\": \"${PACK_ID}\",
     \"version\": \"$(date +%Y-%m-%d)\",
-    \"title\": \"苦手克服パック (自動生成)\",
-    \"description\": \"苦手分析に基づいてClaude Codeが自動生成した問題パック\",
+    \"title\": \"自動補充パック (${NEEDED}問)\",
+    \"description\": \"プール補充のためClaude Codeが自動生成\",
     \"language\": \"ja-JP\",
     \"createdAt\": \"${TIMESTAMP}\",
     \"domains\": [\"Workloads\",\"ML\",\"CV\",\"NLP\",\"GenAI\"]
   },
-  \"questions\": [... 10-15問 ...]
+  \"questions\": [... ${NEEDED}問 ...]
 }
 
-問題タイプ: single, multi, dropdown, match, order, hotarea, casestudy
-ルール:
+■ ルール:
 - capabilities（機能・使い分け）を問う問題のみ
+- 問題タイプ: single, multi, dropdown, match, order, hotarea, casestudy を混在
 - answerのindexはchoices配列の0始まり範囲内
-- ID: AW-001等 (重複不可)
-- domainは Workloads/ML/CV/NLP/GenAI
-- 苦手の分野・タグを重点的に出題
-- JSONのみ出力、説明文不要" > /tmp/ai900-pack-raw.txt 2>&1
+- ID: AG-001〜AG-$(printf '%03d' $NEEDED) (重複不可)
+- domainは5分野に均等配分（苦手があれば重み付け）
+- JSONのみ出力、説明文不要
+- 既存問題と重複しない新しい切り口で出題" > /tmp/ai900-pack-raw.txt 2>&1
 
-# Extract JSON from output
-node -e "
-const fs = require('fs');
-const raw = fs.readFileSync('/tmp/ai900-pack-raw.txt', 'utf8');
-let json = raw;
-const m = raw.match(/\`\`\`(?:json)?\s*([\s\S]*?)\`\`\`/);
-if (m) json = m[1];
-// Try to find JSON object
-const start = json.indexOf('{');
-const end = json.lastIndexOf('}');
-if (start >= 0 && end > start) json = json.slice(start, end + 1);
-const parsed = JSON.parse(json.trim());
-fs.writeFileSync('${PACK_FILE}', JSON.stringify(parsed, null, 2));
-console.log('Pack written: ${PACK_FILE}');
-" || { echo "$(date): Failed to parse generated JSON"; exit 1; }
+  # Extract JSON from output
+  node -e "
+    const fs = require('fs');
+    const raw = fs.readFileSync('/tmp/ai900-pack-raw.txt', 'utf8');
+    let json = raw;
+    const m = raw.match(/\`\`\`(?:json)?\s*([\s\S]*?)\`\`\`/);
+    if (m) json = m[1];
+    const start = json.indexOf('{');
+    const end = json.lastIndexOf('}');
+    if (start >= 0 && end > start) json = json.slice(start, end + 1);
+    const parsed = JSON.parse(json.trim());
+    fs.writeFileSync('${PACK_FILE}', JSON.stringify(parsed, null, 2));
+    console.log('Pack written: ${PACK_FILE}');
+  " || { echo "$(date): Failed to parse generated JSON"; rm -f "$LOCK_FILE"; trap - EXIT; return 1; }
 
-# Validate
-echo "$(date): Validating..."
-if node tools/validate_packs.mjs; then
-  echo "$(date): Validation passed"
-else
-  echo "$(date): Validation failed, removing bad pack"
-  rm -f "${PACK_FILE}"
-  exit 1
-fi
+  # Validate
+  echo "$(date): Validating..."
+  if node tools/validate_packs.mjs; then
+    echo "$(date): Validation passed"
+  else
+    echo "$(date): Validation failed, removing bad pack"
+    rm -f "${PACK_FILE}"
+    rm -f "$LOCK_FILE"
+    trap - EXIT
+    return 1
+  fi
 
-# Rebuild index
-node tools/build_index.mjs
+  # Rebuild index + dedupe
+  node tools/build_index.mjs
+  node tools/dedupe.mjs || echo "$(date): Dedupe warnings (non-fatal)"
 
-# Dedupe check
-node tools/dedupe.mjs || {
-  echo "$(date): Deduplication found issues but continuing"
-}
+  # Commit and push
+  git add public/packs/ public/meta/
+  git commit -m "Auto-generated pool refill: ${PACK_ID} (${NEEDED} questions)
 
-# Commit and push
-git add public/packs/ public/meta/
-git commit -m "Auto-generated weakness pack: ${PACK_ID}
-
-Based on user weakness analysis.
+Pool was at ${UNSEEN_RATIO}% unseen (${SEEN_Q}/${TOTAL_Q} seen).
+Event-driven generation triggered by app.
 Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>"
 
-git push origin master
+  git push origin master
 
-# Deploy
-npx wrangler pages deploy public --project-name ai900-pwa --commit-dirty=true
+  # Deploy
+  npx wrangler pages deploy public --project-name ai900-pwa --commit-dirty=true
 
-echo "$NOW" > /tmp/ai900-last-gen
-echo "$(date): Done! Pack ${PACK_ID} deployed."
+  # Mark request as fulfilled
+  curl -sf -X DELETE "${APP_URL}/api/generate-request" 2>/dev/null || true
+
+  echo "$(date): Done! Pack ${PACK_ID} deployed (${NEEDED} questions added)."
+  rm -f "$LOCK_FILE"
+  trap - EXIT
+}
+
+if [ "$WATCH_MODE" = true ]; then
+  echo "$(date): Starting watch mode (checks every 5 minutes)..."
+  while true; do
+    run_once || true
+    sleep 300
+  done
+else
+  run_once
+fi
