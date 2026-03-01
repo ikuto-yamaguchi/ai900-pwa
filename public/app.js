@@ -483,6 +483,59 @@ function computeTagStats() {
   return s;
 }
 
+/* ---------- Weakness Prompt Generator ---------- */
+function generateWeaknessPrompt(weakDomains, weakTags, weakTypes, numQ) {
+  const domainStr = weakDomains.length > 0 ? weakDomains.map(d => `${d}(${DOMAIN_LABELS[d]||d})`).join(', ') : '全分野均等';
+  const tagStr = weakTags.length > 0 ? weakTags.join(', ') : '一般';
+  const typeStr = weakTypes.length > 0 ? weakTypes.map(t => `${t}(${TYPE_LABELS[t]||t})`).join(', ') : 'single, multi';
+  const packId = `ai900.weak.${Date.now().toString(36)}`;
+
+  return `以下の仕様でAI-900試験対策の問題パックJSON（schema: ai900-pack-v1）を生成してください。
+
+■ 目的
+苦手分野を重点的に強化するための追加問題パックです。
+
+■ 苦手分析結果
+- 弱い分野: ${domainStr}
+- 弱いタグ: ${tagStr}
+- 弱い形式: ${typeStr}
+
+■ 問題数: ${numQ}問
+- 上記の苦手分野・タグを重点的に出題
+- 形式は ${typeStr} を中心に、他の形式も混ぜる
+
+■ 出力JSONフォーマット（これを厳密に守ること）:
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "${packId}",
+    "version": "${new Date().toISOString().slice(0,10)}",
+    "title": "苦手克服パック",
+    "description": "苦手分析に基づいて生成された問題パック",
+    "language": "ja-JP",
+    "createdAt": "${new Date().toISOString()}",
+    "domains": ${JSON.stringify(weakDomains.length > 0 ? weakDomains : DOMAINS)}
+  },
+  "questions": [...]
+}
+
+■ 問題タイプ別スキーマ:
+- single: { id, domain, type:"single", difficulty:1-3, prompt, choices:["A","B","C","D"], answer:[正解index], explanation, tags:[], sources:[] }
+- multi: { id, domain, type:"multi", difficulty:1-3, prompt, choices:["A","B","C","D"], answer:[正解index1,正解index2], explanation, tags:[], sources:[] }
+- dropdown: { id, domain, type:"dropdown", difficulty:1-3, prompt:"text {{0}} more {{1}}", dropdowns:[{options:["a","b","c"],answer:0},{options:["x","y"],answer:1}], explanation, tags:[], sources:[] }
+- match: { id, domain, type:"match", difficulty:1-3, prompt, left:["A","B","C"], right:["1","2","3"], answerMap:{"A":"1","B":"2","C":"3"}, explanation, tags:[], sources:[] }
+- order: { id, domain, type:"order", difficulty:1-3, prompt, items:["s1","s2","s3"], answerOrder:[2,0,1], explanation, tags:[], sources:[] }
+- hotarea: { id, domain, type:"hotarea", difficulty:1-3, prompt, grid:{cols:N,rows:M,cells:["c1","c2",...]}, answer:[正解cellIndex], explanation, tags:[], sources:[] }
+- casestudy: { id, domain, type:"casestudy", difficulty:1-3, prompt:"シナリオ", subQuestions:[{id:"xx-1", type:"single", prompt, choices, answer, explanation},...], explanation, tags:[], sources:[] }
+
+■ ルール:
+- capabilities（機能・使い分け）を問う問題のみ。UI手順暗記は禁止。
+- answerのindexはchoices配列の0始まり範囲内であること。
+- ID命名: WK-001, ML-001, CV-001, NL-001, GA-001 等（重複不可）
+- domains: Workloads, ML, CV, NLP, GenAI のいずれか
+- JSON全文のみ出力（コードブロックで囲む）。説明文不要。`;
+}
+
 /* ========== RENDER ========== */
 function render() {
   const app = document.getElementById('app');
@@ -1446,6 +1499,42 @@ function renderStats(app) {
           });
         }
         page.appendChild(weakCard);
+
+        // Generate weakness-based question prompt
+        const genCard = el('div', { className: 'card' },
+          el('h2', null, '苦手問題を追加生成'),
+          el('p', { className: 'text-muted mb-8' }, '苦手分野に特化した問題パックを生成するためのプロンプトをコピーできます。ChatGPT/Claude等に貼り付けてpack.jsonを生成し、アプリに取り込んでください。')
+        );
+
+        const weakDomainsList = sortedDomains.filter(([,v]) => v.total > 0 && (v.correct/v.total) < 0.7).map(([d]) => d);
+        const weakTagsList = sortedTags.filter(([,v]) => (v.correct/v.total) < 0.7).slice(0, 8).map(([t]) => t);
+
+        // Type weakness from history
+        const typeAgg = {};
+        for (const h of history) {
+          if (!typeAgg[h.type]) typeAgg[h.type] = { correct: 0, total: 0 };
+          typeAgg[h.type].total++;
+          if (h.correct) typeAgg[h.type].correct++;
+        }
+        const weakTypesList = Object.entries(typeAgg).filter(([,v]) => v.total > 0 && (v.correct/v.total) < 0.7).map(([t]) => t);
+
+        const numQ = 20;
+        const prompt = generateWeaknessPrompt(weakDomainsList, weakTagsList, weakTypesList, numQ);
+
+        genCard.appendChild(el('button', { className: 'btn btn-primary btn-block', onClick: () => {
+          navigator.clipboard.writeText(prompt).then(() => toast('プロンプトをコピーしました')).catch(() => {
+            // Fallback: show in textarea
+            const ta = document.getElementById('gen-prompt-area');
+            if (ta) { ta.value = prompt; ta.style.display = 'block'; ta.select(); }
+          });
+        }}, 'プロンプトをコピー'));
+        genCard.appendChild(el('textarea', { id: 'gen-prompt-area', style: { display: 'none', marginTop: '8px' }, readonly: 'true' }));
+        genCard.appendChild(el('button', { className: 'btn btn-block mt-8', onClick: () => {
+          const ta = document.getElementById('gen-prompt-area');
+          if (ta) { ta.value = prompt; ta.style.display = 'block'; }
+        }}, 'プロンプトを表示'));
+
+        page.appendChild(genCard);
       });
 
       // Session history
