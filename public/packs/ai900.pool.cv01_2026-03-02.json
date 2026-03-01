@@ -1,0 +1,643 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.pool.cv01",
+    "version": "2026-03-02",
+    "title": "Computer Vision 応用30問",
+    "description": "コンピュータービジョンの応用問題",
+    "language": "ja-JP",
+    "createdAt": "2026-03-02T01:00:00Z",
+    "domains": ["CV"]
+  },
+  "questions": [
+    {
+      "id": "PC-001",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "Azure AI Visionの画像分析機能で、画像全体の内容を自然言語で1文にまとめて返す機能はどれですか。",
+      "choices": [
+        "Dense Captioning（密キャプション）",
+        "Image Captioning（画像キャプション）",
+        "Smart Cropping（スマートクロッピング）",
+        "OCR（光学文字認識）"
+      ],
+      "answer": [1],
+      "explanation": "Image Captioning（画像キャプション）は、画像全体の内容を自然言語の1文で要約します。Dense Captioningは画像内の複数の領域それぞれにキャプションを付ける機能です。",
+      "tags": ["azure-ai-vision", "image-captioning"],
+      "sources": [{"title": "Azure AI Vision - Image Analysis", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-image-analysis"}]
+    },
+    {
+      "id": "PC-002",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "写真に写っている物体の位置を四角い枠（バウンディングボックス）で囲んで特定するコンピュータービジョンのタスクはどれですか。",
+      "choices": [
+        "画像分類（Image Classification）",
+        "物体検出（Object Detection）",
+        "セマンティックセグメンテーション（Semantic Segmentation）",
+        "画像生成（Image Generation）"
+      ],
+      "answer": [1],
+      "explanation": "物体検出（Object Detection）は、画像内の物体の位置をバウンディングボックスで特定し、それぞれの物体のクラスを判定します。画像分類は画像全体にラベルを付けるタスクで、位置情報は含みません。",
+      "tags": ["object-detection", "cv-fundamentals"],
+      "sources": [{"title": "Object Detection vs Classification", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/getting-started-build-a-classifier"}]
+    },
+    {
+      "id": "PC-003",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Visionのスマートクロッピング（Smart Cropping）機能の目的として、最も適切なものはどれですか。",
+      "choices": [
+        "画像から不要な背景を自動的に削除する",
+        "画像の主要な被写体が含まれるように最適なアスペクト比でトリミングする",
+        "画像を自動的に高解像度にアップスケールする",
+        "画像内の顔を検出して自動的にモザイクをかける"
+      ],
+      "answer": [1],
+      "explanation": "スマートクロッピングは、画像内の関心領域（主要な被写体）を自動的に検出し、指定されたアスペクト比で重要な部分が切れないように最適なトリミングを行う機能です。",
+      "tags": ["azure-ai-vision", "smart-cropping"],
+      "sources": [{"title": "Smart Cropping - Azure AI Vision", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/concept-generating-thumbnails"}]
+    },
+    {
+      "id": "PC-004",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Custom Visionで「画像に犬が写っているか猫が写っているかを判定する」モデルを作成する場合、選択すべきプロジェクトタイプはどれですか。",
+      "choices": [
+        "物体検出（Object Detection）",
+        "画像分類（Classification）",
+        "セマンティックセグメンテーション",
+        "インスタンスセグメンテーション"
+      ],
+      "answer": [1],
+      "explanation": "画像全体に対して「犬」か「猫」かのラベルを付けるタスクは画像分類です。物体検出は画像内の物体の位置（バウンディングボックス）も特定する場合に使用します。",
+      "tags": ["custom-vision", "image-classification"],
+      "sources": [{"title": "Custom Vision - Classification", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/getting-started-build-a-classifier"}]
+    },
+    {
+      "id": "PC-005",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Face APIの「顔認証（Face Verification）」機能の説明として、最も正確なものはどれですか。",
+      "choices": [
+        "画像内のすべての顔を検出し、その位置を返す",
+        "2つの顔画像が同一人物かどうかを判定する",
+        "顔画像から登録済みデータベースの中の誰であるかを特定する",
+        "顔画像から年齢や性別を推定する"
+      ],
+      "answer": [1],
+      "explanation": "顔認証（Face Verification）は、2つの顔画像を比較して同一人物であるかどうかを1対1で判定します。識別（Identification）はデータベースから誰であるかを特定する1対多の照合です。",
+      "tags": ["face-api", "face-verification"],
+      "sources": [{"title": "Face API - Verification", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-identity"}]
+    },
+    {
+      "id": "PC-006",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "Azure Video Indexerが動画から自動的に抽出できる情報として、最も適切なものはどれですか。",
+      "choices": [
+        "動画のファイルサイズの最適化",
+        "音声のトランスクリプション（文字起こし）とシーン検出",
+        "動画のリアルタイムストリーミング配信",
+        "動画ファイルの暗号化と著作権保護"
+      ],
+      "answer": [1],
+      "explanation": "Azure Video Indexerは動画を分析し、音声のトランスクリプション、シーン検出、キーフレーム抽出、顔の識別、トピック抽出、感情分析などの情報を自動的に抽出できます。",
+      "tags": ["video-indexer", "video-analysis"],
+      "sources": [{"title": "Azure Video Indexer", "url": "https://learn.microsoft.com/ja-jp/azure/azure-video-indexer/video-indexer-overview"}]
+    },
+    {
+      "id": "PC-007",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "小売店舗で棚に並んだ商品の種類と位置を自動的に認識し、在庫状況を把握するために最適なコンピュータービジョンのタスクはどれですか。",
+      "choices": [
+        "画像分類（Image Classification）",
+        "画像キャプション（Image Captioning）",
+        "物体検出（Object Detection）",
+        "OCR（光学文字認識）"
+      ],
+      "answer": [2],
+      "explanation": "棚の商品をそれぞれ認識し、位置を特定する必要があるため、バウンディングボックスで物体の位置とクラスを検出する物体検出（Object Detection）が最適です。画像分類では個々の商品の位置を特定できません。",
+      "tags": ["object-detection", "retail-scenario"],
+      "sources": [{"title": "Object Detection - Custom Vision", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/get-started-build-detector"}]
+    },
+    {
+      "id": "PC-008",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 3,
+      "prompt": "画像のピクセルごとにクラスラベルを割り当て、同じクラスの異なるインスタンス（例：隣り合った2台の車）を区別できるコンピュータービジョンのタスクはどれですか。",
+      "choices": [
+        "セマンティックセグメンテーション（Semantic Segmentation）",
+        "インスタンスセグメンテーション（Instance Segmentation）",
+        "物体検出（Object Detection）",
+        "画像分類（Image Classification）"
+      ],
+      "answer": [1],
+      "explanation": "インスタンスセグメンテーションは、ピクセル単位でクラスを割り当てると同時に、同一クラスの個々のインスタンスを区別します。セマンティックセグメンテーションはピクセル単位のクラス割り当てを行いますが、個々のインスタンスの区別はしません。",
+      "tags": ["instance-segmentation", "semantic-segmentation", "cv-fundamentals"],
+      "sources": [{"title": "Image Segmentation Concepts", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/concept-detecting-objects"}]
+    },
+    {
+      "id": "PC-009",
+      "domain": "CV",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure Video Indexerが動画から自動的に抽出できる情報を、以下からすべて選んでください。",
+      "choices": [
+        "顔の検出と識別",
+        "音声のトランスクリプション（文字起こし）",
+        "動画のリアルタイムエンコーディング",
+        "トピックとキーワードの抽出",
+        "動画ファイルの圧縮"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "Azure Video Indexerは、顔の検出・識別、音声トランスクリプション、トピック・キーワード抽出、シーン検出、感情分析などのインサイトを自動抽出します。動画のエンコーディングや圧縮はVideo Indexerの機能ではありません。",
+      "tags": ["video-indexer", "capabilities"],
+      "sources": [{"title": "Video Indexer Overview", "url": "https://learn.microsoft.com/ja-jp/azure/azure-video-indexer/video-indexer-overview"}]
+    },
+    {
+      "id": "PC-010",
+      "domain": "CV",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Face APIの機能として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "顔検出（Face Detection）：画像内の顔の位置を検出する",
+        "顔認証（Face Verification）：2つの顔が同一人物かを判定する",
+        "顔生成（Face Generation）：テキスト記述から顔画像を生成する",
+        "顔識別（Face Identification）：登録済みの人物の中から誰かを特定する",
+        "顔変換（Face Transformation）：顔の表情を別の表情に変換する"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "Face APIは、顔検出（位置・属性の取得）、顔認証（1対1照合）、顔識別（1対多照合）、顔のグルーピングなどの機能を提供します。顔画像の生成や表情の変換は含まれません。",
+      "tags": ["face-api", "capabilities"],
+      "sources": [{"title": "Face API Overview", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-identity"}]
+    },
+    {
+      "id": "PC-011",
+      "domain": "CV",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "OCR（光学文字認識）を使用するシナリオとして適切なものを、以下からすべて選んでください。",
+      "choices": [
+        "スキャンされた書類から文字を抽出する",
+        "手書きメモの内容をデジタルテキストに変換する",
+        "画像内の物体の種類を分類する",
+        "道路標識に書かれた文字を読み取る"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "OCRは、印刷されたテキストや手書きのテキストを画像から読み取ってデジタルテキストに変換する技術です。書類のスキャン、手書きメモ、道路標識の文字読み取りがOCRの適切なユースケースです。物体の分類は画像分類のタスクです。",
+      "tags": ["ocr", "use-cases"],
+      "sources": [{"title": "Azure AI Vision - OCR", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-ocr"}]
+    },
+    {
+      "id": "PC-012",
+      "domain": "CV",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "Azure AI Document Intelligence（旧 Form Recognizer）が請求書から自動的に抽出できる情報を、以下からすべて選んでください。",
+      "choices": [
+        "請求書番号",
+        "合計金額",
+        "請求書の信用スコア（支払い可能性）",
+        "顧客名",
+        "明細項目と個別金額"
+      ],
+      "answer": [0, 1, 3, 4],
+      "explanation": "Document Intelligenceの事前構築済み請求書モデルは、請求書番号、金額、顧客情報、明細項目などの構造化データを自動抽出できます。信用スコアの算出はDocument Intelligenceの機能ではありません。",
+      "tags": ["document-intelligence", "form-recognizer", "invoice"],
+      "sources": [{"title": "Document Intelligence - Invoice Model", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/document-intelligence/concept-invoice"}]
+    },
+    {
+      "id": "PC-013",
+      "domain": "CV",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "自動運転車においてコンピュータービジョンが担う役割として適切なものを、以下からすべて選んでください。",
+      "choices": [
+        "歩行者や他の車両の検出と追跡",
+        "車線の認識と逸脱検知",
+        "エンジンの燃焼効率の最適化",
+        "交通標識の認識と内容の読み取り",
+        "車両の空気抵抗の計算"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "自動運転車のコンピュータービジョンは、歩行者・車両の検出と追跡（物体検出）、車線認識（セグメンテーション）、交通標識の認識（分類とOCR）を担います。エンジン効率や空気抵抗は機械工学の領域です。",
+      "tags": ["autonomous-vehicles", "real-world-scenario"],
+      "sources": [{"title": "AI in Autonomous Vehicles", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview"}]
+    },
+    {
+      "id": "PC-014",
+      "domain": "CV",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure AI Visionで、画像内の複数の領域にそれぞれキャプションを付ける機能は {{0}} であり、画像全体の内容を1文で要約する機能は {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["Dense Captioning", "Image Captioning", "Smart Cropping"],
+          "answer": 0
+        },
+        {
+          "options": ["Dense Captioning", "Image Captioning", "OCR"],
+          "answer": 1
+        }
+      ],
+      "explanation": "Dense Captioning（密キャプション）は画像内の複数の領域を検出し、各領域にキャプションを生成します。Image Captioning（画像キャプション）は画像全体の内容を1つの自然言語文で要約します。",
+      "tags": ["azure-ai-vision", "dense-captioning", "image-captioning"],
+      "sources": [{"title": "Image Analysis - Dense Captions", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/concept-describing-images-40"}]
+    },
+    {
+      "id": "PC-015",
+      "domain": "CV",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Face APIにおいて、提示された顔画像が登録済みの特定の人物と同一人物かを1対1で確認する機能は {{0}} であり、提示された顔画像が登録済みのグループの中の誰であるかを1対多で特定する機能は {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["顔検出（Detection）", "顔認証（Verification）", "顔識別（Identification）"],
+          "answer": 1
+        },
+        {
+          "options": ["顔検出（Detection）", "顔認証（Verification）", "顔識別（Identification）"],
+          "answer": 2
+        }
+      ],
+      "explanation": "顔認証（Verification）は2つの顔画像の1対1照合です。顔識別（Identification）は、1つの顔画像を登録済みの人物グループと1対多で照合し、誰であるかを特定します。",
+      "tags": ["face-api", "verification", "identification"],
+      "sources": [{"title": "Face API - Identity Operations", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-identity"}]
+    },
+    {
+      "id": "PC-016",
+      "domain": "CV",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "コンピュータービジョンで、画像全体に1つのラベルを付けるタスクは {{0}} であり、画像内のすべてのピクセルにクラスラベルを割り当てるタスクは {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["画像分類", "物体検出", "セマンティックセグメンテーション"],
+          "answer": 0
+        },
+        {
+          "options": ["画像分類", "物体検出", "セマンティックセグメンテーション"],
+          "answer": 2
+        }
+      ],
+      "explanation": "画像分類は画像全体に対して1つ以上のラベルを割り当てます。セマンティックセグメンテーションは画像のすべてのピクセルにクラスラベルを割り当て、領域を塗り分けます。",
+      "tags": ["image-classification", "semantic-segmentation", "cv-fundamentals"],
+      "sources": [{"title": "CV Task Types", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-image-analysis"}]
+    },
+    {
+      "id": "PC-017",
+      "domain": "CV",
+      "type": "dropdown",
+      "difficulty": 3,
+      "prompt": "文書から構造化データを抽出する場合、印刷された本のページのテキストを読み取るには {{0}} が適しており、請求書から請求書番号・金額・明細などのフィールドを構造的に抽出するには {{1}} が適しています。",
+      "dropdowns": [
+        {
+          "options": ["OCR（Azure AI Vision）", "Document Intelligence", "Custom Vision"],
+          "answer": 0
+        },
+        {
+          "options": ["OCR（Azure AI Vision）", "Document Intelligence", "Custom Vision"],
+          "answer": 1
+        }
+      ],
+      "explanation": "OCRは画像からテキストを読み取る汎用的な機能で、印刷物の文字認識に適しています。Document Intelligence（旧Form Recognizer）は、請求書や領収書などの特定の文書タイプから構造化されたフィールド（番号、金額、日付など）を抽出するのに特化しています。",
+      "tags": ["ocr", "document-intelligence", "use-case-comparison"],
+      "sources": [{"title": "OCR vs Document Intelligence", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/document-intelligence/overview"}]
+    },
+    {
+      "id": "PC-018",
+      "domain": "CV",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のコンピュータービジョンのタスクと、その出力内容を正しく対応させてください。",
+      "left": ["画像分類", "物体検出", "セマンティックセグメンテーション", "OCR"],
+      "right": ["画像全体へのクラスラベル", "バウンディングボックスとクラスラベル", "ピクセルごとのクラスラベル", "画像内の文字のテキストデータ"],
+      "answerMap": {
+        "画像分類": "画像全体へのクラスラベル",
+        "物体検出": "バウンディングボックスとクラスラベル",
+        "セマンティックセグメンテーション": "ピクセルごとのクラスラベル",
+        "OCR": "画像内の文字のテキストデータ"
+      },
+      "explanation": "画像分類は画像全体にラベルを付け、物体検出は位置（バウンディングボックス）と共にラベルを返し、セマンティックセグメンテーションは全ピクセルにラベルを付け、OCRは画像内のテキストを文字データとして抽出します。",
+      "tags": ["cv-tasks", "output-types"],
+      "sources": [{"title": "Computer Vision Tasks", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-image-analysis"}]
+    },
+    {
+      "id": "PC-019",
+      "domain": "CV",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のAzureサービスと、その主な用途を正しく対応させてください。",
+      "left": ["Azure AI Vision", "Custom Vision", "Face API", "Document Intelligence"],
+      "right": ["事前構築済みの汎用画像分析", "独自のデータでトレーニングした画像分類・物体検出", "顔の検出・認証・識別", "請求書や領収書からの構造化データ抽出"],
+      "answerMap": {
+        "Azure AI Vision": "事前構築済みの汎用画像分析",
+        "Custom Vision": "独自のデータでトレーニングした画像分類・物体検出",
+        "Face API": "顔の検出・認証・識別",
+        "Document Intelligence": "請求書や領収書からの構造化データ抽出"
+      },
+      "explanation": "Azure AI Visionは事前構築済みモデルで汎用的な画像分析を提供し、Custom Visionはユーザー独自のデータでカスタムモデルを構築します。Face APIは顔に特化した機能を提供し、Document Intelligenceは構造化文書からのデータ抽出に特化しています。",
+      "tags": ["azure-services", "service-comparison"],
+      "sources": [{"title": "Azure AI Services Overview", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/what-are-ai-services"}]
+    },
+    {
+      "id": "PC-020",
+      "domain": "CV",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下の実世界のシナリオと、最も適切なコンピュータービジョンのタスクを対応させてください。",
+      "left": ["製造ラインでの製品外観の良品/不良品判定", "自動運転車での歩行者の位置と距離の把握", "医療画像での腫瘍領域の正確な輪郭の特定", "駐車場の看板に書かれた料金表の読み取り"],
+      "right": ["画像分類", "物体検出", "セマンティックセグメンテーション", "OCR"],
+      "answerMap": {
+        "製造ラインでの製品外観の良品/不良品判定": "画像分類",
+        "自動運転車での歩行者の位置と距離の把握": "物体検出",
+        "医療画像での腫瘍領域の正確な輪郭の特定": "セマンティックセグメンテーション",
+        "駐車場の看板に書かれた料金表の読み取り": "OCR"
+      },
+      "explanation": "良品/不良品判定は画像全体の分類、歩行者の位置把握はバウンディングボックスによる物体検出、腫瘍の輪郭特定はピクセル単位のセグメンテーション、料金表の読み取りはOCRが最適です。",
+      "tags": ["real-world-scenarios", "task-selection"],
+      "sources": [{"title": "CV Use Cases", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview"}]
+    },
+    {
+      "id": "PC-021",
+      "domain": "CV",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下のFace APIの機能と、その説明を正しく対応させてください。",
+      "left": ["顔検出（Detection）", "顔認証（Verification）", "顔識別（Identification）", "顔グルーピング（Grouping）"],
+      "right": ["画像内の顔の位置と属性を返す", "2つの顔画像が同一人物かを判定する", "登録済み人物グループから誰であるかを特定する", "類似した顔をまとめてグループ化する"],
+      "answerMap": {
+        "顔検出（Detection）": "画像内の顔の位置と属性を返す",
+        "顔認証（Verification）": "2つの顔画像が同一人物かを判定する",
+        "顔識別（Identification）": "登録済み人物グループから誰であるかを特定する",
+        "顔グルーピング（Grouping）": "類似した顔をまとめてグループ化する"
+      },
+      "explanation": "顔検出は顔の位置と属性の取得、顔認証は1対1の照合、顔識別は1対多の照合、顔グルーピングは類似した顔の自動グループ化を行います。",
+      "tags": ["face-api", "function-comparison"],
+      "sources": [{"title": "Face API Functions", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-identity"}]
+    },
+    {
+      "id": "PC-022",
+      "domain": "CV",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "コンピュータービジョンのタスクを、出力の粒度が粗いものから細かいものの順に並べてください。",
+      "items": [
+        "セマンティックセグメンテーション（ピクセル単位のクラス分類）",
+        "画像分類（画像全体のクラス分類）",
+        "インスタンスセグメンテーション（ピクセル単位 + インスタンス識別）",
+        "物体検出（バウンディングボックスでの物体検出）"
+      ],
+      "answerOrder": [1, 3, 0, 2],
+      "explanation": "粒度の順序は：画像分類（画像全体に1ラベル）→ 物体検出（バウンディングボックスレベル）→ セマンティックセグメンテーション（ピクセルレベル）→ インスタンスセグメンテーション（ピクセルレベル＋個体識別）です。",
+      "tags": ["cv-tasks", "granularity"],
+      "sources": [{"title": "CV Task Hierarchy", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-image-analysis"}]
+    },
+    {
+      "id": "PC-023",
+      "domain": "CV",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Custom Visionで画像分類モデルを構築する一般的な手順を、正しい順序に並べてください。",
+      "items": [
+        "モデルをトレーニングする",
+        "トレーニング画像をアップロードしてタグを付ける",
+        "新しいCustom Visionプロジェクトを作成する",
+        "モデルの精度を評価し、必要に応じてデータを追加する"
+      ],
+      "answerOrder": [2, 1, 0, 3],
+      "explanation": "Custom Visionでのモデル構築手順は：(1) プロジェクトの作成 → (2) 画像のアップロードとタグ付け → (3) モデルのトレーニング → (4) 精度の評価とイテレーション、の順で行います。",
+      "tags": ["custom-vision", "workflow"],
+      "sources": [{"title": "Custom Vision Quickstart", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/getting-started-build-a-classifier"}]
+    },
+    {
+      "id": "PC-024",
+      "domain": "CV",
+      "type": "order",
+      "difficulty": 3,
+      "prompt": "Azure AI Visionを使った空間分析（Spatial Analysis）で店舗内の人の動きを分析する際の処理の流れを、正しい順序に並べてください。",
+      "items": [
+        "検出された人物の移動経路を追跡する",
+        "カメラから映像フレームを取得する",
+        "滞留時間や人数カウントなどのインサイトを生成する",
+        "映像フレーム内の人物を検出する"
+      ],
+      "answerOrder": [1, 3, 0, 2],
+      "explanation": "空間分析の処理は：(1) カメラ映像の取得 → (2) フレーム内の人物検出 → (3) 移動経路の追跡 → (4) インサイト（人数、滞留時間等）の生成、の順で行われます。",
+      "tags": ["spatial-analysis", "people-counting", "dwell-time"],
+      "sources": [{"title": "Spatial Analysis", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/intro-to-spatial-analysis-public-preview"}]
+    },
+    {
+      "id": "PC-025",
+      "domain": "CV",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Document Intelligence（旧Form Recognizer）で請求書からデータを抽出する際の処理の流れを、正しい順序に並べてください。",
+      "items": [
+        "抽出されたフィールド（番号、金額、日付等）を構造化データとして返す",
+        "事前構築済みの請求書モデルを使用して文書を分析する",
+        "請求書の画像またはPDFをDocument Intelligenceに送信する",
+        "文書内のテキストとレイアウトを認識する"
+      ],
+      "answerOrder": [2, 3, 1, 0],
+      "explanation": "処理の流れは：(1) 文書の送信 → (2) テキスト・レイアウトの認識 → (3) 請求書モデルによるフィールドの分析 → (4) 構造化データとしての出力、の順です。",
+      "tags": ["document-intelligence", "processing-pipeline"],
+      "sources": [{"title": "Document Intelligence Processing", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/document-intelligence/overview"}]
+    },
+    {
+      "id": "PC-026",
+      "domain": "CV",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下のシナリオのうち、Custom Vision（カスタムモデル）が必要で、Azure AI Visionの事前構築済みモデルでは対応が難しいものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "自社工場の独自部品の欠陥を検出する",
+          "一般的な物体（犬、車、木など）を認識する",
+          "画像内のテキストをOCRで読み取る",
+          "特定品種の花を識別する独自の分類器を作る",
+          "画像のキャプションを自動生成する",
+          "自社ブランド商品のパッケージを識別する"
+        ]
+      },
+      "answer": [0, 3, 5],
+      "explanation": "自社独自の部品の欠陥検出、特定品種の花の識別、自社ブランド商品の識別は、一般的な事前構築済みモデルでは対応できない固有のドメイン知識が必要なため、Custom Visionでカスタムモデルを構築する必要があります。汎用的な物体認識、OCR、キャプション生成はAzure AI Visionの事前構築済み機能で対応可能です。",
+      "tags": ["custom-vision", "prebuilt-vs-custom"],
+      "sources": [{"title": "Custom Vision vs Prebuilt", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/overview"}]
+    },
+    {
+      "id": "PC-027",
+      "domain": "CV",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の項目のうち、Face APIの顔検出（Face Detection）で取得できる属性を選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "顔の位置（バウンディングボックス）",
+          "顔のランドマーク（目、鼻、口の位置）",
+          "その人の名前",
+          "頭の向き（ヘッドポーズ）",
+          "その人の職業",
+          "マスク着用の有無"
+        ]
+      },
+      "answer": [0, 1, 3, 5],
+      "explanation": "Face APIの顔検出では、顔の位置（バウンディングボックス）、顔のランドマーク、頭の向き（ヘッドポーズ）、マスク着用の有無、ぼかし具合などの属性を取得できます。名前や職業は顔検出だけでは取得できません（名前の特定には顔識別が必要です）。",
+      "tags": ["face-api", "face-detection", "attributes"],
+      "sources": [{"title": "Face Detection Attributes", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/concept-detecting-faces"}]
+    },
+    {
+      "id": "PC-028",
+      "domain": "CV",
+      "type": "hotarea",
+      "difficulty": 3,
+      "prompt": "以下のシナリオのうち、Azure AI Visionの空間分析（Spatial Analysis）機能で実現できるものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "店舗内の特定エリアに滞在する人の数をカウントする",
+          "カメラ映像から商品の価格を読み取る",
+          "入口を通過した人の数を計測する",
+          "特定エリアでの人の滞留時間を測定する",
+          "映像内の人の服の色を分析する",
+          "人と人の間の距離（ソーシャルディスタンス）を監視する"
+        ]
+      },
+      "answer": [0, 2, 3, 5],
+      "explanation": "空間分析では、人数カウント、入退室検出、滞留時間の測定、ソーシャルディスタンスの監視が可能です。商品価格の読み取りはOCRのタスクであり、服の色の分析は空間分析の標準機能ではありません。",
+      "tags": ["spatial-analysis", "people-counting", "dwell-time", "social-distancing"],
+      "sources": [{"title": "Spatial Analysis Scenarios", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/intro-to-spatial-analysis-public-preview"}]
+    },
+    {
+      "id": "PC-029",
+      "domain": "CV",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "B社は大規模な製造工場を運営しており、生産効率と品質管理の向上のためにコンピュータービジョンを活用するプロジェクトを計画しています。具体的には以下の3つの取り組みを検討しています。\n\n1. 製品の外観検査：ベルトコンベア上を流れる製品の画像を撮影し、傷や変色などの不良を自動検出する\n2. 作業員の安全管理：工場内のカメラ映像から、危険区域に立ち入った作業員を検知してアラートを出す\n3. 検査報告書のデジタル化：手書きの検査報告書をスキャンして、検査日、検査員名、検査結果などの情報をデータベースに自動登録する",
+      "subQuestions": [
+        {
+          "id": "PC-029-1",
+          "type": "single",
+          "prompt": "製品の外観検査で傷や変色を検出するために、最も適切なアプローチはどれですか。",
+          "choices": [
+            "Azure AI Visionの事前構築済み画像分類モデルを使用する",
+            "Custom Visionで自社製品の良品/不良品画像を学習させたカスタムモデルを構築する",
+            "OCRを使用して製品の表面を読み取る",
+            "Face APIを使用して製品の表面を分析する"
+          ],
+          "answer": [1],
+          "explanation": "自社製品固有の傷や変色の検出は、一般的な事前構築済みモデルでは対応できません。Custom Visionで自社製品の良品・不良品画像を学習させたカスタムモデルが最適です。"
+        },
+        {
+          "id": "PC-029-2",
+          "type": "single",
+          "prompt": "危険区域への立ち入り検知を実現するために、最も適切なAzureの機能はどれですか。",
+          "choices": [
+            "Custom Visionの物体検出",
+            "Azure AI Visionの空間分析（Spatial Analysis）",
+            "Azure Video Indexerのシーン検出",
+            "Face APIの顔識別"
+          ],
+          "answer": [1],
+          "explanation": "空間分析（Spatial Analysis）は、カメラ映像から人物の位置と動きをリアルタイムで追跡し、特定のゾーンへの立ち入りを検知できます。危険区域の監視に最適です。"
+        },
+        {
+          "id": "PC-029-3",
+          "type": "single",
+          "prompt": "手書きの検査報告書から構造化データ（検査日、検査員名、検査結果）を自動抽出するために、最も適切なサービスはどれですか。",
+          "choices": [
+            "Azure AI VisionのOCR機能のみ",
+            "Azure AI Document Intelligence（旧Form Recognizer）",
+            "Custom Visionの画像分類",
+            "Azure Video Indexer"
+          ],
+          "answer": [1],
+          "explanation": "Document Intelligence（旧Form Recognizer）は、手書き文書を含むフォームから構造化されたフィールド（日付、名前、結果など）を自動抽出するのに最適です。単純なOCRではテキスト抽出はできますが、フィールドの構造的な理解は限定的です。"
+        }
+      ],
+      "explanation": "製造工場でのCV活用では、(1) 自社固有の品質検査にはCustom Visionによるカスタムモデル、(2) 人の動きのリアルタイム監視には空間分析、(3) 文書からの構造化データ抽出にはDocument Intelligenceが、それぞれ最適なサービスです。用途に応じて適切なサービスを選択することが重要です。",
+      "tags": ["manufacturing", "custom-vision", "spatial-analysis", "document-intelligence", "real-world-scenario"],
+      "sources": [{"title": "Azure AI Services", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/what-are-ai-services"}]
+    },
+    {
+      "id": "PC-030",
+      "domain": "CV",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "C社はショッピングモールを運営しており、顧客体験の向上と運営効率化のためにAIビジョンソリューションの導入を検討しています。具体的には以下の取り組みを計画しています。\n\n1. 来客分析：各フロアのカメラ映像から来客数を時間帯別にカウントし、混雑状況をリアルタイムで把握する\n2. セキュリティ強化：要注意人物リストに登録された人物がモール内に入った際に、セキュリティスタッフに通知する\n3. テナント向けサービス：テナントが自店舗のカメラで撮影した陳列棚の画像から、商品の配置状況を自動分析するツールを提供する\n4. 多言語対応：モール内の案内板や看板を撮影すると、そこに書かれたテキストを読み取って他の言語に翻訳する機能を提供する",
+      "subQuestions": [
+        {
+          "id": "PC-030-1",
+          "type": "single",
+          "prompt": "来客数の時間帯別カウントと混雑状況のリアルタイム把握に最適なAzureの機能はどれですか。",
+          "choices": [
+            "Face APIの顔識別（Face Identification）",
+            "Azure AI Visionの空間分析（Spatial Analysis）",
+            "Custom Visionの画像分類",
+            "Azure Video Indexerの顔検出"
+          ],
+          "answer": [1],
+          "explanation": "空間分析（Spatial Analysis）は、カメラ映像からリアルタイムで人数をカウントし、特定エリアの混雑状況を把握するのに最適です。個人を識別する必要はなく、人の数と動きを追跡します。"
+        },
+        {
+          "id": "PC-030-2",
+          "type": "single",
+          "prompt": "要注意人物リストに登録された人物の検知に最適なFace APIの機能はどれですか。",
+          "choices": [
+            "顔検出（Face Detection）",
+            "顔認証（Face Verification）",
+            "顔識別（Face Identification）",
+            "顔グルーピング（Face Grouping）"
+          ],
+          "answer": [2],
+          "explanation": "顔識別（Face Identification）は、検出された顔を登録済みの人物グループ（要注意人物リスト）と照合し、誰であるかを1対多で特定する機能です。特定の個人との1対1照合（認証）ではなく、グループ全体との照合が必要です。"
+        },
+        {
+          "id": "PC-030-3",
+          "type": "single",
+          "prompt": "テナント向けの陳列棚の商品配置分析ツールに最も適切なアプローチはどれですか。",
+          "choices": [
+            "Azure AI Visionの事前構築済み画像キャプション機能",
+            "Custom Visionで各テナントの商品を学習させた物体検出モデル",
+            "Face APIによる棚の分析",
+            "Azure AI VisionのOCR機能"
+          ],
+          "answer": [1],
+          "explanation": "テナント固有の商品を棚の画像から認識し位置を特定するには、Custom Visionでそれぞれの商品を学習させた物体検出モデルが必要です。事前構築済みモデルでは特定の商品を認識できません。"
+        },
+        {
+          "id": "PC-030-4",
+          "type": "single",
+          "prompt": "案内板や看板のテキスト読み取りに使用すべきコンピュータービジョンの機能はどれですか。",
+          "choices": [
+            "画像分類（Image Classification）",
+            "物体検出（Object Detection）",
+            "OCR（光学文字認識）",
+            "画像キャプション（Image Captioning）"
+          ],
+          "answer": [2],
+          "explanation": "案内板や看板に書かれた文字を読み取るにはOCR（光学文字認識）を使用します。OCRで抽出したテキストを翻訳サービスに渡すことで、多言語対応を実現できます。"
+        }
+      ],
+      "explanation": "ショッピングモールでのAIビジョン活用では、(1) 来客カウントに空間分析、(2) 人物照合に顔識別、(3) 商品認識にCustom Visionの物体検出、(4) テキスト読み取りにOCR、とそれぞれの用途に応じた最適なサービス・機能の選択が求められます。",
+      "tags": ["retail-scenario", "spatial-analysis", "face-api", "custom-vision", "ocr", "real-world-scenario"],
+      "sources": [{"title": "Azure AI Vision Solutions", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview"}]
+    }
+  ]
+}

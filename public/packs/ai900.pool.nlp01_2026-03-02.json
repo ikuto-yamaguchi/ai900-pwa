@@ -1,0 +1,633 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.pool.nlp01",
+    "version": "2026-03-02",
+    "title": "自然言語処理 応用30問",
+    "description": "NLPの基礎から応用までの問題",
+    "language": "ja-JP",
+    "createdAt": "2026-03-02T01:00:00Z",
+    "domains": ["NLP"]
+  },
+  "questions": [
+    {
+      "id": "PN-001",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "顧客レビューの文章が「肯定的」「否定的」「中立」のいずれであるかを判定するために使用するAzure AI Languageの機能はどれですか。",
+      "choices": [
+        "キーフレーズ抽出",
+        "感情分析（Sentiment Analysis）",
+        "固有表現認識（NER）",
+        "言語検出"
+      ],
+      "answer": [1],
+      "explanation": "感情分析（Sentiment Analysis）は、テキストの感情的な傾向を「肯定的」「否定的」「中立」「混合」に分類する機能です。顧客レビューの感情を自動判定するのに最適です。",
+      "tags": ["sentiment-analysis", "azure-ai-language"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/sentiment-opinion-mining/overview"]
+    },
+    {
+      "id": "PN-002",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "多言語で書かれたテキストがどの言語で書かれているかを自動的に識別するAzure AI Languageの機能はどれですか。",
+      "choices": [
+        "感情分析",
+        "テキスト要約",
+        "言語検出（Language Detection）",
+        "PII検出"
+      ],
+      "answer": [2],
+      "explanation": "言語検出（Language Detection）は、入力テキストがどの言語で書かれているかを識別し、言語コードと信頼度スコアを返す機能です。多言語環境でのテキスト処理の前段階として使用されます。",
+      "tags": ["language-detection", "azure-ai-language"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/language-detection/overview"]
+    },
+    {
+      "id": "PN-003",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "Azure AI Speechの音声合成（Text-to-Speech）の主な用途として最も適切なものはどれですか。",
+      "choices": [
+        "テキストからキーフレーズを抽出する",
+        "テキストを自然な音声に変換して読み上げる",
+        "音声ファイルから話者を識別する",
+        "音声をリアルタイムで別の言語に翻訳する"
+      ],
+      "answer": [1],
+      "explanation": "Text-to-Speech（TTS）は、テキストを自然な人間の声に変換する機能です。アクセシビリティ向上、IVRシステム、ナビゲーション音声ガイドなどに利用されます。",
+      "tags": ["text-to-speech", "azure-ai-speech"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/text-to-speech"]
+    },
+    {
+      "id": "PN-004",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Conversational Language Understanding（CLU）において、ユーザーの発話「明日の大阪の天気を教えて」から「天気を調べる」という目的を特定する要素はどれですか。",
+      "choices": [
+        "エンティティ（Entity）",
+        "インテント（Intent）",
+        "発話（Utterance）",
+        "コンテキスト（Context）"
+      ],
+      "answer": [1],
+      "explanation": "インテント（Intent）は、ユーザーの発話における目的や意図を表します。「明日の大阪の天気を教えて」の場合、「天気を調べる」がインテントです。「明日」や「大阪」はエンティティに該当します。",
+      "tags": ["intent", "clu", "conversational-ai"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/conversational-language-understanding/overview"]
+    },
+    {
+      "id": "PN-005",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "カスタム質問応答（Custom Question Answering）のナレッジベースに登録できるソースとして適切でないものはどれですか。",
+      "choices": [
+        "FAQ Webページ",
+        "PDF形式のマニュアル",
+        "リアルタイムの株価データフィード",
+        "TSVファイル形式の質問と回答ペア"
+      ],
+      "answer": [2],
+      "explanation": "カスタム質問応答のナレッジベースには、FAQ Webページ、PDF/Wordドキュメント、TSVファイルなどの静的なコンテンツをソースとして登録できます。リアルタイムデータフィードは構造化された質問応答ペアではないため、ナレッジベースのソースとしては適切ではありません。",
+      "tags": ["custom-question-answering", "knowledge-base"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/question-answering/overview"]
+    },
+    {
+      "id": "PN-006",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "コールセンターに寄せられた音声通話をテキストに変換した後、個人情報（クレジットカード番号や電話番号）を自動的にマスキングしたい場合に使用するAzure AI Languageの機能はどれですか。",
+      "choices": [
+        "固有表現認識（NER）",
+        "キーフレーズ抽出",
+        "PII検出（PII Detection）",
+        "感情分析"
+      ],
+      "answer": [2],
+      "explanation": "PII検出（Personally Identifiable Information Detection）は、テキスト内の個人情報（電話番号、メールアドレス、クレジットカード番号など）を識別し、マスキングまたは分類する機能です。",
+      "tags": ["pii-detection", "azure-ai-language"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/personally-identifiable-information/overview"]
+    },
+    {
+      "id": "PN-007",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Translatorのカスタム翻訳機能（Custom Translator）の主な利点はどれですか。",
+      "choices": [
+        "翻訳速度が標準版の10倍になる",
+        "業界固有の用語やスタイルに合わせた翻訳モデルを構築できる",
+        "音声入力を直接翻訳テキストに変換できる",
+        "翻訳結果を自動的にデータベースに保存できる"
+      ],
+      "answer": [1],
+      "explanation": "カスタム翻訳機能（Custom Translator）は、企業固有の用語、スタイル、業界特有の表現を学習させたカスタム翻訳モデルを構築できます。医療、法律、技術文書など専門分野での翻訳精度を向上させることが主な利点です。",
+      "tags": ["custom-translator", "azure-ai-translator"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/translator/custom-translator/overview"]
+    },
+    {
+      "id": "PN-008",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 3,
+      "prompt": "Azure AI Speechの話者認識（Speaker Recognition）が提供する2つの主要な機能はどれですか。",
+      "choices": [
+        "話者の検証（Verification）と話者の識別（Identification）",
+        "音声の録音（Recording）と音声の再生（Playback）",
+        "リアルタイム翻訳（Translation）と音声合成（Synthesis）",
+        "ノイズ除去（Noise Cancellation）とエコー抑制（Echo Suppression）"
+      ],
+      "answer": [0],
+      "explanation": "話者認識には、特定の人物であるかを確認する「話者検証（Speaker Verification）」と、複数の登録済み話者の中から誰が話しているかを特定する「話者識別（Speaker Identification）」の2つの機能があります。",
+      "tags": ["speaker-recognition", "azure-ai-speech"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/speaker-recognition-overview"]
+    },
+    {
+      "id": "PN-009",
+      "domain": "NLP",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure AI Languageの固有表現認識（NER）で検出できるエンティティカテゴリとして正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "人名（Person）",
+        "組織名（Organization）",
+        "感情スコア（Sentiment Score）",
+        "日時（DateTime）",
+        "場所（Location）"
+      ],
+      "answer": [0, 1, 3, 4],
+      "explanation": "固有表現認識（NER）は、テキストから人名、組織名、日時、場所、数量などのエンティティを検出・分類します。感情スコアは感情分析の出力であり、NERのエンティティカテゴリではありません。",
+      "tags": ["ner", "entity-recognition", "azure-ai-language"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/named-entity-recognition/overview"]
+    },
+    {
+      "id": "PN-010",
+      "domain": "NLP",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure AI Speechのリアルタイム音声テキスト変換（Speech-to-Text）の特徴として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "マイクからのリアルタイム音声入力をテキストに変換できる",
+        "音声ファイルのバッチ処理による一括変換が可能である",
+        "変換結果から自動的にキーフレーズを抽出する",
+        "カスタム音声モデルで認識精度を向上できる",
+        "複数言語の自動検出と切り替えに対応している"
+      ],
+      "answer": [0, 1, 3, 4],
+      "explanation": "Speech-to-Textは、リアルタイム音声認識、バッチ処理、カスタムモデルによる精度向上、複数言語の自動検出に対応しています。キーフレーズ抽出はAzure AI Languageの機能であり、Speech-to-Textの直接的な機能ではありません。",
+      "tags": ["speech-to-text", "azure-ai-speech"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/speech-to-text"]
+    },
+    {
+      "id": "PN-011",
+      "domain": "NLP",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Conversational Language Understanding（CLU）のモデルをトレーニングするために必要な要素として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "インテントの定義",
+        "サンプル発話（Utterances）のラベル付け",
+        "音声データの録音ファイル",
+        "エンティティの定義",
+        "応答テンプレートの設定"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "CLUモデルのトレーニングには、インテント（ユーザーの意図）の定義、サンプル発話へのラベル付け、エンティティ（抽出する情報の種類）の定義が必要です。音声データの録音ファイルは不要で（テキストベース）、応答テンプレートはボットの応答設計の一部であり、CLUモデル自体には含まれません。",
+      "tags": ["clu", "training", "intents", "entities"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/conversational-language-understanding/overview"]
+    },
+    {
+      "id": "PN-012",
+      "domain": "NLP",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "Azure Bot Serviceの特徴として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "Microsoft Teams、Webチャット、Slackなど複数のチャネルに接続できる",
+        "ボットのロジックはAzure上でのみ実行できる",
+        "Azure AI Languageと統合して自然言語理解を実現できる",
+        "ユーザーとの対話フローを管理する機能を提供する"
+      ],
+      "answer": [0, 2, 3],
+      "explanation": "Azure Bot Serviceは、マルチチャネル対応、Azure AI Languageとの統合による自然言語理解、対話フロー管理などの機能を提供します。ボットのロジックはAzure上だけでなく、オンプレミスや他のクラウドでもホスト可能です。",
+      "tags": ["bot-service", "bot-framework", "channels"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/bot-service/bot-service-overview"]
+    },
+    {
+      "id": "PN-013",
+      "domain": "NLP",
+      "type": "multi",
+      "difficulty": 1,
+      "prompt": "Azure AI Translatorで実行できるタスクとして正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "テキストをリアルタイムで別の言語に翻訳する",
+        "ドキュメント全体の書式を保持しながら翻訳する",
+        "テキストの感情を分析する",
+        "翻訳元の言語の自動検出を行う"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "Azure AI Translatorは、テキスト翻訳、ドキュメント翻訳（書式を保持）、翻訳元言語の自動検出に対応しています。テキストの感情分析はAzure AI Languageの機能です。",
+      "tags": ["azure-ai-translator", "text-translation", "document-translation"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/translator/overview"]
+    },
+    {
+      "id": "PN-014",
+      "domain": "NLP",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Conversational Language Understanding（CLU）において、ユーザーの発話「来週の金曜日に東京から大阪へのフライトを予約して」から抽出される情報のうち、「フライトを予約する」はユーザーの {{0}} であり、「来週の金曜日」「東京」「大阪」はそれぞれ {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["インテント（Intent）", "エンティティ（Entity）", "発話（Utterance）"],
+          "answer": 0
+        },
+        {
+          "options": ["インテント（Intent）", "エンティティ（Entity）", "発話（Utterance）"],
+          "answer": 1
+        }
+      ],
+      "explanation": "インテント（Intent）はユーザーが達成したい目的（フライトの予約）を表し、エンティティ（Entity）は発話から抽出される具体的な情報（日付、出発地、目的地）を表します。発話（Utterance）は入力文全体のことです。",
+      "tags": ["clu", "intent", "entity", "utterance"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/conversational-language-understanding/concepts/entity-components"]
+    },
+    {
+      "id": "PN-015",
+      "domain": "NLP",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "自然言語処理のパイプラインにおいて、テキストを個々の単語やトークンに分割する処理は {{0}} と呼ばれ、単語を基本形（辞書形）に変換する処理は {{1}} と呼ばれます。",
+      "dropdowns": [
+        {
+          "options": ["トークン化（Tokenization）", "ステミング（Stemming）", "レンマ化（Lemmatization）"],
+          "answer": 0
+        },
+        {
+          "options": ["トークン化（Tokenization）", "ステミング（Stemming）", "レンマ化（Lemmatization）"],
+          "answer": 2
+        }
+      ],
+      "explanation": "トークン化（Tokenization）はテキストを個々のトークン（単語や文字）に分割する処理です。レンマ化（Lemmatization）は単語を辞書の基本形に変換する処理で、文法的な解析に基づきます。ステミングは語幹の抽出を行いますが、必ずしも正しい辞書形にはなりません。",
+      "tags": ["tokenization", "lemmatization", "nlp-pipeline"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/overview"]
+    },
+    {
+      "id": "PN-016",
+      "domain": "NLP",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure AI Speechにおいて、音声をテキストに変換する機能は {{0}} であり、テキストを自然な音声に変換する機能は {{1}} です。また、ある言語の音声を別の言語のテキストまたは音声にリアルタイムで変換する機能は {{2}} です。",
+      "dropdowns": [
+        {
+          "options": ["Speech-to-Text", "Text-to-Speech", "Speech Translation"],
+          "answer": 0
+        },
+        {
+          "options": ["Speech-to-Text", "Text-to-Speech", "Speech Translation"],
+          "answer": 1
+        },
+        {
+          "options": ["Speech-to-Text", "Text-to-Speech", "Speech Translation"],
+          "answer": 2
+        }
+      ],
+      "explanation": "Speech-to-Textは音声認識、Text-to-Speechは音声合成、Speech Translationは音声のリアルタイム翻訳を行います。これらはAzure AI Speechの3つの主要機能です。",
+      "tags": ["speech-to-text", "text-to-speech", "speech-translation", "azure-ai-speech"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/overview"]
+    },
+    {
+      "id": "PN-017",
+      "domain": "NLP",
+      "type": "dropdown",
+      "difficulty": 3,
+      "prompt": "長文のニュース記事から主要なポイントを自動的に短くまとめる機能は {{0}} であり、記事内の企業名や日付などの固有名詞を識別・分類する機能は {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["キーフレーズ抽出", "テキスト要約（Summarization）", "固有表現認識（NER）"],
+          "answer": 1
+        },
+        {
+          "options": ["キーフレーズ抽出", "テキスト要約（Summarization）", "固有表現認識（NER）"],
+          "answer": 2
+        }
+      ],
+      "explanation": "テキスト要約（Summarization）は長文を短くまとめる機能で、抽出型と抽象型の要約に対応しています。固有表現認識（NER）は人名、組織名、場所、日時などのエンティティを識別・分類します。キーフレーズ抽出は文書の重要な語句を抽出しますが、要約やエンティティ分類とは異なります。",
+      "tags": ["summarization", "ner", "azure-ai-language"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/summarization/overview"]
+    },
+    {
+      "id": "PN-018",
+      "domain": "NLP",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のAzure AI Languageの機能と、その説明を正しく対応させてください。",
+      "left": ["感情分析", "キーフレーズ抽出", "固有表現認識（NER）", "言語検出"],
+      "right": ["テキストの感情的な傾向を判定する", "文書から重要な語句を抽出する", "人名・場所・組織名などのエンティティを識別する", "テキストがどの言語で書かれているかを判定する"],
+      "answerMap": {
+        "感情分析": "テキストの感情的な傾向を判定する",
+        "キーフレーズ抽出": "文書から重要な語句を抽出する",
+        "固有表現認識（NER）": "人名・場所・組織名などのエンティティを識別する",
+        "言語検出": "テキストがどの言語で書かれているかを判定する"
+      },
+      "explanation": "感情分析はポジティブ/ネガティブ/中立の判定、キーフレーズ抽出は重要語句の抽出、NERは固有名詞のエンティティ識別、言語検出はテキストの言語識別を行います。",
+      "tags": ["azure-ai-language", "text-analytics"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/overview"]
+    },
+    {
+      "id": "PN-019",
+      "domain": "NLP",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のNLPのシナリオと、最も適切なAzureサービスを対応させてください。",
+      "left": ["会議の音声を文字起こしする", "Webサイトを多言語対応にする", "チャットボットにFAQ応答機能を追加する", "顧客フィードバックの感情傾向を分析する"],
+      "right": ["Azure AI Speech（Speech-to-Text）", "Azure AI Translator", "カスタム質問応答（Custom Question Answering）", "Azure AI Language（感情分析）"],
+      "answerMap": {
+        "会議の音声を文字起こしする": "Azure AI Speech（Speech-to-Text）",
+        "Webサイトを多言語対応にする": "Azure AI Translator",
+        "チャットボットにFAQ応答機能を追加する": "カスタム質問応答（Custom Question Answering）",
+        "顧客フィードバックの感情傾向を分析する": "Azure AI Language（感情分析）"
+      },
+      "explanation": "音声の文字起こしにはSpeech-to-Text、多言語対応にはTranslator、FAQ応答にはカスタム質問応答、感情分析にはAzure AI Languageの感情分析機能が適切です。",
+      "tags": ["service-selection", "scenario-matching"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/overview"]
+    },
+    {
+      "id": "PN-020",
+      "domain": "NLP",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下のNLP用語と、その説明を正しく対応させてください。",
+      "left": ["トークン化", "ステミング", "レンマ化", "ストップワード除去"],
+      "right": ["テキストを単語やサブワードに分割する", "語尾を機械的に除去して語幹を取り出す", "文法規則に基づき単語を辞書の基本形に変換する", "「は」「の」「です」など意味の薄い語を取り除く"],
+      "answerMap": {
+        "トークン化": "テキストを単語やサブワードに分割する",
+        "ステミング": "語尾を機械的に除去して語幹を取り出す",
+        "レンマ化": "文法規則に基づき単語を辞書の基本形に変換する",
+        "ストップワード除去": "「は」「の」「です」など意味の薄い語を取り除く"
+      },
+      "explanation": "トークン化はテキスト分割、ステミングは語幹抽出（例: running→run）、レンマ化は辞書形への変換（例: better→good）、ストップワード除去は頻出の機能語の除去を行います。これらはNLP前処理パイプラインの基本的なステップです。",
+      "tags": ["nlp-pipeline", "tokenization", "stemming", "lemmatization"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/overview"]
+    },
+    {
+      "id": "PN-021",
+      "domain": "NLP",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下のAzure AI Speechの機能と、その用途を正しく対応させてください。",
+      "left": ["Speech-to-Text", "Text-to-Speech", "Speech Translation", "話者認識"],
+      "right": ["コールセンターの通話内容を自動文字起こしする", "視覚障害者向けにテキストコンテンツを音声で読み上げる", "国際会議の発言をリアルタイムで他言語に変換する", "電話での本人確認を声紋で行う"],
+      "answerMap": {
+        "Speech-to-Text": "コールセンターの通話内容を自動文字起こしする",
+        "Text-to-Speech": "視覚障害者向けにテキストコンテンツを音声で読み上げる",
+        "Speech Translation": "国際会議の発言をリアルタイムで他言語に変換する",
+        "話者認識": "電話での本人確認を声紋で行う"
+      },
+      "explanation": "Speech-to-Textは音声からテキストへの変換、Text-to-Speechはテキストの音声化、Speech Translationはリアルタイム音声翻訳、話者認識は声紋に基づく個人の識別・検証に使用されます。",
+      "tags": ["azure-ai-speech", "speech-to-text", "text-to-speech", "speech-translation", "speaker-recognition"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/overview"]
+    },
+    {
+      "id": "PN-022",
+      "domain": "NLP",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "カスタム質問応答（Custom Question Answering）を使ったFAQボットを構築する際の一般的なステップを、正しい順序に並べてください。",
+      "items": [
+        "ナレッジベースにFAQデータソースを追加する",
+        "Azure AI Languageリソースを作成する",
+        "質問応答ペアをテストして精度を確認する",
+        "ナレッジベースを公開してボットに接続する"
+      ],
+      "answerOrder": [1, 0, 2, 3],
+      "explanation": "まずAzure AI Languageリソースを作成し、次にFAQデータソース（Webページ、ドキュメントなど）を追加してナレッジベースを構築します。その後テストで精度を確認し、最後に公開してボットに接続します。",
+      "tags": ["custom-question-answering", "knowledge-base", "process"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/question-answering/overview"]
+    },
+    {
+      "id": "PN-023",
+      "domain": "NLP",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Conversational Language Understanding（CLU）モデルの開発プロセスを、正しい順序に並べてください。",
+      "items": [
+        "サンプル発話にインテントとエンティティのラベルを付ける",
+        "モデルをトレーニングする",
+        "インテントとエンティティのスキーマを定義する",
+        "モデルをデプロイしてアプリケーションから呼び出す"
+      ],
+      "answerOrder": [2, 0, 1, 3],
+      "explanation": "CLU開発では、まずインテントとエンティティのスキーマ（構造）を定義し、次にサンプル発話にラベルを付けてトレーニングデータを準備します。その後モデルをトレーニングし、最後にデプロイしてアプリケーションから利用します。",
+      "tags": ["clu", "model-development", "process"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/conversational-language-understanding/how-to/build-schema"]
+    },
+    {
+      "id": "PN-024",
+      "domain": "NLP",
+      "type": "order",
+      "difficulty": 3,
+      "prompt": "コールセンターの通話データをNLPで分析するパイプラインのステップを、正しい順序に並べてください。",
+      "items": [
+        "テキストに対してキーフレーズ抽出と感情分析を実行する",
+        "Speech-to-Textで音声をテキストに変換する",
+        "分析結果をダッシュボードに可視化してレポートする",
+        "PII検出で個人情報をマスキングする"
+      ],
+      "answerOrder": [1, 3, 0, 2],
+      "explanation": "まずSpeech-to-Textで音声をテキスト化し、次にPII検出で個人情報を保護します。その後、クレンジングされたテキストに対してキーフレーズ抽出や感情分析を行い、最後に結果をダッシュボードで可視化します。",
+      "tags": ["nlp-pipeline", "speech-to-text", "pii-detection", "sentiment-analysis"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/call-center-overview"]
+    },
+    {
+      "id": "PN-025",
+      "domain": "NLP",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "自然言語処理（NLP）の一般的なテキスト前処理パイプラインのステップを、正しい順序に並べてください。",
+      "items": [
+        "ストップワードを除去する",
+        "テキストをトークン（単語）に分割する",
+        "各トークンを基本形（レンマ）に変換する",
+        "テキストを小文字に正規化する"
+      ],
+      "answerOrder": [3, 1, 0, 2],
+      "explanation": "NLPの前処理では、まずテキストを小文字に正規化し、次にトークン化（単語分割）を行います。その後ストップワード（機能語）を除去し、最後にレンマ化（基本形変換）を行います。",
+      "tags": ["nlp-pipeline", "text-preprocessing", "tokenization", "lemmatization"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/overview"]
+    },
+    {
+      "id": "PN-026",
+      "domain": "NLP",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下のシナリオのうち、Azure AI Translator を使用するのが最も適切なものをすべて選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "英語の技術文書を日本語に翻訳する",
+          "顧客レビューのポジティブ・ネガティブを判定する",
+          "多言語のECサイトで商品説明を自動翻訳する",
+          "音声メッセージをテキストに変換する",
+          "メールの宛先から個人名を抽出する",
+          "社内ポータルのFAQページを50言語に翻訳する"
+        ]
+      },
+      "answer": [0, 2, 5],
+      "explanation": "Azure AI Translatorは、テキストの多言語翻訳に特化したサービスです。技術文書の翻訳、ECサイトの商品説明の自動翻訳、FAQページの多言語化が該当します。感情判定はAI Language、音声変換はAI Speech、人名抽出はNERの機能です。",
+      "tags": ["azure-ai-translator", "scenario-selection"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/translator/overview"]
+    },
+    {
+      "id": "PN-027",
+      "domain": "NLP",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の項目のうち、Conversational Language Understanding（CLU）のモデル構築に必要な要素をすべて選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "インテントの定義",
+          "音声合成用の音声モデル",
+          "サンプル発話のラベル付け",
+          "翻訳メモリの構築",
+          "エンティティの定義",
+          "画像データセットの準備"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "CLUモデルの構築には、インテント（ユーザーの意図カテゴリ）の定義、サンプル発話へのラベル付け、エンティティ（抽出する情報）の定義が必要です。音声合成モデル、翻訳メモリ、画像データセットはCLUとは無関係です。",
+      "tags": ["clu", "model-building", "intents", "entities"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/conversational-language-understanding/overview"]
+    },
+    {
+      "id": "PN-028",
+      "domain": "NLP",
+      "type": "hotarea",
+      "difficulty": 3,
+      "prompt": "以下のシナリオのうち、Azure AI Speech サービスの機能で実現できるものをすべて選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "ポッドキャストの音声を自動的に文字起こしする",
+          "テキスト文書のキーフレーズを抽出する",
+          "アプリのテキスト通知を音声で読み上げる",
+          "顧客レビューの感情を数値化する",
+          "英語の講演を日本語の音声にリアルタイム翻訳する",
+          "テキストから人名と組織名を検出する"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "Azure AI Speechでは、音声の文字起こし（Speech-to-Text）、テキストの音声読み上げ（Text-to-Speech）、リアルタイム音声翻訳（Speech Translation）が可能です。キーフレーズ抽出、感情分析、固有表現認識はAzure AI Languageの機能です。",
+      "tags": ["azure-ai-speech", "speech-to-text", "text-to-speech", "speech-translation"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/overview"]
+    },
+    {
+      "id": "PN-029",
+      "domain": "NLP",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "グローバル展開するB社は、多言語カスタマーサポートシステムの構築を計画しています。顧客は電話やチャットで問い合わせを行い、システムは以下の機能を提供する必要があります：(1) 電話での問い合わせ内容をリアルタイムで文字起こしする、(2) 問い合わせテキストから顧客の感情と主要なトピックを分析する、(3) よくある質問に対してナレッジベースから自動回答する、(4) 問い合わせ内容を顧客の母国語で応対する。",
+      "subQuestions": [
+        {
+          "id": "PN-029-1",
+          "type": "single",
+          "prompt": "電話での問い合わせ内容をリアルタイムで文字起こしするために、最も適切なAzureサービスはどれですか。",
+          "choices": [
+            "Azure AI Language",
+            "Azure AI Speech（Speech-to-Text）",
+            "Azure AI Translator",
+            "Azure Bot Service"
+          ],
+          "answer": [1],
+          "explanation": "Speech-to-Textは、リアルタイムの音声をテキストに変換する機能を提供します。電話の通話内容を即座にテキスト化するのに最適です。"
+        },
+        {
+          "id": "PN-029-2",
+          "type": "single",
+          "prompt": "文字起こしされたテキストから顧客の感情傾向と主要なトピックを抽出するために使用するAzure AI Languageの機能の組み合わせとして最も適切なものはどれですか。",
+          "choices": [
+            "言語検出とPII検出",
+            "感情分析とキーフレーズ抽出",
+            "固有表現認識とテキスト要約",
+            "言語検出と固有表現認識"
+          ],
+          "answer": [1],
+          "explanation": "感情分析はテキストの感情的な傾向（肯定/否定/中立）を判定し、キーフレーズ抽出はテキストの主要なトピックやキーワードを抽出します。この組み合わせが顧客の感情とトピック分析に最適です。"
+        },
+        {
+          "id": "PN-029-3",
+          "type": "single",
+          "prompt": "FAQナレッジベースからの自動回答機能を実現するために、最も適切なAzureサービスはどれですか。",
+          "choices": [
+            "Azure AI Translator",
+            "Azure AI Speech",
+            "カスタム質問応答（Custom Question Answering）",
+            "Conversational Language Understanding（CLU）"
+          ],
+          "answer": [2],
+          "explanation": "カスタム質問応答（Custom Question Answering）は、FAQページやドキュメントからナレッジベースを構築し、ユーザーの質問に対して最適な回答を返す機能です。"
+        }
+      ],
+      "explanation": "このケーススタディでは、多言語カスタマーサポートシステムに必要な複数のNLPサービスを組み合わせて使用する方法を問います。音声の文字起こしにはSpeech-to-Text、感情・トピック分析にはAzure AI Language、FAQ応答にはカスタム質問応答がそれぞれ適切です。",
+      "tags": ["speech-to-text", "sentiment-analysis", "key-phrase-extraction", "custom-question-answering", "scenario"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/overview", "https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/overview"]
+    },
+    {
+      "id": "PN-030",
+      "domain": "NLP",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "C社は法務部門の業務効率化のためにNLPソリューションの導入を検討しています。法務部門では大量の契約書を処理しており、以下の課題があります：(1) 契約書は英語、ドイツ語、フランス語など複数の言語で作成されている、(2) 契約書から当事者名、日付、金額などの重要情報を抽出する必要がある、(3) 長い契約書の要点を素早く把握したい、(4) 契約書に含まれる個人情報を適切に管理する必要がある。",
+      "subQuestions": [
+        {
+          "id": "PN-030-1",
+          "type": "single",
+          "prompt": "複数言語の契約書を社内の標準言語に統一するために、最も適切なAzureサービスはどれですか。",
+          "choices": [
+            "Azure AI Language（言語検出）",
+            "Azure AI Translator（ドキュメント翻訳）",
+            "Azure AI Speech（Speech Translation）",
+            "Conversational Language Understanding（CLU）"
+          ],
+          "answer": [1],
+          "explanation": "Azure AI Translatorのドキュメント翻訳機能は、ドキュメント全体の書式やレイアウトを保持しながら翻訳を行うことができます。複数言語の契約書を標準言語に統一するのに最適です。"
+        },
+        {
+          "id": "PN-030-2",
+          "type": "single",
+          "prompt": "契約書から当事者名、日付、金額などの重要情報を自動抽出するために、最も適切なAzure AI Languageの機能はどれですか。",
+          "choices": [
+            "感情分析",
+            "キーフレーズ抽出",
+            "固有表現認識（NER）",
+            "言語検出"
+          ],
+          "answer": [2],
+          "explanation": "固有表現認識（NER）は、テキストから人名、組織名、日付、金額などのエンティティを自動的に識別・分類する機能です。契約書からの重要情報抽出に最適です。"
+        },
+        {
+          "id": "PN-030-3",
+          "type": "single",
+          "prompt": "契約書に含まれる個人情報（担当者の電話番号やメールアドレスなど）を検出して保護するために、最も適切なAzure AI Languageの機能はどれですか。",
+          "choices": [
+            "テキスト要約",
+            "PII検出（PII Detection）",
+            "キーフレーズ抽出",
+            "感情分析"
+          ],
+          "answer": [1],
+          "explanation": "PII検出（Personally Identifiable Information Detection）は、テキスト内の個人情報を自動的に検出し、分類やマスキングを行う機能です。契約書内の電話番号、メールアドレスなどの保護に適しています。"
+        }
+      ],
+      "explanation": "このケーススタディでは、法務部門の契約書処理における複数のNLP課題を扱います。多言語文書の翻訳にはAzure AI Translator、重要情報の抽出にはNER、個人情報の保護にはPII検出がそれぞれ適切なソリューションです。",
+      "tags": ["document-translation", "ner", "pii-detection", "azure-ai-translator", "azure-ai-language", "scenario"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/translator/document-translation/overview", "https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/named-entity-recognition/overview", "https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/personally-identifiable-information/overview"]
+    }
+  ]
+}

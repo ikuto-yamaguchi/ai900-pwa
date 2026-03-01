@@ -1,0 +1,697 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.pool.genai01",
+    "version": "2026-03-02",
+    "title": "生成AI 応用30問",
+    "description": "生成AIの基礎から応用までの問題",
+    "language": "ja-JP",
+    "createdAt": "2026-03-02T01:00:00Z",
+    "domains": ["GenAI"]
+  },
+  "questions": [
+    {
+      "id": "PG-001",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "Azure OpenAI Serviceで利用可能なGPT-4モデルの主な特徴として、最も正確なものはどれですか。",
+      "choices": [
+        "画像のみを生成する専用モデルである",
+        "テキストの生成・要約・翻訳・コード生成など多目的に利用できる大規模言語モデルである",
+        "音声をテキストに変換する専用モデルである",
+        "構造化データの統計分析を行う専用モデルである"
+      ],
+      "answer": [1],
+      "explanation": "GPT-4はOpenAIが開発した大規模言語モデル（LLM）であり、テキスト生成、要約、翻訳、コード生成、質問応答など幅広い自然言語タスクに対応できるマルチパーパスモデルです。画像生成はDALL-E、音声変換はWhisperの役割です。",
+      "tags": ["azure-openai", "gpt-4", "model-capabilities"],
+      "sources": [
+        {"title": "Azure OpenAI Service モデル", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/models"}
+      ]
+    },
+    {
+      "id": "PG-002",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "生成AIにおいて「ハルシネーション（Hallucination）」とは何を指しますか。",
+      "choices": [
+        "AIが処理速度を超えてエラーを返すこと",
+        "AIが事実に基づかない、もっともらしいが誤った情報を生成すること",
+        "AIが過去のトレーニングデータを忘れてしまうこと",
+        "AIが意図的に有害なコンテンツを出力すること"
+      ],
+      "answer": [1],
+      "explanation": "ハルシネーションとは、大規模言語モデルが事実に基づかない情報をあたかも正しいかのように自信をもって生成する現象です。モデルはパターンに基づいてテキストを生成するため、存在しない事実や誤った情報を出力することがあります。",
+      "tags": ["hallucination", "genai-concepts"],
+      "sources": [
+        {"title": "Azure OpenAI Service のハルシネーション対策", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/system-message"}
+      ]
+    },
+    {
+      "id": "PG-003",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "Azure OpenAI Serviceで提供されるDALL-Eモデルの主な機能はどれですか。",
+      "choices": [
+        "音声データからテキストを生成する",
+        "テキストの説明から画像を生成する",
+        "テキストを他の言語に翻訳する",
+        "テキストデータをベクトルに変換する"
+      ],
+      "answer": [1],
+      "explanation": "DALL-Eは、テキストによる説明（プロンプト）を入力として、それに対応する画像を生成するモデルです。自然言語の記述に基づいてオリジナルの画像を作成できます。",
+      "tags": ["dall-e", "image-generation", "model-capabilities"],
+      "sources": [
+        {"title": "Azure OpenAI DALL-E", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/dall-e-quickstart"}
+      ]
+    },
+    {
+      "id": "PG-004",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "プロンプトエンジニアリングにおいて、モデルに期待する回答形式の例を入力に含めて回答の精度を向上させる手法は何と呼ばれますか。",
+      "choices": [
+        "ゼロショット学習（Zero-shot Learning）",
+        "ファインチューニング（Fine-tuning）",
+        "フューショット学習（Few-shot Learning）",
+        "転移学習（Transfer Learning）"
+      ],
+      "answer": [2],
+      "explanation": "フューショット学習（Few-shot Learning）は、プロンプト内にいくつかの入出力例を含めることで、モデルに期待する回答のパターンやフォーマットを示す手法です。例を見せることでモデルの出力品質を向上させます。",
+      "tags": ["prompt-engineering", "few-shot"],
+      "sources": [
+        {"title": "プロンプトエンジニアリングの手法", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/prompt-engineering"}
+      ]
+    },
+    {
+      "id": "PG-005",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI Serviceにおいて、temperatureパラメーターを高い値（例：1.0に近い値）に設定すると、モデルの出力はどのように変化しますか。",
+      "choices": [
+        "出力が常に同じ結果になり再現性が高くなる",
+        "出力の多様性が高まり、よりランダムで創造的な応答になる",
+        "出力のトークン数が減少し、応答が短くなる",
+        "出力が常に事実に基づく正確な情報のみを返すようになる"
+      ],
+      "answer": [1],
+      "explanation": "temperatureは出力の多様性を制御するパラメーターです。高い値に設定するとモデルの出力はよりランダムで多様になり、創造的なタスクに向きます。低い値にすると出力はより決定的で一貫したものになります。",
+      "tags": ["temperature", "model-parameters"],
+      "sources": [
+        {"title": "Azure OpenAI パラメーター", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/reference"}
+      ]
+    },
+    {
+      "id": "PG-006",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "RAG（Retrieval Augmented Generation）の最も正確な説明はどれですか。",
+      "choices": [
+        "大規模言語モデルを新しいデータで再トレーニングする手法",
+        "外部のデータソースから関連情報を取得し、その情報をモデルへの入力に追加して回答の精度を高める手法",
+        "モデルのパラメーターを削減して応答速度を向上させる手法",
+        "複数のモデルを並列に実行して最適な回答を選択する手法"
+      ],
+      "answer": [1],
+      "explanation": "RAG（Retrieval Augmented Generation）は、ユーザーの質問に対して外部データソース（データベース、ドキュメントなど）から関連情報を検索・取得し、その情報をプロンプトに付加してモデルに渡すことで、より正確で最新の情報に基づく回答を生成する手法です。",
+      "tags": ["rag", "grounding", "architecture"],
+      "sources": [
+        {"title": "RAG と Azure OpenAI", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/retrieval-augmented-generation"}
+      ]
+    },
+    {
+      "id": "PG-007",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI Serviceのコンテンツフィルタリングが検出する有害カテゴリに含まれないものはどれですか。",
+      "choices": [
+        "ヘイト（Hate）",
+        "暴力（Violence）",
+        "文法エラー（Grammatical Error）",
+        "自傷行為（Self-harm）"
+      ],
+      "answer": [2],
+      "explanation": "Azure OpenAI Serviceのコンテンツフィルタリングは、ヘイト（差別的表現）、性的コンテンツ（Sexual）、暴力（Violence）、自傷行為（Self-harm）の4つの主要カテゴリを検出します。文法エラーの検出はコンテンツフィルタリングの対象ではありません。",
+      "tags": ["content-filtering", "safety", "responsible-ai"],
+      "sources": [
+        {"title": "Azure OpenAI コンテンツフィルタリング", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/content-filter"}
+      ]
+    },
+    {
+      "id": "PG-008",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "Azure OpenAI Serviceで提供されるWhisperモデルの主な機能はどれですか。",
+      "choices": [
+        "テキストから画像を生成する",
+        "テキストを別の言語に翻訳する",
+        "音声データをテキストに変換する（文字起こし）",
+        "テキストデータをベクトル表現に変換する"
+      ],
+      "answer": [2],
+      "explanation": "Whisperは音声認識モデルであり、音声データを入力としてテキストへの文字起こし（Speech-to-Text）を行います。多言語の音声認識と翻訳に対応しています。",
+      "tags": ["whisper", "speech-to-text", "model-capabilities"],
+      "sources": [
+        {"title": "Azure OpenAI Whisper モデル", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/whisper-quickstart"}
+      ]
+    },
+    {
+      "id": "PG-009",
+      "domain": "GenAI",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "生成AIにおけるハルシネーション（幻覚）を軽減するための有効な対策として正しいものをすべて選んでください。",
+      "choices": [
+        "temperatureを高い値に設定して多様な出力を促す",
+        "グラウンディング（Grounding）を使って外部データに基づく回答を生成する",
+        "システムメッセージで「情報が不明な場合は分からないと回答すること」と指示する",
+        "RAGを使って関連するドキュメントを検索しプロンプトに含める",
+        "max_tokensを最大値に設定して長い回答を生成する"
+      ],
+      "answer": [1, 2, 3],
+      "explanation": "ハルシネーション対策として有効なのは、グラウンディングで外部データに基づかせること、システムメッセージで不明な場合の振る舞いを指定すること、RAGで関連情報を付加することです。temperatureを高くすると多様性は増しますが正確性は下がり、max_tokensの増加はハルシネーション対策にはなりません。",
+      "tags": ["hallucination", "mitigation", "grounding", "rag"],
+      "sources": [
+        {"title": "Azure OpenAI ハルシネーション対策", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/system-message"},
+        {"title": "RAG の概要", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/retrieval-augmented-generation"}
+      ]
+    },
+    {
+      "id": "PG-010",
+      "domain": "GenAI",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI Serviceのエンベディング（Embeddings）モデルの適切なユースケースとして正しいものをすべて選んでください。",
+      "choices": [
+        "テキスト間の意味的な類似度を計算する",
+        "テキストから画像を生成する",
+        "ドキュメントのセマンティック検索を実装する",
+        "類似コンテンツに基づくレコメンデーション機能を構築する",
+        "リアルタイムの音声認識を行う"
+      ],
+      "answer": [0, 2, 3],
+      "explanation": "エンベディングモデルはテキストを数値ベクトルに変換し、テキスト間の意味的な類似度を計算できます。これにより、セマンティック検索（意味に基づく検索）やレコメンデーション（類似コンテンツの推薦）に活用できます。画像生成はDALL-E、音声認識はWhisperの役割です。",
+      "tags": ["embeddings", "semantic-search", "recommendations"],
+      "sources": [
+        {"title": "Azure OpenAI エンベディング", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/understand-embeddings"}
+      ]
+    },
+    {
+      "id": "PG-011",
+      "domain": "GenAI",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Microsoft Copilotの特徴として正しいものをすべて選んでください。",
+      "choices": [
+        "大規模言語モデル（LLM）を基盤技術として利用している",
+        "グラウンディングにより組織のデータと連携して回答を生成できる",
+        "モデルのファインチューニングをエンドユーザーが直接行える",
+        "自然言語で指示を出すことでタスクの支援を受けられる",
+        "インターネット接続なしでも完全に動作する"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "Microsoft Copilotは大規模言語モデルを基盤とし、グラウンディングにより組織のデータ（Microsoft 365のファイルやメールなど）と連携し、自然言語の指示でユーザーのタスクを支援します。エンドユーザーがモデルのファインチューニングを直接行うことはできず、インターネット接続が必要です。",
+      "tags": ["copilot", "grounding", "llm"],
+      "sources": [
+        {"title": "Microsoft Copilot の概要", "url": "https://learn.microsoft.com/ja-jp/microsoft-365-copilot/microsoft-365-copilot-overview"}
+      ]
+    },
+    {
+      "id": "PG-012",
+      "domain": "GenAI",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "生成AIの実際のビジネス活用シナリオとして適切なものをすべて選んでください。",
+      "choices": [
+        "カスタマーサポートチャットボットによる顧客問い合わせの自動応答",
+        "マーケティング用コンテンツの自動ドラフト作成",
+        "リアルタイムのセンサーデータに基づく工場設備の物理的制御",
+        "大量のドキュメントの要約生成",
+        "開発者向けのコード生成・補完支援"
+      ],
+      "answer": [0, 1, 3, 4],
+      "explanation": "生成AIは、チャットボットによる自動応答、マーケティングコンテンツの作成、ドキュメントの要約、コード生成・補完といったテキスト生成タスクに適しています。工場設備の物理的な制御はIoTや産業制御システムの領域であり、生成AIの直接的なユースケースではありません。",
+      "tags": ["genai-scenarios", "business-use-cases"],
+      "sources": [
+        {"title": "Azure OpenAI のユースケース", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/overview"}
+      ]
+    },
+    {
+      "id": "PG-013",
+      "domain": "GenAI",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "プロンプトエンジニアリングにおけるシステムメッセージ（System Message）の役割として正しいものをすべて選んでください。",
+      "choices": [
+        "モデルの動作方針やペルソナを設定する",
+        "モデルが回答すべきでないトピックを指定する",
+        "モデルの基盤となるパラメーター（重み）を変更する",
+        "出力のフォーマットや言語スタイルを指示する"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "システムメッセージは、モデルの振る舞い（ペルソナ、トーン）、制約（回答すべきでないトピック）、出力フォーマット（JSON形式など）を指定するために使用します。モデルの重み（パラメーター）自体を変更するものではありません。",
+      "tags": ["prompt-engineering", "system-message"],
+      "sources": [
+        {"title": "システムメッセージの設計", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/system-message"}
+      ]
+    },
+    {
+      "id": "PG-014",
+      "domain": "GenAI",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI Serviceにおいて、出力の多様性（ランダムさ）を制御するパラメーターは {{0}} であり、生成されるテキストの最大長を制御するパラメーターは {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["max_tokens", "temperature", "frequency_penalty"],
+          "answer": 1
+        },
+        {
+          "options": ["temperature", "top_p", "max_tokens"],
+          "answer": 2
+        }
+      ],
+      "explanation": "temperatureは出力のランダムさ・多様性を制御し、値が高いほど多様な出力になります。max_tokensは生成されるテキストの最大トークン数（長さ）を制限するパラメーターです。",
+      "tags": ["model-parameters", "temperature", "max-tokens"],
+      "sources": [
+        {"title": "Azure OpenAI API リファレンス", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/reference"}
+      ]
+    },
+    {
+      "id": "PG-015",
+      "domain": "GenAI",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "プロンプトに例を含めずにモデルに直接タスクを指示する手法は {{0}} と呼ばれ、いくつかの入出力例をプロンプトに含めてモデルを導く手法は {{1}} と呼ばれます。",
+      "dropdowns": [
+        {
+          "options": ["フューショット（Few-shot）", "ゼロショット（Zero-shot）", "チェーン・オブ・ソート（Chain-of-thought）"],
+          "answer": 1
+        },
+        {
+          "options": ["ゼロショット（Zero-shot）", "フューショット（Few-shot）", "ファインチューニング（Fine-tuning）"],
+          "answer": 1
+        }
+      ],
+      "explanation": "ゼロショットは例を提供せずにモデルに直接指示する手法です。フューショットはプロンプト内にいくつかの入出力例を含めることで、モデルに期待するパターンを示す手法です。",
+      "tags": ["prompt-engineering", "zero-shot", "few-shot"],
+      "sources": [
+        {"title": "プロンプトエンジニアリング技法", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/prompt-engineering"}
+      ]
+    },
+    {
+      "id": "PG-016",
+      "domain": "GenAI",
+      "type": "dropdown",
+      "difficulty": 3,
+      "prompt": "大規模言語モデルの応答精度を向上させたい場合、モデル自体のパラメーターを調整せずにプロンプトの工夫で対応する手法は {{0}} であり、特定ドメインのデータでモデルの重みを再調整する手法は {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["ファインチューニング", "プロンプトエンジニアリング", "トランスファーラーニング"],
+          "answer": 1
+        },
+        {
+          "options": ["プロンプトエンジニアリング", "RAG", "ファインチューニング"],
+          "answer": 2
+        }
+      ],
+      "explanation": "プロンプトエンジニアリングはモデルのパラメーターを変更せず、入力（プロンプト）の工夫で出力品質を向上させます。ファインチューニングは特定のドメインやタスクに特化したデータでモデルの重みを再調整し、専門性を高める手法です。",
+      "tags": ["prompt-engineering", "fine-tuning", "comparison"],
+      "sources": [
+        {"title": "Azure OpenAI ファインチューニング", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/how-to/fine-tuning"},
+        {"title": "プロンプトエンジニアリング", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/prompt-engineering"}
+      ]
+    },
+    {
+      "id": "PG-017",
+      "domain": "GenAI",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI Serviceのコンテンツフィルタリングにおいて、差別的・偏見的な表現を検出するカテゴリは {{0}} であり、身体的な危害を示すコンテンツを検出するカテゴリは {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["暴力（Violence）", "ヘイト（Hate）", "自傷行為（Self-harm）"],
+          "answer": 1
+        },
+        {
+          "options": ["性的コンテンツ（Sexual）", "ヘイト（Hate）", "暴力（Violence）"],
+          "answer": 2
+        }
+      ],
+      "explanation": "ヘイト（Hate）カテゴリは、人種、性別、宗教などに基づく差別的・偏見的な表現を検出します。暴力（Violence）カテゴリは、身体的な危害や暴力行為に関するコンテンツを検出します。",
+      "tags": ["content-filtering", "safety-categories"],
+      "sources": [
+        {"title": "Azure OpenAI コンテンツフィルタリング", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/content-filter"}
+      ]
+    },
+    {
+      "id": "PG-018",
+      "domain": "GenAI",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI Serviceの各モデルと、その主な機能を対応させてください。",
+      "left": ["GPT-4", "DALL-E", "Whisper", "Embeddings モデル"],
+      "right": ["テキストの生成・理解・推論を行う", "テキストの説明から画像を生成する", "音声をテキストに変換する", "テキストを数値ベクトルに変換する"],
+      "answerMap": {
+        "GPT-4": "テキストの生成・理解・推論を行う",
+        "DALL-E": "テキストの説明から画像を生成する",
+        "Whisper": "音声をテキストに変換する",
+        "Embeddings モデル": "テキストを数値ベクトルに変換する"
+      },
+      "explanation": "GPT-4は自然言語の生成・理解に優れた大規模言語モデル、DALL-Eはテキストから画像を生成するモデル、Whisperは音声認識（文字起こし）モデル、Embeddingsモデルはテキストを数値ベクトル（埋め込み表現）に変換するモデルです。",
+      "tags": ["azure-openai", "model-capabilities", "model-comparison"],
+      "sources": [
+        {"title": "Azure OpenAI Service モデル", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/models"}
+      ]
+    },
+    {
+      "id": "PG-019",
+      "domain": "GenAI",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "プロンプトエンジニアリングの各手法と、その説明を対応させてください。",
+      "left": ["ゼロショット", "フューショット", "チェーン・オブ・ソート", "システムメッセージ"],
+      "right": ["例を示さずに直接タスクを指示する", "いくつかの入出力例をプロンプトに含める", "段階的な推論プロセスをモデルに求める", "モデルの振る舞いや制約を事前に定義する"],
+      "answerMap": {
+        "ゼロショット": "例を示さずに直接タスクを指示する",
+        "フューショット": "いくつかの入出力例をプロンプトに含める",
+        "チェーン・オブ・ソート": "段階的な推論プロセスをモデルに求める",
+        "システムメッセージ": "モデルの振る舞いや制約を事前に定義する"
+      },
+      "explanation": "ゼロショットは例なしで直接指示、フューショットは例を提示、チェーン・オブ・ソートは「ステップバイステップで考えてください」のように推論過程を明示させる手法、システムメッセージはモデルの役割や制約を定義するメカニズムです。",
+      "tags": ["prompt-engineering", "techniques"],
+      "sources": [
+        {"title": "プロンプトエンジニアリング技法", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/prompt-engineering"}
+      ]
+    },
+    {
+      "id": "PG-020",
+      "domain": "GenAI",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下の生成AI関連の概念と、その最も適切な説明を対応させてください。",
+      "left": ["グラウンディング", "ハルシネーション", "トークン", "コンテキストウィンドウ"],
+      "right": ["外部データや事実に基づいてモデルの応答を裏付ける手法", "モデルが事実に基づかない情報を自信をもって生成する現象", "モデルがテキストを処理する際の最小単位", "モデルが一度に処理できる入出力の最大トークン数"],
+      "answerMap": {
+        "グラウンディング": "外部データや事実に基づいてモデルの応答を裏付ける手法",
+        "ハルシネーション": "モデルが事実に基づかない情報を自信をもって生成する現象",
+        "トークン": "モデルがテキストを処理する際の最小単位",
+        "コンテキストウィンドウ": "モデルが一度に処理できる入出力の最大トークン数"
+      },
+      "explanation": "グラウンディングは外部データに基づいて応答の正確性を高める手法、ハルシネーションはモデルが誤情報を生成する現象、トークンはテキスト処理の最小単位（単語や部分語）、コンテキストウィンドウはモデルが一度に扱えるトークン数の上限です。",
+      "tags": ["genai-concepts", "grounding", "hallucination", "tokens"],
+      "sources": [
+        {"title": "Azure OpenAI の概念", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/overview"}
+      ]
+    },
+    {
+      "id": "PG-021",
+      "domain": "GenAI",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のモデルパラメーターと、その制御対象を対応させてください。",
+      "left": ["temperature", "top_p", "max_tokens", "frequency_penalty"],
+      "right": ["出力のランダムさ・多様性を調整する", "確率の上位何%のトークンから選択するかを制限する", "生成されるテキストの最大長を制限する", "同じ単語の繰り返し使用を抑制する"],
+      "answerMap": {
+        "temperature": "出力のランダムさ・多様性を調整する",
+        "top_p": "確率の上位何%のトークンから選択するかを制限する",
+        "max_tokens": "生成されるテキストの最大長を制限する",
+        "frequency_penalty": "同じ単語の繰り返し使用を抑制する"
+      },
+      "explanation": "temperatureは出力の多様性、top_pは確率分布の上位からのサンプリング範囲、max_tokensは生成するトークン数の上限、frequency_penaltyは既に使用されたトークンの再出現を抑えるパラメーターです。",
+      "tags": ["model-parameters", "temperature", "top-p", "max-tokens"],
+      "sources": [
+        {"title": "Azure OpenAI API リファレンス", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/reference"}
+      ]
+    },
+    {
+      "id": "PG-022",
+      "domain": "GenAI",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "RAG（Retrieval Augmented Generation）パターンにおけるデータの流れを正しい順序に並べてください。",
+      "items": [
+        "大規模言語モデルが取得された情報を基に回答を生成する",
+        "ユーザーが質問（クエリ）を入力する",
+        "関連するドキュメントやデータを検索・取得する",
+        "取得した情報をプロンプトに追加してモデルに送信する"
+      ],
+      "answerOrder": [1, 2, 3, 0],
+      "explanation": "RAGのフローは、(1)ユーザーが質問を入力、(2)質問に基づいて外部データソースから関連情報を検索・取得、(3)取得した情報をプロンプトに追加してモデルに送信、(4)モデルが情報を基に回答を生成する、という順序です。",
+      "tags": ["rag", "architecture", "data-flow"],
+      "sources": [
+        {"title": "RAG パターン", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/retrieval-augmented-generation"}
+      ]
+    },
+    {
+      "id": "PG-023",
+      "domain": "GenAI",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "アプリケーションがAzure OpenAI ServiceのChat Completions APIを使用してユーザーの質問に回答するまでの流れを正しい順序に並べてください。",
+      "items": [
+        "APIから返されたアシスタントメッセージ（assistant）を取得してユーザーに表示する",
+        "システムメッセージ（system）でモデルの役割や動作方針を定義する",
+        "ユーザーからの質問をユーザーメッセージ（user）としてプロンプトに追加する",
+        "構築したプロンプトをChat Completions APIに送信する"
+      ],
+      "answerOrder": [1, 2, 3, 0],
+      "explanation": "まずシステムメッセージでモデルの役割を定義し、次にユーザーの質問をユーザーメッセージとしてプロンプトに追加します。構築したプロンプトをAPIに送信し、返されたアシスタントメッセージをユーザーに表示します。",
+      "tags": ["chat-completion", "message-roles", "content-filtering"],
+      "sources": [
+        {"title": "Azure OpenAI Chat Completion", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/how-to/chatgpt"}
+      ]
+    },
+    {
+      "id": "PG-024",
+      "domain": "GenAI",
+      "type": "order",
+      "difficulty": 3,
+      "prompt": "企業が社内ナレッジベースに基づくAIチャットボットを構築する際の一般的な手順を正しい順序に並べてください。",
+      "items": [
+        "ナレッジベースのドキュメントをチャンク分割しエンベディングを生成してベクトルストアに格納する",
+        "プロンプトエンジニアリングとグラウンディングの設定を行いチャットボットをテストする",
+        "Azure OpenAI Serviceのリソースをプロビジョニングしモデルをデプロイする",
+        "ユーザーの質問に対してベクトル検索で関連ドキュメントを取得しLLMで回答を生成するRAGパイプラインを構成する"
+      ],
+      "answerOrder": [2, 0, 3, 1],
+      "explanation": "まずAzure OpenAI Serviceのリソースを用意し、次にドキュメントをエンベディング化してベクトルストアに格納し、RAGパイプライン（検索と生成の連携）を構成した後、プロンプト設計とテストを行います。",
+      "tags": ["rag", "architecture", "implementation"],
+      "sources": [
+        {"title": "Azure OpenAI on your data", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/use-your-data"}
+      ]
+    },
+    {
+      "id": "PG-025",
+      "domain": "GenAI",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "エンベディングを使ったセマンティック検索の処理フローを正しい順序に並べてください。",
+      "items": [
+        "類似度が高い順にドキュメントをランク付けして結果を返す",
+        "検索クエリをエンベディングモデルでベクトルに変換する",
+        "事前にドキュメントをエンベディングに変換してベクトルデータベースに格納する",
+        "クエリベクトルとドキュメントベクトルの類似度（コサイン類似度など）を計算する"
+      ],
+      "answerOrder": [2, 1, 3, 0],
+      "explanation": "まず事前にドキュメントをエンベディング化してベクトルDBに格納し、検索時にクエリもベクトルに変換して、ベクトル間の類似度を計算し、類似度の高い順にランク付けして結果を返します。",
+      "tags": ["embeddings", "semantic-search", "vector-search"],
+      "sources": [
+        {"title": "Azure OpenAI エンベディング", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/understand-embeddings"}
+      ]
+    },
+    {
+      "id": "PG-026",
+      "domain": "GenAI",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の項目のうち、グラウンディング（Grounding）の手法や目的に該当するものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "外部データソースに基づいて回答の正確性を高める",
+          "モデルのパラメーター数を削減して軽量化する",
+          "RAGで関連ドキュメントをプロンプトに含める",
+          "temperatureを上げて創造的な応答を促す",
+          "ハルシネーションを軽減する",
+          "モデルのトレーニング速度を向上させる"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "グラウンディングとは、外部データや事実に基づいてモデルの応答を裏付ける手法です。RAGで関連ドキュメントを含めることはグラウンディングの代表的な実装方法であり、主な目的はハルシネーションの軽減です。パラメーター削減、temperature調整、トレーニング速度はグラウンディングとは無関係です。",
+      "tags": ["grounding", "rag", "hallucination"],
+      "sources": [
+        {"title": "Azure OpenAI グラウンディング", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/retrieval-augmented-generation"}
+      ]
+    },
+    {
+      "id": "PG-027",
+      "domain": "GenAI",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の項目のうち、Azure OpenAI Serviceのコンテンツフィルタリングで検出される有害コンテンツの4つのカテゴリに含まれるものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "ヘイト（Hate）",
+          "スパム（Spam）",
+          "性的コンテンツ（Sexual）",
+          "暴力（Violence）",
+          "フィッシング（Phishing）",
+          "自傷行為（Self-harm）"
+        ]
+      },
+      "answer": [0, 2, 3, 5],
+      "explanation": "Azure OpenAI Serviceのコンテンツフィルタリングは、ヘイト（Hate）、性的コンテンツ（Sexual）、暴力（Violence）、自傷行為（Self-harm）の4カテゴリを検出します。各カテゴリにはSafe、Low、Medium、Highの重大度レベルがあります。スパムやフィッシングはコンテンツフィルタリングの対象カテゴリではありません。",
+      "tags": ["content-filtering", "safety-categories", "responsible-ai"],
+      "sources": [
+        {"title": "Azure OpenAI コンテンツフィルタリング", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/content-filter"}
+      ]
+    },
+    {
+      "id": "PG-028",
+      "domain": "GenAI",
+      "type": "hotarea",
+      "difficulty": 3,
+      "prompt": "以下のシナリオのうち、ファインチューニングよりもプロンプトエンジニアリング（またはRAG）が適切なケースを選んでください。",
+      "grid": {
+        "cols": 2,
+        "rows": 3,
+        "cells": [
+          "最新の社内FAQ情報に基づいて回答させたい",
+          "モデルに特定業界の専門用語や文体を完全に学習させたい",
+          "出力フォーマットをJSON形式に指定したい",
+          "数千件の専門データで応答スタイルを根本的に変えたい",
+          "フューショット例で回答のパターンを示して精度を向上させたい",
+          "検索結果のコンテキストを添えて質問に回答させたい"
+        ]
+      },
+      "answer": [0, 2, 4, 5],
+      "explanation": "最新情報への対応（RAG）、出力フォーマットの指定（プロンプト）、フューショット例の活用（プロンプト）、検索結果に基づく回答（RAG）は、モデルの再トレーニング不要で実現できます。専門用語の完全な学習や応答スタイルの根本的な変更には、ファインチューニングが適切です。",
+      "tags": ["prompt-engineering", "fine-tuning", "rag", "comparison"],
+      "sources": [
+        {"title": "プロンプトエンジニアリング vs ファインチューニング", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/prompt-engineering"},
+        {"title": "Azure OpenAI ファインチューニング", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/how-to/fine-tuning"}
+      ]
+    },
+    {
+      "id": "PG-029",
+      "domain": "GenAI",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "B社はオンライン旅行代理店を運営しており、顧客対応の効率化のためにAzure OpenAI Serviceを活用したAIチャットボットの導入を計画しています。チャットボットは、自社の旅行プランデータベースに基づいて顧客の質問に回答し、旅行プランの提案を行います。また、不適切なコンテンツの生成を防ぎ、顧客の問い合わせ内容を多言語で処理できる必要があります。B社は生成AIの特性を理解した上で、適切な設計を行いたいと考えています。",
+      "subQuestions": [
+        {
+          "id": "PG-029-1",
+          "type": "single",
+          "prompt": "B社のチャットボットが自社の最新旅行プランデータベースに基づいて正確な回答を生成するために、最も適切なアーキテクチャパターンはどれですか。",
+          "choices": [
+            "GPT-4モデルをファインチューニングして旅行プランデータを学習させる",
+            "RAG（Retrieval Augmented Generation）パターンを使い、クエリに関連する旅行プランを検索してプロンプトに含める",
+            "temperatureを0に設定して常に同じ回答を返すようにする",
+            "DALL-Eモデルを使って旅行先の画像を生成し回答に含める"
+          ],
+          "answer": [1],
+          "explanation": "最新の自社データに基づく回答にはRAGパターンが最適です。データベースから関連情報を検索し、プロンプトに含めることで、モデルが最新かつ正確な旅行プラン情報に基づいて回答を生成できます。ファインチューニングでは最新データへの即時対応が困難です。"
+        },
+        {
+          "id": "PG-029-2",
+          "type": "single",
+          "prompt": "チャットボットが不適切な応答を生成するリスクを低減するために、B社が活用すべきAzure OpenAI Serviceの機能はどれですか。",
+          "choices": [
+            "エンベディングモデルによるテキストのベクトル化",
+            "コンテンツフィルタリングによる有害コンテンツの検出とブロック",
+            "Whisperモデルによる音声入力の文字起こし",
+            "max_tokensパラメーターによる出力長の制限"
+          ],
+          "answer": [1],
+          "explanation": "Azure OpenAI Serviceのコンテンツフィルタリングは、ヘイト、性的、暴力、自傷行為の4カテゴリで入出力を検査し、有害コンテンツを検出・ブロックします。不適切な応答の生成を防ぐための主要な安全機能です。"
+        },
+        {
+          "id": "PG-029-3",
+          "type": "single",
+          "prompt": "B社のチャットボットにおいて、モデルが旅行プランに関する質問以外（例：政治的意見の質問）に回答しないよう制御するために最も効果的な手法はどれですか。",
+          "choices": [
+            "temperatureを0.0に設定する",
+            "max_tokensを小さい値に設定する",
+            "システムメッセージで応答範囲を旅行プランに限定する指示を記述する",
+            "top_pを0.1に設定する"
+          ],
+          "answer": [2],
+          "explanation": "システムメッセージにモデルの役割と応答範囲の制約を明示的に記述することで、特定のトピック（旅行プラン）以外の質問に対する応答を制限できます。temperatureやtop_pは出力の多様性を制御するパラメーターであり、トピック制限には適していません。"
+        }
+      ],
+      "explanation": "このケーススタディでは、旅行代理店のAIチャットボット構築において、RAGパターンによる自社データの活用、コンテンツフィルタリングによる安全性の確保、システムメッセージによるトピック制限といった生成AIの主要な設計パターンを問います。",
+      "tags": ["rag", "content-filtering", "system-message", "architecture", "real-world-scenario"],
+      "sources": [
+        {"title": "Azure OpenAI on your data", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/use-your-data"},
+        {"title": "Azure OpenAI コンテンツフィルタリング", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/content-filter"},
+        {"title": "システムメッセージの設計", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/system-message"}
+      ]
+    },
+    {
+      "id": "PG-030",
+      "domain": "GenAI",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "C社は大手法律事務所であり、弁護士の業務効率化のために生成AIの導入を検討しています。具体的には、大量の法律文書の要約生成、過去の判例検索、契約書のドラフト作成を自動化したいと考えています。法律分野では情報の正確性が極めて重要であり、誤った法的アドバイスは深刻な問題につながる可能性があります。C社はAzure OpenAI Serviceを利用し、責任あるAIの原則に沿った実装を目指しています。",
+      "subQuestions": [
+        {
+          "id": "PG-030-1",
+          "type": "single",
+          "prompt": "C社が過去の判例データベースから関連する判例を検索し、弁護士の質問に対して正確な判例情報を含む回答を生成するために、最も適切な技術の組み合わせはどれですか。",
+          "choices": [
+            "DALL-Eで判例の視覚的要約を生成する",
+            "エンベディングによるセマンティック検索とRAGパターンを組み合わせる",
+            "Whisperで判例の音声読み上げを行う",
+            "temperatureを最大値に設定して多様な判例解釈を生成する"
+          ],
+          "answer": [1],
+          "explanation": "過去の判例をエンベディングでベクトル化してセマンティック検索を可能にし、RAGパターンで検索結果をプロンプトに含めることで、関連判例に基づいた正確な回答を生成できます。法律分野では正確性が重要なため、グラウンディングされた回答が不可欠です。"
+        },
+        {
+          "id": "PG-030-2",
+          "type": "single",
+          "prompt": "法律文書の要約において、AIがハルシネーションにより存在しない法律条文を引用するリスクを軽減するために、最も重要な対策はどれですか。",
+          "choices": [
+            "max_tokensを大きく設定して詳細な要約を生成する",
+            "グラウンディングを行い、情報源が不明な場合は「確認が必要」と回答するようシステムメッセージで指示する",
+            "GPT-3.5ではなくGPT-4を使用することでハルシネーションを完全に排除する",
+            "frequency_penaltyを高く設定して繰り返しを防ぐ"
+          ],
+          "answer": [1],
+          "explanation": "ハルシネーション対策の基本は、外部データに基づくグラウンディングと、情報の確実性が低い場合の適切な振る舞い（「確認が必要」と回答する等）をシステムメッセージで指示することです。GPT-4はGPT-3.5より性能が高いですが、ハルシネーションを完全に排除することはできません。"
+        },
+        {
+          "id": "PG-030-3",
+          "type": "single",
+          "prompt": "C社が責任あるAIの原則に従い、生成AIによる契約書ドラフトの品質を担保するために導入すべき運用ポリシーとして最も適切なものはどれですか。",
+          "choices": [
+            "AIが生成した契約書をそのまま顧客に送付してコスト削減を図る",
+            "AIの出力をブラックボックスとして扱い、効率性を最優先にする",
+            "AIが生成した契約書ドラフトは必ず弁護士がレビューし、最終判断は人間が行う運用にする",
+            "AIの出力に問題があった場合のみ、事後的に修正する"
+          ],
+          "answer": [2],
+          "explanation": "責任あるAIの原則（特にアカウンタビリティと信頼性・安全性）に基づき、法律分野のようにリスクの高い領域では、AIの出力を必ず専門家（弁護士）がレビューし、最終的な判断と責任は人間が持つ「Human-in-the-loop」の運用が不可欠です。"
+        }
+      ],
+      "explanation": "このケーススタディでは、法律事務所における生成AI活用において、エンベディング+RAGによる正確な判例検索、グラウンディングとシステムメッセージによるハルシネーション対策、責任あるAIの原則に基づくHuman-in-the-loopの運用設計を問います。",
+      "tags": ["rag", "embeddings", "hallucination", "responsible-ai", "human-in-the-loop", "real-world-scenario"],
+      "sources": [
+        {"title": "Azure OpenAI の責任ある使用", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/system-message"},
+        {"title": "Azure OpenAI on your data", "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/use-your-data"},
+        {"title": "責任ある AI の原則", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"}
+      ]
+    }
+  ]
+}

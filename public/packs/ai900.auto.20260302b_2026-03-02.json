@@ -1,0 +1,452 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.auto.20260302b",
+    "version": "2026-03-02",
+    "title": "追加練習パック #2",
+    "description": "バランス良く全領域をカバーする追加問題パック",
+    "language": "ja-JP",
+    "createdAt": "2026-03-02T00:00:00Z",
+    "domains": ["Workloads", "ML", "CV", "NLP", "GenAI"]
+  },
+  "questions": [
+    {
+      "id": "BW-001",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "ある企業が顧客の購買履歴データを使って、顧客をいくつかのグループに自動分類したいと考えています。事前にグループの定義はありません。この要件に最も適切なAIワークロードはどれですか。",
+      "choices": [
+        "分類（Classification）",
+        "回帰（Regression）",
+        "クラスタリング（Clustering）",
+        "異常検出（Anomaly Detection）"
+      ],
+      "answer": [2],
+      "explanation": "クラスタリングは教師なし学習の一種で、事前にグループ（ラベル）が定義されていないデータを類似性に基づいて自動的にグループ分けするタスクです。分類は事前定義されたカテゴリへの振り分け、回帰は数値予測、異常検出は逸脱の検出です。",
+      "tags": ["clustering", "unsupervised-learning", "workload-type"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"]
+    },
+    {
+      "id": "BW-002",
+      "domain": "Workloads",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "責任あるAIにおいて、AIシステムの障害が人命に関わるリスクがある場合に重視すべき原則は {{0}} であり、AIの判断に対して組織内の誰が最終的な責任を負うかを明確にすることを求める原則は {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["公平性（Fairness）", "信頼性と安全性（Reliability & Safety）", "包括性（Inclusiveness）", "アカウンタビリティ（Accountability）"],
+          "answer": 1
+        },
+        {
+          "options": ["公平性（Fairness）", "信頼性と安全性（Reliability & Safety）", "包括性（Inclusiveness）", "アカウンタビリティ（Accountability）"],
+          "answer": 3
+        }
+      ],
+      "explanation": "信頼性と安全性は、AIシステムが予測どおりに安全に動作することを求める原則で、人命に関わるシステムでは特に重要です。アカウンタビリティは、AIシステムの設計・運用に関わる人々が責任を持ち、説明責任を果たすことを求める原則です。",
+      "tags": ["responsible-ai", "reliability-safety", "accountability"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"]
+    },
+    {
+      "id": "BW-003",
+      "domain": "Workloads",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "AIソリューションを企業に導入する際の一般的なライフサイクルを正しい順序に並べてください。",
+      "items": [
+        "本番環境にモデルをデプロイし、継続的に監視する",
+        "ビジネス要件を定義し、解決すべき問題を特定する",
+        "データを収集・前処理してモデルのトレーニングに備える",
+        "モデルをトレーニングし、評価指標で性能を検証する"
+      ],
+      "answerOrder": [1, 2, 3, 0],
+      "explanation": "AIソリューションのライフサイクルは、まずビジネス要件の定義から始まり、次にデータの収集・前処理、モデルのトレーニングと評価、最後に本番デプロイと継続監視の順に進みます。",
+      "tags": ["ai-lifecycle", "deployment", "workload-type"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-ml-pipelines"]
+    },
+    {
+      "id": "BW-004",
+      "domain": "Workloads",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の項目のうち、AIワークロードとして「教師あり学習」に該当するタスクを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "メールをスパムか正常かに分類する",
+          "顧客を類似グループに自動分割する",
+          "過去の気温データから明日の最高気温を予測する",
+          "ラベルなしデータの隠れたパターンを発見する",
+          "患者の検査値から糖尿病の有無を判定する",
+          "報酬信号に基づいてゲームの最適戦略を学習する"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "教師あり学習は正解ラベル付きデータで学習するタスクです。スパム分類（二値分類）、気温予測（回帰）、糖尿病判定（分類）はいずれも正解ラベルが必要な教師あり学習です。顧客のグループ分割とパターン発見は教師なし学習、ゲーム戦略学習は強化学習に該当します。",
+      "tags": ["supervised-learning", "classification", "regression", "workload-type"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"]
+    },
+    {
+      "id": "BW-005",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learningのデザイナー（Designer）の特徴として正しいものはどれですか。",
+      "choices": [
+        "Pythonコードの記述が必須であり、GUIは提供されない",
+        "ドラッグ＆ドロップのGUIでMLパイプラインを構築できる",
+        "自動機械学習（AutoML）のみをサポートし、カスタムモデルは構築できない",
+        "モデルのトレーニングのみ可能で、デプロイ機能は含まれない"
+      ],
+      "answer": [1],
+      "explanation": "Azure Machine Learningデザイナーは、コードを書かずにドラッグ＆ドロップの視覚的インターフェースでMLパイプラインを構築できるツールです。データの前処理、モデルのトレーニング、評価、デプロイまで一連のワークフローを視覚的に作成できます。",
+      "tags": ["azure-ml", "designer", "no-code"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-designer"]
+    },
+    {
+      "id": "BW-006",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "回帰モデルの性能を評価する指標として正しいものをすべて選んでください。",
+      "choices": [
+        "平均絶対誤差（MAE: Mean Absolute Error）",
+        "決定係数（R²: R-Squared）",
+        "AUC（Area Under the Curve）",
+        "平均二乗誤差の平方根（RMSE: Root Mean Squared Error）",
+        "F1スコア"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "MAE、R²、RMSEは回帰モデルの評価指標です。MAEは予測値と実際値の平均的な差、R²はモデルがデータの分散をどれだけ説明できるか、RMSEは二乗誤差の平均の平方根です。AUCとF1スコアは分類モデルの評価指標です。",
+      "tags": ["regression", "evaluation-metrics", "ml-fundamentals"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"]
+    },
+    {
+      "id": "BW-007",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下の機械学習アルゴリズムの種類と、適切なユースケースを対応させてください。",
+      "left": [
+        "線形回帰",
+        "ロジスティック回帰",
+        "デシジョンツリー",
+        "k-means"
+      ],
+      "right": [
+        "顧客を購買パターンの類似度でグループ分けする",
+        "住宅の特徴から価格を連続値で予測する",
+        "解釈しやすいルールベースの分類・回帰モデルを構築する",
+        "患者データからがんの良性・悪性を二値で予測する"
+      ],
+      "answerMap": {
+        "線形回帰": "住宅の特徴から価格を連続値で予測する",
+        "ロジスティック回帰": "患者データからがんの良性・悪性を二値で予測する",
+        "デシジョンツリー": "解釈しやすいルールベースの分類・回帰モデルを構築する",
+        "k-means": "顧客を購買パターンの類似度でグループ分けする"
+      },
+      "explanation": "線形回帰は連続値の予測（回帰）、ロジスティック回帰は二値分類、デシジョンツリーはルールベースで解釈しやすい分類・回帰、k-meansはクラスタリング（教師なし学習）に使用されます。",
+      "tags": ["ml-algorithms", "regression", "classification", "clustering"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/machine-learning/algorithm-cheat-sheet"]
+    },
+    {
+      "id": "BW-008",
+      "domain": "ML",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learningの自動機械学習（AutoML）で分類タスクを実行する際のステップを正しい順序に並べてください。",
+      "items": [
+        "最もパフォーマンスの高いモデルを選択してデプロイする",
+        "データセットをAzure Machine Learningワークスペースに登録する",
+        "タスクの種類（分類）とターゲット列を指定してAutoMLジョブを作成する",
+        "AutoMLが複数のアルゴリズムとハイパーパラメーターの組み合わせを自動試行する"
+      ],
+      "answerOrder": [1, 2, 3, 0],
+      "explanation": "まずデータセットを登録し、タスク種類とターゲット列を指定してAutoMLジョブを作成します。AutoMLが自動的に多数のアルゴリズムとパラメーターを試行した後、最良のモデルを選択してデプロイします。",
+      "tags": ["automl", "azure-ml", "process"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"]
+    },
+    {
+      "id": "BW-009",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Visionの空間分析（Spatial Analysis）機能の用途として最も適切なものはどれですか。",
+      "choices": [
+        "画像内のテキストを抽出してデジタル化する",
+        "動画フィード内の人物の動きや密集度をリアルタイムで分析する",
+        "画像内の顔を検出して年齢や感情を推定する",
+        "カスタム画像分類モデルをトレーニングする"
+      ],
+      "answer": [1],
+      "explanation": "Azure AI Visionの空間分析は、ビデオカメラのフィードをリアルタイムで分析し、人物の移動パターン、エリアへの進入・退出、人数カウント、ソーシャルディスタンスの監視などを行う機能です。",
+      "tags": ["cv", "spatial-analysis", "video-analytics"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/intro-to-spatial-analysis-public-preview"]
+    },
+    {
+      "id": "BW-010",
+      "domain": "CV",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure AI Document Intelligenceの事前構築済みモデルが対応している文書タイプとして正しいものをすべて選んでください。",
+      "choices": [
+        "請求書（Invoice）",
+        "レシート（Receipt）",
+        "ソースコードファイル（.py, .js等）",
+        "名刺（Business Card）",
+        "身分証明書（ID Document）"
+      ],
+      "answer": [0, 1, 3, 4],
+      "explanation": "Azure AI Document Intelligenceには請求書、レシート、名刺、身分証明書などの一般的なビジネス文書用の事前構築済みモデルが用意されています。ソースコードファイルの解析は対応していません。",
+      "tags": ["cv", "document-intelligence", "ocr", "prebuilt-models"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/document-intelligence/overview"]
+    },
+    {
+      "id": "BW-011",
+      "domain": "CV",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure Face APIで、2枚の写真に写っている人物が同一人物かどうかを判定する機能は {{0}} であり、事前に登録した人物グループの中から写真の人物が誰であるかを特定する機能は {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["顔の検出（Face Detection）", "顔の検証（Face Verification）", "顔の識別（Face Identification）", "顔のグループ化（Face Grouping）"],
+          "answer": 1
+        },
+        {
+          "options": ["顔の検出（Face Detection）", "顔の検証（Face Verification）", "顔の識別（Face Identification）", "顔のグループ化（Face Grouping）"],
+          "answer": 2
+        }
+      ],
+      "explanation": "顔の検証（Face Verification）は1対1の照合で、2枚の写真の人物が同一かどうかを判定します。顔の識別（Face Identification）は1対多の照合で、登録された人物グループの中から写真の人物を特定します。",
+      "tags": ["cv", "face-api", "verification", "identification"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-identity"]
+    },
+    {
+      "id": "BW-012",
+      "domain": "CV",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "B社は大手小売チェーンで、店舗運営の効率化にAIを活用しようとしています。具体的には、(1)店舗内カメラで来店客の動線を分析してレイアウトを最適化する、(2)レシートや請求書を自動でデジタル化して経理処理を効率化する、(3)商品棚の画像から欠品をリアルタイムで検出する、という3つのプロジェクトを計画しています。",
+      "subQuestions": [
+        {
+          "id": "BW-012-1",
+          "type": "single",
+          "prompt": "店舗内の来店客の動線分析に最も適したAzureサービスはどれですか。",
+          "choices": [
+            "Azure Custom Vision",
+            "Azure AI Visionの空間分析（Spatial Analysis）",
+            "Azure Face API",
+            "Azure AI Document Intelligence"
+          ],
+          "answer": [1],
+          "explanation": "空間分析（Spatial Analysis）は動画フィード内の人物の移動パターンをリアルタイムで追跡・分析する機能であり、来店客の動線分析に最適です。"
+        },
+        {
+          "id": "BW-012-2",
+          "type": "single",
+          "prompt": "レシートや請求書のデジタル化に最も適したAzureサービスはどれですか。",
+          "choices": [
+            "Azure AI Vision（OCR）",
+            "Azure AI Document Intelligence",
+            "Azure Custom Vision",
+            "Azure AI Language"
+          ],
+          "answer": [1],
+          "explanation": "Azure AI Document Intelligenceはレシートや請求書などの構造化文書から情報を抽出する事前構築済みモデルを備えており、経理文書のデジタル化に最適です。単純なOCRよりも構造化された情報抽出が可能です。"
+        },
+        {
+          "id": "BW-012-3",
+          "type": "single",
+          "prompt": "商品棚の欠品をリアルタイムで検出するために、最も適切なアプローチはどれですか。",
+          "choices": [
+            "Azure AI Languageで商品名をテキスト分析する",
+            "Azure Custom Visionで欠品状態を検出するカスタム物体検出モデルを構築する",
+            "Azure Anomaly Detectorで売上データの異常を検出する",
+            "Azure AI Speechで店内アナウンスを分析する"
+          ],
+          "answer": [1],
+          "explanation": "商品棚の画像から欠品を検出するには、Custom Visionで「欠品エリア」や「商品あり・なし」を識別するカスタム物体検出モデルをトレーニングするのが最適です。"
+        }
+      ],
+      "explanation": "このケーススタディでは、小売店舗でのAI活用における適切なAzureサービスの選択を問います。動線分析には空間分析、文書デジタル化にはDocument Intelligence、画像ベースの欠品検出にはCustom Visionが適しています。",
+      "tags": ["cv", "spatial-analysis", "document-intelligence", "custom-vision", "retail"],
+      "sources": [
+        "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/intro-to-spatial-analysis-public-preview",
+        "https://learn.microsoft.com/ja-jp/azure/ai-services/document-intelligence/overview",
+        "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/overview"
+      ]
+    },
+    {
+      "id": "BW-013",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Languageの「会話言語理解（CLU: Conversational Language Understanding）」の主な目的はどれですか。",
+      "choices": [
+        "テキストを別の言語に翻訳する",
+        "ユーザーの発話から意図（Intent）とエンティティ（Entity）を抽出する",
+        "テキストの感情をポジティブ・ネガティブ・ニュートラルに分類する",
+        "テキストからキーフレーズを抽出する"
+      ],
+      "answer": [1],
+      "explanation": "会話言語理解（CLU）は、ユーザーの自然言語による発話を解析し、意図（Intent：ユーザーが何をしたいか）とエンティティ（Entity：発話内の重要な情報）を抽出するサービスです。チャットボットや音声アシスタントの構築に使用されます。",
+      "tags": ["nlp", "clu", "intent", "entity", "conversational-ai"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/conversational-language-understanding/overview"]
+    },
+    {
+      "id": "BW-014",
+      "domain": "NLP",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure AI Translatorでリアルタイムにテキストを翻訳する機能は {{0}} であり、大量の文書ファイルを一括で翻訳する非同期処理の機能は {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["テキスト翻訳（Text Translation）", "ドキュメント翻訳（Document Translation）", "カスタム翻訳（Custom Translator）"],
+          "answer": 0
+        },
+        {
+          "options": ["テキスト翻訳（Text Translation）", "ドキュメント翻訳（Document Translation）", "カスタム翻訳（Custom Translator）"],
+          "answer": 1
+        }
+      ],
+      "explanation": "テキスト翻訳はAPIをリアルタイムで呼び出してテキストを翻訳する同期処理です。ドキュメント翻訳は、Word、PDF、HTMLなどの文書ファイルを一括で非同期的に翻訳する機能で、レイアウトを保持したまま翻訳できます。",
+      "tags": ["nlp", "translator", "text-translation", "document-translation"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/translator/overview"]
+    },
+    {
+      "id": "BW-015",
+      "domain": "NLP",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のAzure AI Languageの機能と、その出力内容を対応させてください。",
+      "left": [
+        "感情分析（Sentiment Analysis）",
+        "キーフレーズ抽出（Key Phrase Extraction）",
+        "言語検出（Language Detection）",
+        "エンティティリンク（Entity Linking）"
+      ],
+      "right": [
+        "テキスト内の重要な語句や表現のリスト",
+        "テキストの言語コード（例: ja, en）と信頼スコア",
+        "テキスト全体および文単位のポジティブ・ネガティブ・ニュートラルのスコア",
+        "テキスト内のエンティティとWikipedia等のナレッジベースへのリンク"
+      ],
+      "answerMap": {
+        "感情分析（Sentiment Analysis）": "テキスト全体および文単位のポジティブ・ネガティブ・ニュートラルのスコア",
+        "キーフレーズ抽出（Key Phrase Extraction）": "テキスト内の重要な語句や表現のリスト",
+        "言語検出（Language Detection）": "テキストの言語コード（例: ja, en）と信頼スコア",
+        "エンティティリンク（Entity Linking）": "テキスト内のエンティティとWikipedia等のナレッジベースへのリンク"
+      },
+      "explanation": "感情分析はポジティブ・ネガティブ・ニュートラルのスコアを返し、キーフレーズ抽出は重要な語句を返し、言語検出は言語コードと信頼度を返し、エンティティリンクはテキスト内のエンティティをWikipedia等の外部知識と紐づけます。",
+      "tags": ["nlp", "azure-language", "sentiment", "key-phrase", "language-detection", "entity-linking"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/overview"]
+    },
+    {
+      "id": "BW-016",
+      "domain": "NLP",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Azure Bot ServiceとAzure AI Languageを使用してFAQチャットボットを構築する際のステップを正しい順序に並べてください。",
+      "items": [
+        "ボットをMicrosoft TeamsやWebサイトなどのチャネルに公開する",
+        "カスタム質問応答（Custom Question Answering）でFAQデータからナレッジベースを作成する",
+        "Azure Bot Serviceでボットリソースを作成し、ナレッジベースと接続する",
+        "ナレッジベースをテストし、回答の精度を確認・調整する"
+      ],
+      "answerOrder": [1, 3, 2, 0],
+      "explanation": "まずFAQデータからナレッジベースを作成し、テストで精度を確認・調整した後、Azure Bot Serviceでボットを作成してナレッジベースと接続し、最後にTeamsやWebサイトなどのチャネルに公開します。",
+      "tags": ["nlp", "bot-service", "custom-question-answering", "process"],
+      "sources": [
+        "https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/question-answering/overview",
+        "https://learn.microsoft.com/ja-jp/azure/bot-service/bot-service-overview"
+      ]
+    },
+    {
+      "id": "BW-017",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI Serviceのモデルのうち、テキストからの画像生成（Text-to-Image）に対応しているモデルはどれですか。",
+      "choices": [
+        "GPT-4o",
+        "DALL-E",
+        "Whisper",
+        "GPT-4 Turbo"
+      ],
+      "answer": [1],
+      "explanation": "DALL-Eはテキストプロンプトから画像を生成するモデルで、Azure OpenAI Serviceで利用可能です。GPT-4oとGPT-4 Turboはテキスト・マルチモーダル理解モデル、Whisperは音声認識モデルです。",
+      "tags": ["genai", "dall-e", "image-generation", "azure-openai"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/models"]
+    },
+    {
+      "id": "BW-018",
+      "domain": "GenAI",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI Serviceのコンテンツフィルタリング機能がデフォルトで検出・フィルタリングするカテゴリとして正しいものをすべて選んでください。",
+      "choices": [
+        "ヘイト表現（Hate）",
+        "性的コンテンツ（Sexual）",
+        "文法の誤り（Grammar Error）",
+        "暴力（Violence）",
+        "自傷行為（Self-harm）"
+      ],
+      "answer": [0, 1, 3, 4],
+      "explanation": "Azure OpenAI Serviceのコンテンツフィルタリングは、ヘイト表現、性的コンテンツ、暴力、自傷行為の4つのカテゴリをデフォルトで検出・フィルタリングします。文法の誤りの検出はコンテンツフィルタリングの対象ではありません。",
+      "tags": ["genai", "content-filtering", "responsible-ai", "azure-openai"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/content-filter"]
+    },
+    {
+      "id": "BW-019",
+      "domain": "GenAI",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のAzure OpenAI Serviceのプロンプトエンジニアリング手法と、その説明を対応させてください。",
+      "left": [
+        "ゼロショット（Zero-shot）",
+        "フューショット（Few-shot）",
+        "チェーン・オブ・ソート（Chain-of-Thought）",
+        "システムメッセージの活用"
+      ],
+      "right": [
+        "モデルの役割や振る舞いを事前に定義してから応答させる",
+        "例示なしで直接タスクの指示を与える",
+        "いくつかの入出力例を提示してからタスクを実行させる",
+        "モデルにステップバイステップで推論過程を記述させる"
+      ],
+      "answerMap": {
+        "ゼロショット（Zero-shot）": "例示なしで直接タスクの指示を与える",
+        "フューショット（Few-shot）": "いくつかの入出力例を提示してからタスクを実行させる",
+        "チェーン・オブ・ソート（Chain-of-Thought）": "モデルにステップバイステップで推論過程を記述させる",
+        "システムメッセージの活用": "モデルの役割や振る舞いを事前に定義してから応答させる"
+      },
+      "explanation": "ゼロショットは例示なしの直接指示、フューショットは数例の入出力を提示してパターンを示す手法、チェーン・オブ・ソートは段階的な推論を促す手法、システムメッセージはモデルの役割設定に使用します。",
+      "tags": ["genai", "prompt-engineering", "zero-shot", "few-shot", "chain-of-thought"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/prompt-engineering"]
+    },
+    {
+      "id": "BW-020",
+      "domain": "GenAI",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の項目のうち、Azure OpenAI Serviceで利用可能なモデルの種類として正しいものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "GPT-4o（テキスト生成・マルチモーダル理解）",
+          "ResNet（画像分類用CNN）",
+          "DALL-E（テキストから画像生成）",
+          "BERT（Google開発のNLPモデル）",
+          "Whisper（音声認識）",
+          "YOLOv8（リアルタイム物体検出）"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "Azure OpenAI Serviceで利用可能なモデルには、GPT-4o（テキスト生成・マルチモーダル理解）、DALL-E（テキストから画像生成）、Whisper（音声認識）があります。ResNetやYOLOv8は一般的なCV用モデルで、BERTはGoogle開発のNLPモデルであり、いずれもAzure OpenAI Serviceのモデルとしては提供されていません。",
+      "tags": ["genai", "azure-openai", "models", "gpt-4o", "dall-e", "whisper"],
+      "sources": ["https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/models"]
+    }
+  ]
+}

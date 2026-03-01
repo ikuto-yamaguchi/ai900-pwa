@@ -1,0 +1,647 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.pool.ml01",
+    "version": "2026-03-02",
+    "title": "機械学習 応用30問",
+    "description": "機械学習の基礎から応用までの問題",
+    "language": "ja-JP",
+    "createdAt": "2026-03-02T01:00:00Z",
+    "domains": ["ML"]
+  },
+  "questions": [
+    {
+      "id": "PM-001",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "入力データに対して「はい」か「いいえ」のように、あらかじめ定義されたカテゴリを予測するタスクはどれですか。",
+      "choices": [
+        "回帰（Regression）",
+        "分類（Classification）",
+        "クラスタリング（Clustering）",
+        "次元削減（Dimensionality Reduction）"
+      ],
+      "answer": [1],
+      "explanation": "分類（Classification）は、入力データをあらかじめ定義された離散的なカテゴリのいずれかに割り当てる教師あり学習タスクです。回帰は連続値の予測、クラスタリングと次元削減は教師なし学習の手法です。",
+      "tags": ["classification", "supervised-learning"],
+      "sources": [{"title": "Azure Machine Learning - 自動ML", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"}]
+    },
+    {
+      "id": "PM-002",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "住宅の面積や築年数などの特徴量から住宅価格（連続値）を予測するタスクに最も適切な機械学習手法はどれですか。",
+      "choices": [
+        "クラスタリング",
+        "分類",
+        "回帰",
+        "強化学習"
+      ],
+      "answer": [2],
+      "explanation": "回帰（Regression）は、連続的な数値を予測する教師あり学習タスクです。住宅価格のような連続値の予測には回帰モデルが最も適しています。",
+      "tags": ["regression", "supervised-learning"],
+      "sources": [{"title": "Azure Machine Learning - 自動ML", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"}]
+    },
+    {
+      "id": "PM-003",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "機械学習において、モデルの予測対象となる値を何と呼びますか。",
+      "choices": [
+        "特徴量（Feature）",
+        "ラベル（Label）",
+        "ハイパーパラメータ（Hyperparameter）",
+        "エポック（Epoch）"
+      ],
+      "answer": [1],
+      "explanation": "ラベル（Label）は、教師あり学習においてモデルが予測しようとする目的変数です。特徴量はモデルへの入力データ、ハイパーパラメータはモデルの構成設定、エポックはトレーニングの反復回数を指します。",
+      "tags": ["label", "feature", "ml-concepts"],
+      "sources": [{"title": "Azure Machine Learning - データの概念", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-data"}]
+    },
+    {
+      "id": "PM-004",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "モデルがトレーニングデータに過度に適合し、新しいデータに対する予測性能が低下する現象を何と呼びますか。",
+      "choices": [
+        "アンダーフィッティング（Underfitting）",
+        "オーバーフィッティング（Overfitting）",
+        "正則化（Regularization）",
+        "交差検証（Cross-validation）"
+      ],
+      "answer": [1],
+      "explanation": "オーバーフィッティング（過学習）は、モデルがトレーニングデータのノイズやパターンを過度に学習してしまい、未知のデータに対して一般化できなくなる現象です。アンダーフィッティングはその逆で、モデルがデータのパターンを十分に捉えられていない状態です。",
+      "tags": ["overfitting", "model-evaluation"],
+      "sources": [{"title": "Azure ML - モデル評価", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}]
+    },
+    {
+      "id": "PM-005",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learningの自動ML（Automated ML）の主な目的として、最も適切なものはどれですか。",
+      "choices": [
+        "データをクラウドストレージに自動アップロードする",
+        "最適なアルゴリズムとハイパーパラメータを自動的に選択してモデルを構築する",
+        "トレーニングデータを自動的に収集する",
+        "モデルのコードを自動的にGitHubにプッシュする"
+      ],
+      "answer": [1],
+      "explanation": "自動ML（Automated ML）は、複数のアルゴリズムとハイパーパラメータの組み合わせを自動的に試行し、指定されたメトリックに基づいて最適なモデルを選択する機能です。これにより、ML専門家でなくても効果的なモデルを構築できます。",
+      "tags": ["automated-ml", "azure-ml"],
+      "sources": [{"title": "Azure Machine Learning - 自動MLとは", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"}]
+    },
+    {
+      "id": "PM-006",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "強化学習（Reinforcement Learning）の仕組みとして正しい説明はどれですか。",
+      "choices": [
+        "正解ラベル付きデータを使ってパターンを学習する",
+        "ラベルなしデータからグループを自動的に見つける",
+        "エージェントが環境と対話し、報酬を最大化する行動方針を学習する",
+        "既存の学習済みモデルを別のタスクに転用する"
+      ],
+      "answer": [2],
+      "explanation": "強化学習では、エージェントが環境内で行動を取り、その結果として得られる報酬（または罰則）に基づいて、累積報酬を最大化する最適な行動方針（ポリシー）を学習します。ゲームAIやロボット制御などに活用されます。",
+      "tags": ["reinforcement-learning"],
+      "sources": [{"title": "Azure ML - 強化学習", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-reinforcement-learning"}]
+    },
+    {
+      "id": "PM-007",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "顧客の購買データにラベルを付けず、類似した購買パターンを持つ顧客を自動的にグループ化する手法はどれですか。",
+      "choices": [
+        "分類",
+        "回帰",
+        "クラスタリング",
+        "強化学習"
+      ],
+      "answer": [2],
+      "explanation": "クラスタリングは教師なし学習の手法で、ラベルのないデータを類似性に基づいて自動的にグループ化します。事前にグループの定義が不要で、データの自然な構造を発見するのに適しています。",
+      "tags": ["clustering", "unsupervised-learning"],
+      "sources": [{"title": "Azure ML - クラスタリングの概念", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/component-reference/k-means-clustering"}]
+    },
+    {
+      "id": "PM-008",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "二値分類モデルにおいて、「陽性と予測したもののうち実際に陽性だった割合」を示す評価指標はどれですか。",
+      "choices": [
+        "正解率（Accuracy）",
+        "適合率（Precision）",
+        "再現率（Recall）",
+        "平均二乗誤差（RMSE）"
+      ],
+      "answer": [1],
+      "explanation": "適合率（Precision）は、モデルが陽性と予測したサンプルのうち、実際に陽性であったサンプルの割合です。偽陽性のコストが高い場合（例：スパム判定）に重要な指標です。再現率は実際に陽性のもののうち正しく検出できた割合です。",
+      "tags": ["precision", "evaluation-metrics", "classification"],
+      "sources": [{"title": "Azure ML - 分類メトリック", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}]
+    },
+    {
+      "id": "PM-009",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "教師あり学習（Supervised Learning）に該当するタスクを、以下からすべて選んでください。",
+      "choices": [
+        "メールをスパムか正常かに分類する",
+        "顧客データをラベルなしでグループ化する",
+        "過去の気温データから明日の気温を予測する",
+        "大量の文書からトピックを自動抽出する",
+        "画像に写っている動物の種類を判定する"
+      ],
+      "answer": [0, 2, 4],
+      "explanation": "教師あり学習は正解ラベル付きデータを使ってモデルをトレーニングする手法です。スパム分類、気温予測（回帰）、画像分類は教師あり学習です。ラベルなしのグループ化（クラスタリング）やトピック抽出は教師なし学習に該当します。",
+      "tags": ["supervised-learning", "classification", "regression"],
+      "sources": [{"title": "Azure ML - 機械学習アルゴリズム", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/algorithm-cheat-sheet"}]
+    },
+    {
+      "id": "PM-010",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "モデルの過学習（オーバーフィッティング）を防ぐための手法として有効なものを、以下からすべて選んでください。",
+      "choices": [
+        "トレーニングデータの量を増やす",
+        "モデルの複雑さを増す",
+        "正則化（Regularization）を適用する",
+        "交差検証（Cross-validation）を使用する",
+        "特徴量の数を際限なく増やす"
+      ],
+      "answer": [0, 2, 3],
+      "explanation": "過学習を防ぐには、トレーニングデータを増やしてモデルが多様なパターンを学ぶこと、正則化でモデルの複雑さにペナルティを与えること、交差検証で汎化性能を評価することが有効です。モデルの複雑さや特徴量を増やすと、逆に過学習のリスクが高まります。",
+      "tags": ["overfitting", "regularization", "cross-validation"],
+      "sources": [{"title": "Azure ML - モデルの評価", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}]
+    },
+    {
+      "id": "PM-011",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "回帰モデルの性能を評価するために適切な指標を、以下からすべて選んでください。",
+      "choices": [
+        "RMSE（平均二乗誤差平方根）",
+        "AUC（曲線下面積）",
+        "MAE（平均絶対誤差）",
+        "決定係数（R²）",
+        "F1スコア"
+      ],
+      "answer": [0, 2, 3],
+      "explanation": "RMSE、MAE、R²は回帰モデルの評価に使用される指標です。RMSEとMAEは予測値と実際の値の誤差を測定し、R²はモデルの説明力を示します。AUCとF1スコアは分類モデルの評価に使用される指標であり、回帰には適しません。",
+      "tags": ["regression", "evaluation-metrics", "rmse", "mae", "r-squared"],
+      "sources": [{"title": "Azure ML - 回帰メトリック", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}]
+    },
+    {
+      "id": "PM-012",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learning Designerの説明として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "ドラッグアンドドロップのGUIでMLパイプラインを構築できる",
+        "コードを書かずにデータの前処理からモデルのトレーニングまで行える",
+        "Pythonコードの記述が必須である",
+        "あらかじめ用意されたコンポーネントを組み合わせてワークフローを作成できる"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "Azure ML Designerは、コード不要のドラッグアンドドロップインターフェースで、データの前処理、モデルのトレーニング、評価までのパイプラインを構築できるツールです。Pythonコードの記述は必須ではなく、あらかじめ用意されたコンポーネントを視覚的に組み合わせて使用します。",
+      "tags": ["azure-ml-designer", "no-code"],
+      "sources": [{"title": "Azure ML Designer とは", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-designer"}]
+    },
+    {
+      "id": "PM-013",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "MLOps（Machine Learning Operations）の主要な目的として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "モデルのデプロイと運用を自動化する",
+        "モデルの再トレーニングを手動でのみ行うようにする",
+        "モデルのバージョン管理と再現性を確保する",
+        "継続的なモデルの監視とパフォーマンス追跡を実現する",
+        "データサイエンティストがインフラ管理に集中できるようにする"
+      ],
+      "answer": [0, 2, 3],
+      "explanation": "MLOpsは、MLモデルのライフサイクル全体を管理する手法で、デプロイの自動化、バージョン管理と再現性の確保、継続的な監視が主な目的です。手動のみの再トレーニングはMLOpsの理念に反し、MLOpsはデータサイエンティストがインフラではなくモデル開発に集中できるようにすることを目指します。",
+      "tags": ["mlops", "model-lifecycle"],
+      "sources": [{"title": "Azure ML - MLOps", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-model-management-and-deployment"}]
+    },
+    {
+      "id": "PM-014",
+      "domain": "ML",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "教師あり学習において、連続的な数値を予測するタスクは {{0}} と呼ばれ、離散的なカテゴリを予測するタスクは {{1}} と呼ばれます。",
+      "dropdowns": [
+        {
+          "options": ["分類", "回帰", "クラスタリング"],
+          "answer": 1
+        },
+        {
+          "options": ["分類", "回帰", "クラスタリング"],
+          "answer": 0
+        }
+      ],
+      "explanation": "回帰は連続的な数値（例：価格、温度）を予測するタスクで、分類は離散的なカテゴリ（例：スパム/正常、犬/猫）を予測するタスクです。クラスタリングは教師なし学習であり、教師あり学習には含まれません。",
+      "tags": ["regression", "classification", "supervised-learning"],
+      "sources": [{"title": "Azure ML - 自動ML タスクの種類", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"}]
+    },
+    {
+      "id": "PM-015",
+      "domain": "ML",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "データセットを3つに分割する場合、モデルのトレーニングに使用するのは {{0}} セットであり、ハイパーパラメータの調整やモデル選択に使用するのは {{1}} セットであり、最終的なモデル性能の評価に使用するのは {{2}} セットです。",
+      "dropdowns": [
+        {
+          "options": ["トレーニング", "検証", "テスト"],
+          "answer": 0
+        },
+        {
+          "options": ["トレーニング", "検証", "テスト"],
+          "answer": 1
+        },
+        {
+          "options": ["トレーニング", "検証", "テスト"],
+          "answer": 2
+        }
+      ],
+      "explanation": "トレーニングセットはモデルの学習に使用され、検証セットはハイパーパラメータの調整やモデル選択の判断に使用されます。テストセットはモデル開発プロセスには使用せず、最終的な汎化性能の評価にのみ使用します。",
+      "tags": ["train-validation-test", "data-split"],
+      "sources": [{"title": "Azure ML - データ分割", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-configure-cross-validation-data-splits"}]
+    },
+    {
+      "id": "PM-016",
+      "domain": "ML",
+      "type": "dropdown",
+      "difficulty": 3,
+      "prompt": "分類モデルの評価において、実際に陽性のサンプルのうちモデルが正しく陽性と予測した割合は {{0}} であり、適合率と再現率の調和平均は {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["適合率（Precision）", "再現率（Recall）", "正解率（Accuracy）", "F1スコア"],
+          "answer": 1
+        },
+        {
+          "options": ["適合率（Precision）", "再現率（Recall）", "正解率（Accuracy）", "F1スコア"],
+          "answer": 3
+        }
+      ],
+      "explanation": "再現率（Recall）は、実際に陽性であるサンプルのうち、モデルが正しく陽性と予測できた割合です。F1スコアは適合率と再現率の調和平均で、両方のバランスを考慮した指標です。",
+      "tags": ["recall", "f1-score", "evaluation-metrics"],
+      "sources": [{"title": "Azure ML - 分類メトリック", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}]
+    },
+    {
+      "id": "PM-017",
+      "domain": "ML",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "データ準備において、特徴量の値の範囲を統一する処理は {{0}} と呼ばれ、欠損値がある場合に平均値や中央値で埋める処理は {{1}} と呼ばれます。",
+      "dropdowns": [
+        {
+          "options": ["正規化（Normalization）", "欠損値補完（Imputation）", "特徴量エンジニアリング"],
+          "answer": 0
+        },
+        {
+          "options": ["正規化（Normalization）", "欠損値補完（Imputation）", "特徴量エンジニアリング"],
+          "answer": 1
+        }
+      ],
+      "explanation": "正規化は特徴量の値のスケールを統一する処理で、異なるスケールの特徴量を持つデータでモデルが適切に学習できるようにします。欠損値補完は欠損データを推定値（平均値、中央値、最頻値など）で埋める処理です。",
+      "tags": ["normalization", "imputation", "data-preparation"],
+      "sources": [{"title": "Azure ML - データ変換", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/component-reference/normalize-data"}]
+    },
+    {
+      "id": "PM-018",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下の機械学習の種類と、その特徴を正しく対応させてください。",
+      "left": ["教師あり学習", "教師なし学習", "強化学習"],
+      "right": ["正解ラベル付きデータからパターンを学習する", "ラベルなしデータからデータの構造やパターンを発見する", "環境との対話を通じて報酬を最大化する行動を学習する"],
+      "answerMap": {
+        "教師あり学習": "正解ラベル付きデータからパターンを学習する",
+        "教師なし学習": "ラベルなしデータからデータの構造やパターンを発見する",
+        "強化学習": "環境との対話を通じて報酬を最大化する行動を学習する"
+      },
+      "explanation": "教師あり学習は入力と正解の対を使い、教師なし学習はラベルなしデータの潜在的構造を見つけ、強化学習はエージェントが試行錯誤しながら報酬を最大化する戦略を学びます。",
+      "tags": ["supervised-learning", "unsupervised-learning", "reinforcement-learning"],
+      "sources": [{"title": "Azure ML - 機械学習アルゴリズム", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/algorithm-cheat-sheet"}]
+    },
+    {
+      "id": "PM-019",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下の評価指標と、それが適用される機械学習タスクを正しく対応させてください。",
+      "left": ["RMSE（平均二乗誤差平方根）", "AUC（曲線下面積）", "F1スコア", "正解率（Accuracy）"],
+      "right": ["回帰モデルの予測誤差を測定する", "二値分類モデルの判別性能を評価する", "分類モデルの適合率と再現率のバランスを評価する", "全予測のうち正しい予測の割合を測定する"],
+      "answerMap": {
+        "RMSE（平均二乗誤差平方根）": "回帰モデルの予測誤差を測定する",
+        "AUC（曲線下面積）": "二値分類モデルの判別性能を評価する",
+        "F1スコア": "分類モデルの適合率と再現率のバランスを評価する",
+        "正解率（Accuracy）": "全予測のうち正しい予測の割合を測定する"
+      },
+      "explanation": "RMSEは回帰の予測精度を測定し、AUCは二値分類の全体的な判別性能を示し、F1スコアは適合率と再現率の調和平均、正解率は全体の正しい予測の割合を示します。各指標は対応するタスクの特性に合わせて設計されています。",
+      "tags": ["evaluation-metrics", "rmse", "auc", "f1-score", "accuracy"],
+      "sources": [{"title": "Azure ML - 評価メトリック", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}]
+    },
+    {
+      "id": "PM-020",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下のAzure Machine Learningの機能と、その主な用途を正しく対応させてください。",
+      "left": ["自動ML（Automated ML）", "Designer", "Notebooks", "コンピューティングクラスター"],
+      "right": ["最適なアルゴリズムとパラメータを自動的に探索する", "GUIでドラッグアンドドロップによりパイプラインを構築する", "PythonやRのコードを対話的に記述・実行する", "大規模なトレーニングジョブを分散処理する"],
+      "answerMap": {
+        "自動ML（Automated ML）": "最適なアルゴリズムとパラメータを自動的に探索する",
+        "Designer": "GUIでドラッグアンドドロップによりパイプラインを構築する",
+        "Notebooks": "PythonやRのコードを対話的に記述・実行する",
+        "コンピューティングクラスター": "大規模なトレーニングジョブを分散処理する"
+      },
+      "explanation": "自動MLはアルゴリズム選択を自動化し、Designerはノーコードでパイプラインを構築でき、Notebooksはコードベースの開発環境を提供し、コンピューティングクラスターは大規模計算リソースを提供します。",
+      "tags": ["azure-ml", "automated-ml", "designer", "notebooks", "compute"],
+      "sources": [{"title": "Azure ML - 概要", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/overview-what-is-azure-machine-learning"}]
+    },
+    {
+      "id": "PM-021",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のデータ前処理手法と、その目的を正しく対応させてください。",
+      "left": ["正規化", "ワンホットエンコーディング", "特徴量選択", "欠損値補完"],
+      "right": ["特徴量の値のスケールを統一する", "カテゴリ変数を数値表現に変換する", "モデルに有用な特徴量のみを選び出す", "データの欠損箇所を推定値で埋める"],
+      "answerMap": {
+        "正規化": "特徴量の値のスケールを統一する",
+        "ワンホットエンコーディング": "カテゴリ変数を数値表現に変換する",
+        "特徴量選択": "モデルに有用な特徴量のみを選び出す",
+        "欠損値補完": "データの欠損箇所を推定値で埋める"
+      },
+      "explanation": "正規化は異なるスケールの特徴量を統一し、ワンホットエンコーディングはカテゴリ変数を二値ベクトルに変換し、特徴量選択は不要な特徴量を除外してモデルの性能向上を図り、欠損値補完はデータの完全性を確保します。",
+      "tags": ["data-preparation", "normalization", "encoding", "feature-selection", "imputation"],
+      "sources": [{"title": "Azure ML - データ変換コンポーネント", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/component-reference/data-transformation"}]
+    },
+    {
+      "id": "PM-022",
+      "domain": "ML",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "機械学習モデルのライフサイクルを正しい順序に並べてください。",
+      "items": [
+        "モデルのデプロイ",
+        "データの収集と前処理",
+        "モデルのトレーニング",
+        "モデルの評価とチューニング",
+        "ビジネス課題の定義"
+      ],
+      "answerOrder": [4, 1, 2, 3, 0],
+      "explanation": "まずビジネス課題を定義し、次にデータの収集と前処理を行い、モデルをトレーニングします。その後、モデルの性能を評価・チューニングし、最終的にモデルをデプロイして本番環境で運用します。",
+      "tags": ["model-lifecycle", "ml-process"],
+      "sources": [{"title": "Azure ML - MLOps", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-model-management-and-deployment"}]
+    },
+    {
+      "id": "PM-023",
+      "domain": "ML",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learningで自動MLを使用してモデルを構築する際の一般的な流れを正しい順序に並べてください。",
+      "items": [
+        "最適なモデルを選択してデプロイする",
+        "データセットを登録する",
+        "自動MLの実行を構成する（タスクの種類・メトリックの指定）",
+        "実行結果から各モデルの性能を比較する"
+      ],
+      "answerOrder": [1, 2, 3, 0],
+      "explanation": "まずデータセットをAzure MLに登録し、自動MLの実行設定（タスクの種類やプライマリメトリックなど）を構成します。実行後に各モデルの性能を比較し、最適なモデルを選択してデプロイします。",
+      "tags": ["automated-ml", "azure-ml", "workflow"],
+      "sources": [{"title": "Azure ML - 自動ML", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"}]
+    },
+    {
+      "id": "PM-024",
+      "domain": "ML",
+      "type": "order",
+      "difficulty": 3,
+      "prompt": "MLOpsの継続的デリバリーにおいて、モデルの更新プロセスを正しい順序に並べてください。",
+      "items": [
+        "モデルの再トレーニング",
+        "データドリフトの検出",
+        "更新されたモデルのステージング環境でのテスト",
+        "本番環境へのデプロイとモニタリング"
+      ],
+      "answerOrder": [1, 0, 2, 3],
+      "explanation": "まずデータドリフト（本番データの分布変化）を検出し、新しいデータでモデルを再トレーニングします。次にステージング環境でテストを行い、問題がなければ本番環境にデプロイして継続的にモニタリングします。",
+      "tags": ["mlops", "data-drift", "continuous-delivery"],
+      "sources": [{"title": "Azure ML - MLOps", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-model-management-and-deployment"}]
+    },
+    {
+      "id": "PM-025",
+      "domain": "ML",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "データ前処理の一般的な手順を正しい順序に並べてください。",
+      "items": [
+        "特徴量エンジニアリングと選択",
+        "データのクレンジング（欠損値処理・外れ値除去）",
+        "探索的データ分析（EDA）でデータの特徴を把握",
+        "データの正規化・標準化"
+      ],
+      "answerOrder": [2, 1, 0, 3],
+      "explanation": "まず探索的データ分析でデータの特性を理解し、次にクレンジングで欠損値や外れ値に対処します。その後、特徴量エンジニアリングで有用な特徴量を作成・選択し、最後に正規化・標準化でスケールを統一してモデルに投入可能な状態にします。",
+      "tags": ["data-preparation", "eda", "feature-engineering", "normalization"],
+      "sources": [{"title": "Azure ML - データの準備", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-prepare-datasets-for-automl"}]
+    },
+    {
+      "id": "PM-026",
+      "domain": "ML",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の項目のうち、教師なし学習（Unsupervised Learning）の手法に該当するものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "K-meansクラスタリング",
+          "線形回帰",
+          "主成分分析（PCA）",
+          "ロジスティック回帰",
+          "階層的クラスタリング",
+          "決定木分類"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "K-meansクラスタリング、主成分分析（PCA）、階層的クラスタリングは教師なし学習の手法です。線形回帰とロジスティック回帰、決定木分類は正解ラベルを使用する教師あり学習の手法です。PCAはデータの次元を削減するための教師なし手法として広く使われます。",
+      "tags": ["unsupervised-learning", "clustering", "pca", "dimensionality-reduction"],
+      "sources": [{"title": "Azure ML - アルゴリズムチートシート", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/algorithm-cheat-sheet"}]
+    },
+    {
+      "id": "PM-027",
+      "domain": "ML",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の項目のうち、Azure Machine Learningのコンピューティングオプションとして利用可能なものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "コンピューティングインスタンス",
+          "Azure Functions",
+          "コンピューティングクラスター",
+          "Azure Logic Apps",
+          "Kubernetesクラスター（AKS連携）",
+          "Azure Event Grid"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "Azure MLのコンピューティングオプションには、開発用のコンピューティングインスタンス、トレーニング用のコンピューティングクラスター、推論用のKubernetesクラスター（AKS連携）があります。Azure Functions、Logic Apps、Event Gridはサーバーレスやイベント駆動のサービスであり、Azure MLのコンピューティングオプションではありません。",
+      "tags": ["azure-ml", "compute-options"],
+      "sources": [{"title": "Azure ML - コンピューティング先", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-compute-target"}]
+    },
+    {
+      "id": "PM-028",
+      "domain": "ML",
+      "type": "hotarea",
+      "difficulty": 3,
+      "prompt": "以下のシナリオのうち、強化学習（Reinforcement Learning）が最も適しているものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "囲碁AIが対局を繰り返して戦略を改善する",
+          "過去の売上データから来月の売上を予測する",
+          "自動運転車が走行経験から運転判断を最適化する",
+          "医療画像からがん細胞を検出する",
+          "ロボットが試行錯誤しながら歩行を学習する",
+          "顧客データを類似グループに分類する"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "強化学習は、エージェントが環境と対話し、報酬に基づいて行動方針を学習する手法です。囲碁AIの戦略学習、自動運転車の判断最適化、ロボットの歩行学習はすべて強化学習の典型的なユースケースです。売上予測は回帰、がん検出は画像分類、顧客分類はクラスタリングに該当します。",
+      "tags": ["reinforcement-learning", "use-cases"],
+      "sources": [{"title": "Azure ML - 強化学習", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-reinforcement-learning"}]
+    },
+    {
+      "id": "PM-029",
+      "domain": "ML",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "B社はECサイトを運営しており、機械学習を活用して以下の課題を解決しようとしています。\n\n課題1：顧客の過去の購買履歴から、来月の購入金額を予測したい。\n課題2：顧客をいくつかのセグメントに自動的に分類し、セグメントごとにマーケティング施策を最適化したい。\n課題3：商品のレコメンドシステムで、ユーザーの行動に応じて推薦を動的に改善したい。\n\nデータサイエンスチームはAzure Machine Learningを使用してこれらのモデルを開発・運用する予定です。",
+      "subQuestions": [
+        {
+          "id": "PM-029-1",
+          "type": "single",
+          "prompt": "課題1（来月の購入金額の予測）に最も適切な機械学習タスクはどれですか。",
+          "choices": [
+            "二値分類",
+            "回帰",
+            "クラスタリング",
+            "強化学習"
+          ],
+          "answer": [1],
+          "explanation": "購入金額は連続的な数値であるため、回帰タスクが最も適切です。回帰は過去のデータから連続値を予測するための教師あり学習手法です。"
+        },
+        {
+          "id": "PM-029-2",
+          "type": "single",
+          "prompt": "課題2（顧客のセグメント分類）に最も適切な機械学習の手法はどれですか。",
+          "choices": [
+            "線形回帰",
+            "ロジスティック回帰",
+            "K-meansクラスタリング",
+            "決定木"
+          ],
+          "answer": [2],
+          "explanation": "事前にグループの定義がなく、顧客の購買パターンから自動的にセグメントを発見したい場合は、教師なし学習であるK-meansクラスタリングが最も適しています。"
+        },
+        {
+          "id": "PM-029-3",
+          "type": "single",
+          "prompt": "課題3のレコメンドシステムにおいて、ユーザーの行動フィードバックに応じて推薦を動的に改善するアプローチとして最も適切なものはどれですか。",
+          "choices": [
+            "教師あり学習で固定モデルを使用する",
+            "強化学習でユーザーの反応を報酬として学習する",
+            "教師なし学習でユーザーをクラスタリングする",
+            "ルールベースのフィルタリングのみを使用する"
+          ],
+          "answer": [1],
+          "explanation": "強化学習は、ユーザーのクリックや購買といった行動を報酬としてモデルに反映し、推薦の質を動的に改善するのに適しています。"
+        },
+        {
+          "id": "PM-029-4",
+          "type": "single",
+          "prompt": "B社のデータサイエンスチームがMLの専門知識が限られている場合、最初にモデルを構築するために最も推奨されるAzure MLの機能はどれですか。",
+          "choices": [
+            "Notebooks（Jupyter）",
+            "自動ML（Automated ML）",
+            "Azure CLI",
+            "REST API"
+          ],
+          "answer": [1],
+          "explanation": "自動ML（Automated ML）は、アルゴリズムの選択やハイパーパラメータの調整を自動化するため、MLの専門知識が限られているチームでも効果的なモデルを迅速に構築できます。"
+        }
+      ],
+      "explanation": "このケーススタディでは、ECサイトの様々な課題に対して適切なMLタスクを選択する能力を問います。連続値予測には回帰、ラベルなしのセグメント分けにはクラスタリング、動的な最適化には強化学習が適しています。また、Azure MLの自動ML機能はML初心者でも活用しやすい機能です。",
+      "tags": ["regression", "clustering", "reinforcement-learning", "automated-ml", "azure-ml"],
+      "sources": [{"title": "Azure ML - 概要", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/overview-what-is-azure-machine-learning"}, {"title": "Azure ML - 自動ML", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"}]
+    },
+    {
+      "id": "PM-030",
+      "domain": "ML",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "C病院では、患者の検査データに基づいて疾患リスクを予測するMLモデルを開発しています。血液検査の50以上の数値項目を特徴量として使用し、特定の疾患の有無を予測するモデルを構築中です。初期のモデルはトレーニングデータで99%の正解率を示しましたが、新しい患者データでは65%の正解率に低下しました。チームはモデルの改善とAzure MLを使った本番運用を計画しています。",
+      "subQuestions": [
+        {
+          "id": "PM-030-1",
+          "type": "single",
+          "prompt": "トレーニングデータで99%だが新しいデータで65%に低下する現象は何と呼ばれますか。",
+          "choices": [
+            "アンダーフィッティング（未学習）",
+            "オーバーフィッティング（過学習）",
+            "データドリフト",
+            "コンセプトドリフト"
+          ],
+          "answer": [1],
+          "explanation": "トレーニングデータでは高い性能を示すが、未知のデータでは性能が大幅に低下する現象はオーバーフィッティング（過学習）です。モデルがトレーニングデータのノイズまで学習してしまい、汎化性能が低下しています。"
+        },
+        {
+          "id": "PM-030-2",
+          "type": "single",
+          "prompt": "50以上の特徴量を持つデータでモデルの汎化性能を向上させるために、最も効果的なアプローチはどれですか。",
+          "choices": [
+            "すべての特徴量をそのまま使用し、トレーニングのエポック数を増やす",
+            "特徴量選択や次元削減を行い、重要な特徴量に絞る",
+            "トレーニングデータの量を減らして計算時間を短縮する",
+            "検証セットを使わずにすべてのデータでトレーニングする"
+          ],
+          "answer": [1],
+          "explanation": "多数の特徴量は過学習の原因となり得るため、特徴量選択や次元削減（PCAなど）により重要な特徴量に絞ることが効果的です。不要な特徴量を除去することで、モデルのノイズへの過剰適合を抑え、汎化性能を向上できます。"
+        },
+        {
+          "id": "PM-030-3",
+          "type": "single",
+          "prompt": "疾患の見逃し（偽陰性）を最小化することが最も重要な場合、優先すべき評価指標はどれですか。",
+          "choices": [
+            "適合率（Precision）",
+            "再現率（Recall）",
+            "正解率（Accuracy）",
+            "RMSE"
+          ],
+          "answer": [1],
+          "explanation": "再現率（Recall）は、実際に陽性（疾患あり）のサンプルのうち正しく検出できた割合です。疾患の見逃しを最小化したい場合は、偽陰性を減らすことが重要であり、再現率を優先すべきです。"
+        }
+      ],
+      "explanation": "このケーススタディでは、医療データを使ったMLモデル開発における実践的な課題を問います。過学習の認識と対処法、高次元データの扱い方、医療分野における適切な評価指標の選択が主要なテーマです。",
+      "tags": ["overfitting", "feature-selection", "dimensionality-reduction", "recall", "evaluation-metrics", "model-lifecycle"],
+      "sources": [{"title": "Azure ML - モデルの評価と解釈", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}, {"title": "Azure ML - 責任あるAI", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"}]
+    }
+  ]
+}

@@ -1,25 +1,176 @@
 {
   "schema": "ai900-pack-index-v1",
-  "updatedAt": "2026-03-02T00:00:00Z",
+  "updatedAt": "2026-03-01T23:33:09.482Z",
   "packs": [
-    {
-      "id": "ai900.base",
-      "title": "AI-900 基礎80問",
-      "version": "2026-03-01",
-      "url": "/packs/ai900.base_2026-03-01.json",
-      "questionCount": 80,
-      "domains": ["Workloads", "ML", "CV", "NLP", "GenAI"],
-      "types": ["single", "multi", "dropdown", "match", "order", "hotarea", "casestudy"],
-      "minAppVersion": "1.0.0"
-    },
     {
       "id": "ai900.auto.20260302",
       "title": "苦手克服パック #1",
       "version": "2026-03-02",
       "url": "/packs/ai900.auto.20260302_2026-03-02.json",
       "questionCount": 15,
-      "domains": ["Workloads", "ML", "CV", "NLP", "GenAI"],
-      "types": ["single", "multi", "dropdown", "match", "order", "hotarea"],
+      "domains": [
+        "Workloads",
+        "ML",
+        "CV",
+        "NLP",
+        "GenAI"
+      ],
+      "types": [
+        "match",
+        "order",
+        "single",
+        "multi",
+        "dropdown",
+        "hotarea"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
+      "id": "ai900.auto.20260302b",
+      "title": "追加練習パック #2",
+      "version": "2026-03-02",
+      "url": "/packs/ai900.auto.20260302b_2026-03-02.json",
+      "questionCount": 20,
+      "domains": [
+        "Workloads",
+        "ML",
+        "CV",
+        "NLP",
+        "GenAI"
+      ],
+      "types": [
+        "single",
+        "dropdown",
+        "order",
+        "hotarea",
+        "multi",
+        "match",
+        "casestudy"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
+      "id": "ai900.base",
+      "title": "AI-900 基礎80問",
+      "version": "2026-03-01",
+      "url": "/packs/ai900.base_2026-03-01.json",
+      "questionCount": 80,
+      "domains": [
+        "Workloads",
+        "ML",
+        "CV",
+        "NLP",
+        "GenAI"
+      ],
+      "types": [
+        "single",
+        "multi",
+        "dropdown",
+        "match",
+        "order",
+        "hotarea",
+        "casestudy"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
+      "id": "ai900.pool.cv01",
+      "title": "Computer Vision 応用30問",
+      "version": "2026-03-02",
+      "url": "/packs/ai900.pool.cv01_2026-03-02.json",
+      "questionCount": 30,
+      "domains": [
+        "CV"
+      ],
+      "types": [
+        "single",
+        "multi",
+        "dropdown",
+        "match",
+        "order",
+        "hotarea",
+        "casestudy"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
+      "id": "ai900.pool.genai01",
+      "title": "生成AI 応用30問",
+      "version": "2026-03-02",
+      "url": "/packs/ai900.pool.genai01_2026-03-02.json",
+      "questionCount": 30,
+      "domains": [
+        "GenAI"
+      ],
+      "types": [
+        "single",
+        "multi",
+        "dropdown",
+        "match",
+        "order",
+        "hotarea",
+        "casestudy"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
+      "id": "ai900.pool.ml01",
+      "title": "機械学習 応用30問",
+      "version": "2026-03-02",
+      "url": "/packs/ai900.pool.ml01_2026-03-02.json",
+      "questionCount": 30,
+      "domains": [
+        "ML"
+      ],
+      "types": [
+        "single",
+        "multi",
+        "dropdown",
+        "match",
+        "order",
+        "hotarea",
+        "casestudy"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
+      "id": "ai900.pool.nlp01",
+      "title": "自然言語処理 応用30問",
+      "version": "2026-03-02",
+      "url": "/packs/ai900.pool.nlp01_2026-03-02.json",
+      "questionCount": 30,
+      "domains": [
+        "NLP"
+      ],
+      "types": [
+        "single",
+        "multi",
+        "dropdown",
+        "match",
+        "order",
+        "hotarea",
+        "casestudy"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
+      "id": "ai900.pool.workloads01",
+      "title": "Workloads 応用30問",
+      "version": "2026-03-02",
+      "url": "/packs/ai900.pool.workloads01_2026-03-02.json",
+      "questionCount": 30,
+      "domains": [
+        "Workloads"
+      ],
+      "types": [
+        "single",
+        "multi",
+        "dropdown",
+        "match",
+        "order",
+        "hotarea",
+        "casestudy"
+      ],
       "minAppVersion": "1.0.0"
     }
   ]

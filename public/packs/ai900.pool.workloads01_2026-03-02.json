@@ -1,0 +1,914 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.pool.workloads01",
+    "version": "2026-03-02",
+    "title": "Workloads 応用30問",
+    "description": "AIワークロードと責任あるAIの応用問題",
+    "language": "ja-JP",
+    "createdAt": "2026-03-02T01:00:00Z",
+    "domains": ["Workloads"]
+  },
+  "questions": [
+    {
+      "id": "PW-001",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "ECサイトで「この商品を購入した人はこの商品も購入しています」という提案を行うために、最も適切なAIワークロードはどれですか。",
+      "choices": [
+        "回帰（Regression）",
+        "分類（Classification）",
+        "レコメンデーション（Recommendation）",
+        "クラスタリング（Clustering）"
+      ],
+      "answer": [2],
+      "explanation": "レコメンデーション（推薦）は、ユーザーの行動履歴や嗜好に基づいて関連アイテムを提案するAIワークロードです。「この商品を購入した人はこの商品も購入しています」は協調フィルタリングに基づくレコメンデーションの典型例です。",
+      "tags": ["recommendation", "workload-type", "retail"],
+      "sources": [
+        {
+          "title": "Azure AI Personalizer の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/personalizer/what-is-personalizer"
+        }
+      ]
+    },
+    {
+      "id": "PW-002",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "責任あるAIの原則のうち、AIチャットボットが多様な言語や文化的背景を持つユーザーにも等しくサービスを提供できるよう設計することを求める原則はどれですか。",
+      "choices": [
+        "信頼性と安全性（Reliability & Safety）",
+        "透明性（Transparency）",
+        "包括性（Inclusiveness）",
+        "アカウンタビリティ（Accountability）"
+      ],
+      "answer": [2],
+      "explanation": "包括性（Inclusiveness）の原則は、AIシステムがすべての人々に力を与え、人々を巻き込むことを求めます。多様な言語や文化的背景を持つユーザーがサービスを利用できるよう配慮することは、包括性の具体的な実践です。",
+      "tags": ["responsible-ai", "inclusiveness"],
+      "sources": [
+        {
+          "title": "Microsoft の責任ある AI の原則",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW-003",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "教師あり学習（Supervised Learning）の特徴として正しいものはどれですか。",
+      "choices": [
+        "ラベル付きデータを使用してモデルをトレーニングし、新しいデータに対する予測を行う",
+        "報酬と罰則のフィードバックを通じてモデルが最適な行動を学習する",
+        "ラベルなしデータからデータの隠れた構造やパターンを発見する",
+        "モデルが自律的に新しいデータを生成して学習を進める"
+      ],
+      "answer": [0],
+      "explanation": "教師あり学習は、入力データとそれに対応する正解ラベル（教師データ）を使ってモデルをトレーニングする手法です。分類や回帰が代表的なタスクです。報酬フィードバックは強化学習、隠れた構造の発見は教師なし学習の特徴です。",
+      "tags": ["supervised-learning", "ml-concepts"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning のアルゴリズム",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-select-algorithms"
+        }
+      ]
+    },
+    {
+      "id": "PW-004",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "金融機関がクレジットカード取引の不正を検出するためにAIを活用しています。このとき、責任あるAIの観点で最も懸念すべき問題はどれですか。",
+      "choices": [
+        "モデルのトレーニングに時間がかかること",
+        "特定の地域や年齢層の正当な取引を不正と誤判定するバイアスが存在すること",
+        "クラウドコンピューティングのコストが高いこと",
+        "AIモデルのバージョン管理が複雑であること"
+      ],
+      "answer": [1],
+      "explanation": "責任あるAIの観点では、モデルのバイアスが最も重要な懸念事項です。特定の地域や年齢層に偏った判定を行うことは公平性の原則に反し、正当な取引を持つ顧客に不利益をもたらす可能性があります。コストやバージョン管理は運用上の課題であり、責任あるAIの主要な懸念ではありません。",
+      "tags": ["responsible-ai", "fairness", "bias", "finance"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning の公平性",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-fairness-ml"
+        }
+      ]
+    },
+    {
+      "id": "PW-005",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "病院が患者の再入院リスクを0〜100%のスコアで予測するAIモデルを構築したいと考えています。この要件に最も適切なAIワークロードはどれですか。",
+      "choices": [
+        "分類（Classification）",
+        "クラスタリング（Clustering）",
+        "回帰（Regression）",
+        "異常検出（Anomaly Detection）"
+      ],
+      "answer": [2],
+      "explanation": "回帰（Regression）は、連続的な数値を予測するワークロードです。再入院リスクを0〜100%のスコアとして出力するのは、連続値の予測であり回帰タスクに該当します。分類は「再入院する/しない」という離散的なカテゴリへの振り分けになります。",
+      "tags": ["regression", "workload-type", "healthcare"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning の自動ML",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PW-006",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "あるAI搭載の採用システムが、履歴書の名前から性別を推定し、男性候補者を優先的に高く評価していることが判明しました。この問題に最も関連する責任あるAIの原則はどれですか。",
+      "choices": [
+        "プライバシーとセキュリティ（Privacy & Security）",
+        "透明性（Transparency）",
+        "公平性（Fairness）",
+        "信頼性と安全性（Reliability & Safety）"
+      ],
+      "answer": [2],
+      "explanation": "公平性（Fairness）の原則は、AIシステムが性別、民族、年齢などの属性に基づいて特定のグループを不当に扱わないことを求めます。男性候補者を優先するバイアスは公平性への明確な違反です。このような問題の検出にはFairlearnなどのバイアス検出ツールが役立ちます。",
+      "tags": ["responsible-ai", "fairness", "bias"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning の公平性",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-fairness-ml"
+        }
+      ]
+    },
+    {
+      "id": "PW-007",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 3,
+      "prompt": "強化学習（Reinforcement Learning）が最も適しているシナリオはどれですか。",
+      "choices": [
+        "過去の販売データからカテゴリごとの売上を予測する",
+        "顧客レビューをポジティブ・ネガティブに分類する",
+        "ロボットが試行錯誤を通じて最適な組立手順を自律的に学習する",
+        "医療画像から腫瘍を検出する"
+      ],
+      "answer": [2],
+      "explanation": "強化学習は、エージェントが環境との相互作用を通じて報酬を最大化する行動を学習する手法です。ロボットが試行錯誤で最適な手順を学習するシナリオは、エージェントが行動を選択し、結果に応じてフィードバック（報酬/罰則）を受ける典型的な強化学習の応用です。売上予測は回帰、レビュー分類は分類、腫瘍検出はコンピュータービジョンのタスクです。",
+      "tags": ["reinforcement-learning", "ml-concepts", "manufacturing"],
+      "sources": [
+        {
+          "title": "強化学習の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-reinforcement-learning"
+        }
+      ]
+    },
+    {
+      "id": "PW-008",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 3,
+      "prompt": "Azure AI サービスにおいて、テキストドキュメントから個人識別情報（PII）を検出・マスキングする機能を提供するサービスはどれですか。",
+      "choices": [
+        "Azure Computer Vision",
+        "Azure AI Language（テキスト分析）",
+        "Azure AI Speech",
+        "Azure Anomaly Detector"
+      ],
+      "answer": [1],
+      "explanation": "Azure AI Language（旧Text Analytics）は、テキストドキュメントから個人識別情報（PII）を検出し、マスキングする機能を提供します。これには名前、住所、電話番号、メールアドレスなどの識別が含まれます。責任あるAIのプライバシーとセキュリティの原則を実践する上で重要な機能です。",
+      "tags": ["azure-ai-services", "privacy", "nlp"],
+      "sources": [
+        {
+          "title": "Azure AI Language PII 検出",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/personally-identifiable-information/overview"
+        }
+      ]
+    },
+    {
+      "id": "PW-009",
+      "domain": "Workloads",
+      "type": "multi",
+      "difficulty": 1,
+      "prompt": "教師なし学習（Unsupervised Learning）に該当するAIワークロードをすべて選んでください。",
+      "choices": [
+        "分類（Classification）",
+        "クラスタリング（Clustering）",
+        "回帰（Regression）",
+        "異常検出（Anomaly Detection）",
+        "次元削減（Dimensionality Reduction）"
+      ],
+      "answer": [1, 3, 4],
+      "explanation": "教師なし学習はラベルなしデータから構造やパターンを発見する手法です。クラスタリング（データのグループ化）、異常検出（正常パターンからの逸脱発見）、次元削減（特徴量の圧縮）が教師なし学習に該当します。分類と回帰はラベル付きデータを必要とする教師あり学習のタスクです。",
+      "tags": ["unsupervised-learning", "workload-type", "ml-concepts"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning のアルゴリズム選択",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-select-algorithms"
+        }
+      ]
+    },
+    {
+      "id": "PW-010",
+      "domain": "Workloads",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "AIモデルの説明可能性（Explainability）を高めるために有効なアプローチをすべて選んでください。",
+      "choices": [
+        "モデルの予測に対する各特徴量の寄与度（Feature Importance）を算出する",
+        "トレーニングデータのサイズを増やす",
+        "SHAP値やLIMEなどの解釈ツールを使用して個々の予測を説明する",
+        "モデルの精度を100%に近づける",
+        "モデルのデータシートやモデルカードを作成して判断基準を文書化する"
+      ],
+      "answer": [0, 2, 4],
+      "explanation": "モデルの説明可能性を高めるためには、(1)特徴量の寄与度を算出して予測に最も影響を与えた要因を明示する、(2)SHAP値やLIMEなどの解釈ツールで個々の予測を局所的に説明する、(3)モデルカードを作成して判断基準・制限事項・バイアスを文書化する、といったアプローチが有効です。データサイズの増大やモデル精度の向上は性能改善であり、直接的に説明可能性を高めるものではありません。",
+      "tags": ["responsible-ai", "transparency", "explainability"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning での解釈可能性",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-machine-learning-interpretability"
+        }
+      ]
+    },
+    {
+      "id": "PW-011",
+      "domain": "Workloads",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "小売業の需要予測（Demand Forecasting）AIソリューションで考慮すべきデータとして適切なものをすべて選んでください。",
+      "choices": [
+        "過去の販売実績データ",
+        "季節や祝日などの外部カレンダー情報",
+        "従業員の個人的な意見や勘",
+        "天候データや気温の変動",
+        "競合他社の株価の秒単位の変動"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "需要予測では、過去の販売実績（トレンドやパターン）、季節・祝日などのカレンダー情報（周期性）、天候データ（外部変動要因）が重要な特徴量となります。従業員の主観的な意見は定量データではなく、競合他社の株価の秒単位の変動は需要との直接的な因果関係が薄いため、通常は有用な特徴量とはなりません。",
+      "tags": ["forecasting", "regression", "retail", "workload-type"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning での予測",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PW-012",
+      "domain": "Workloads",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "責任あるAIの「信頼性と安全性」の原則を実践するための具体的な取り組みとして正しいものをすべて選んでください。",
+      "choices": [
+        "エッジケースや敵対的入力に対するモデルのロバスト性をテストする",
+        "AIシステムにフォールバックメカニズム（人間への引き継ぎ）を実装する",
+        "モデルの推論結果のみに基づいて完全に自動化された意思決定を行う",
+        "デプロイ後も継続的にモデルの性能を監視しドリフトを検出する",
+        "想定される運用環境と異なる条件でのストレステストを実施する"
+      ],
+      "answer": [0, 1, 3, 4],
+      "explanation": "信頼性と安全性の原則では、(1)エッジケース・敵対的入力のテスト、(2)フォールバックメカニズムの実装、(3)継続的な性能監視とドリフト検出、(4)様々な条件でのストレステストが重要です。完全な自動化による意思決定は人間の監視を排除するため、この原則に反します。",
+      "tags": ["responsible-ai", "reliability-safety"],
+      "sources": [
+        {
+          "title": "責任ある AI のプラクティス",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW-013",
+      "domain": "Workloads",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "Azure AI Content Safety サービスの機能として正しいものをすべて選んでください。",
+      "choices": [
+        "テキストコンテンツの有害性（暴力、ヘイトスピーチ等）を検出する",
+        "画像コンテンツの有害性を分析・フィルタリングする",
+        "SQLインジェクション攻撃を防御する",
+        "プロンプトシールドによりジェイルブレイク攻撃を検出する",
+        "リアルタイムの株価データを分析する"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "Azure AI Content Safetyは、テキストと画像の有害コンテンツ検出、およびプロンプトシールドによるジェイルブレイク攻撃の検出機能を提供します。SQLインジェクション防御はWebアプリケーションファイアウォール（WAF）の領域、株価分析はContent Safetyの対象外です。",
+      "tags": ["azure-ai-services", "content-safety", "responsible-ai"],
+      "sources": [
+        {
+          "title": "Azure AI Content Safety の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/content-safety/overview"
+        }
+      ]
+    },
+    {
+      "id": "PW-014",
+      "domain": "Workloads",
+      "type": "dropdown",
+      "difficulty": 1,
+      "prompt": "AIワークロードにおいて、顧客を購買行動の類似性に基づいてグループ分けするタスクは {{0}} であり、過去のデータから商品の将来の販売数を数値として予測するタスクは {{1}} です。",
+      "dropdowns": [
+        {
+          "options": [
+            "分類（Classification）",
+            "クラスタリング（Clustering）",
+            "回帰（Regression）",
+            "異常検出（Anomaly Detection）"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "分類（Classification）",
+            "クラスタリング（Clustering）",
+            "回帰（Regression）",
+            "異常検出（Anomaly Detection）"
+          ],
+          "answer": 2
+        }
+      ],
+      "explanation": "クラスタリングは事前定義されたラベルなしにデータの類似性に基づいてグループ分けするタスクです。回帰は過去のデータから連続的な数値（この場合は販売数）を予測するタスクです。",
+      "tags": ["clustering", "regression", "workload-type"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning のアルゴリズム",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-select-algorithms"
+        }
+      ]
+    },
+    {
+      "id": "PW-015",
+      "domain": "Workloads",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "医療AIシステムにおいて、患者の検査結果を基に「陽性」「陰性」を判定するワークロードは {{0}} に分類されます。この医療AIが誤った判定を行い患者に危害を及ぼさないようにするための責任あるAIの原則は {{1}} であり、判定の根拠を医師に説明できるようにするための原則は {{2}} です。",
+      "dropdowns": [
+        {
+          "options": [
+            "回帰（Regression）",
+            "分類（Classification）",
+            "クラスタリング（Clustering）",
+            "レコメンデーション（Recommendation）"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "公平性（Fairness）",
+            "信頼性と安全性（Reliability & Safety）",
+            "包括性（Inclusiveness）",
+            "透明性（Transparency）"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "公平性（Fairness）",
+            "信頼性と安全性（Reliability & Safety）",
+            "包括性（Inclusiveness）",
+            "透明性（Transparency）"
+          ],
+          "answer": 3
+        }
+      ],
+      "explanation": "陽性/陰性の判定は2値分類タスクです。誤判定による患者への危害を防ぐのは信頼性と安全性の原則、判定根拠の説明は透明性の原則に基づきます。",
+      "tags": ["classification", "responsible-ai", "reliability-safety", "transparency", "healthcare"],
+      "sources": [
+        {
+          "title": "Microsoft の責任ある AI の原則",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW-016",
+      "domain": "Workloads",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "機械学習において、ラベル付きデータを使ってモデルをトレーニングする手法は {{0}} と呼ばれ、ラベルなしデータから隠れたパターンを発見する手法は {{1}} と呼ばれます。エージェントが環境と相互作用しながら報酬を最大化する行動を学習する手法は {{2}} と呼ばれます。",
+      "dropdowns": [
+        {
+          "options": [
+            "教師あり学習（Supervised Learning）",
+            "教師なし学習（Unsupervised Learning）",
+            "強化学習（Reinforcement Learning）",
+            "転移学習（Transfer Learning）"
+          ],
+          "answer": 0
+        },
+        {
+          "options": [
+            "教師あり学習（Supervised Learning）",
+            "教師なし学習（Unsupervised Learning）",
+            "強化学習（Reinforcement Learning）",
+            "転移学習（Transfer Learning）"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "教師あり学習（Supervised Learning）",
+            "教師なし学習（Unsupervised Learning）",
+            "強化学習（Reinforcement Learning）",
+            "転移学習（Transfer Learning）"
+          ],
+          "answer": 2
+        }
+      ],
+      "explanation": "教師あり学習はラベル付きデータで入力と出力の関係を学習します。教師なし学習はラベルなしデータから構造を発見します。強化学習はエージェントが試行錯誤を通じて最適な戦略を学びます。",
+      "tags": ["supervised-learning", "unsupervised-learning", "reinforcement-learning", "ml-concepts"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning のアルゴリズム選択",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-select-algorithms"
+        }
+      ]
+    },
+    {
+      "id": "PW-017",
+      "domain": "Workloads",
+      "type": "dropdown",
+      "difficulty": 3,
+      "prompt": "Azure AIサービスにおいて、画像内の物体を検出・分類するには {{0}} を使用し、テキストの感情分析を行うには {{1}} を使用します。音声をリアルタイムでテキストに変換するには {{2}} を使用します。",
+      "dropdowns": [
+        {
+          "options": [
+            "Azure AI Vision（Computer Vision）",
+            "Azure AI Language",
+            "Azure AI Speech",
+            "Azure Bot Service"
+          ],
+          "answer": 0
+        },
+        {
+          "options": [
+            "Azure AI Vision（Computer Vision）",
+            "Azure AI Language",
+            "Azure AI Speech",
+            "Azure Bot Service"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "Azure AI Vision（Computer Vision）",
+            "Azure AI Language",
+            "Azure AI Speech",
+            "Azure Bot Service"
+          ],
+          "answer": 2
+        }
+      ],
+      "explanation": "Azure AI Vision は画像分析（物体検出、分類、OCR等）を提供し、Azure AI Language はテキスト分析（感情分析、エンティティ認識、キーフレーズ抽出等）を提供し、Azure AI Speech は音声テキスト変換（STT）、テキスト音声変換（TTS）、翻訳等を提供します。",
+      "tags": ["azure-ai-services", "cv", "nlp", "speech"],
+      "sources": [
+        {
+          "title": "Azure AI サービスの概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/what-are-ai-services"
+        }
+      ]
+    },
+    {
+      "id": "PW-018",
+      "domain": "Workloads",
+      "type": "match",
+      "difficulty": 1,
+      "prompt": "以下のAIワークロードの種類と、その説明を正しく対応させてください。",
+      "left": [
+        "分類",
+        "回帰",
+        "クラスタリング",
+        "異常検出"
+      ],
+      "right": [
+        "ラベルなしデータを類似性に基づいてグループに分ける",
+        "入力データをあらかじめ定義されたカテゴリに振り分ける",
+        "正常なパターンから逸脱したデータポイントを特定する",
+        "過去のデータから連続的な数値を予測する"
+      ],
+      "answerMap": {
+        "分類": "入力データをあらかじめ定義されたカテゴリに振り分ける",
+        "回帰": "過去のデータから連続的な数値を予測する",
+        "クラスタリング": "ラベルなしデータを類似性に基づいてグループに分ける",
+        "異常検出": "正常なパターンから逸脱したデータポイントを特定する"
+      },
+      "explanation": "分類は離散的なカテゴリへの振り分け、回帰は連続値の予測、クラスタリングは教師なしでのグループ分け、異常検出は通常パターンからの逸脱の識別です。これらは機械学習の4大ワークロードタイプです。",
+      "tags": ["workload-type", "ml-concepts"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning の自動ML",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PW-019",
+      "domain": "Workloads",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下の業界別AIユースケースと、最も適切なAIワークロードの種類を対応させてください。",
+      "left": [
+        "銀行：ローン申請者の信用リスクを「高・中・低」で評価",
+        "物流：配送ルートの最適化で燃料消費量を数値予測",
+        "小売：顧客セグメンテーション（購買パターン別グループ分け）",
+        "製造：生産設備のセンサー値の異常パターン検出"
+      ],
+      "right": [
+        "異常検出（Anomaly Detection）",
+        "クラスタリング（Clustering）",
+        "分類（Classification）",
+        "回帰（Regression）"
+      ],
+      "answerMap": {
+        "銀行：ローン申請者の信用リスクを「高・中・低」で評価": "分類（Classification）",
+        "物流：配送ルートの最適化で燃料消費量を数値予測": "回帰（Regression）",
+        "小売：顧客セグメンテーション（購買パターン別グループ分け）": "クラスタリング（Clustering）",
+        "製造：生産設備のセンサー値の異常パターン検出": "異常検出（Anomaly Detection）"
+      },
+      "explanation": "信用リスクの「高・中・低」評価は定義済みカテゴリへの分類、燃料消費量の予測は連続数値の回帰、事前定義なしの顧客グループ分けはクラスタリング、センサー値の逸脱検出は異常検出です。",
+      "tags": ["workload-type", "finance", "retail", "manufacturing", "real-world"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning のシナリオ",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PW-020",
+      "domain": "Workloads",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下の責任あるAIの実践手法と、対応するAzureの機能・ツールを正しく対応させてください。",
+      "left": [
+        "モデルのバイアス検出と緩和",
+        "モデルの予測根拠の可視化",
+        "有害コンテンツのフィルタリング",
+        "モデルの性能劣化の監視"
+      ],
+      "right": [
+        "Azure AI Content Safety",
+        "Azure Machine Learning の監視（モニタリング）機能",
+        "Fairlearn（公平性評価ツール）",
+        "InterpretML / SHAP（解釈ツール）"
+      ],
+      "answerMap": {
+        "モデルのバイアス検出と緩和": "Fairlearn（公平性評価ツール）",
+        "モデルの予測根拠の可視化": "InterpretML / SHAP（解釈ツール）",
+        "有害コンテンツのフィルタリング": "Azure AI Content Safety",
+        "モデルの性能劣化の監視": "Azure Machine Learning の監視（モニタリング）機能"
+      },
+      "explanation": "Fairlearnはモデルの公平性を評価しバイアスを緩和するツール、InterpretML/SHAPはモデルの予測を解釈・可視化するツール、Content Safetyは有害コンテンツを検出・フィルタリングするサービス、AML監視機能はデプロイ後のモデル性能・データドリフトを追跡します。",
+      "tags": ["responsible-ai", "azure-ai-services", "fairness", "transparency", "tools"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning の責任ある AI ダッシュボード",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai-dashboard"
+        }
+      ]
+    },
+    {
+      "id": "PW-021",
+      "domain": "Workloads",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下のAzure AIサービスと、そのサービスが提供する主要な機能を正しく対応させてください。",
+      "left": [
+        "Azure AI Document Intelligence",
+        "Azure AI Vision",
+        "Azure AI Language",
+        "Azure OpenAI Service"
+      ],
+      "right": [
+        "画像分析、物体検出、OCR、空間分析",
+        "GPT/DALL-Eモデルによるテキスト生成・要約・画像生成",
+        "フォーム・請求書・レシートからの構造化データ抽出",
+        "感情分析、エンティティ認識、テキスト要約、QA"
+      ],
+      "answerMap": {
+        "Azure AI Document Intelligence": "フォーム・請求書・レシートからの構造化データ抽出",
+        "Azure AI Vision": "画像分析、物体検出、OCR、空間分析",
+        "Azure AI Language": "感情分析、エンティティ認識、テキスト要約、QA",
+        "Azure OpenAI Service": "GPT/DALL-Eモデルによるテキスト生成・要約・画像生成"
+      },
+      "explanation": "Document Intelligenceはフォーム・文書から構造化データを抽出、AI Visionは画像/動画の分析、AI Languageはテキスト分析全般、OpenAI Serviceは大規模言語モデルによる生成AI機能を提供します。",
+      "tags": ["azure-ai-services", "service-overview"],
+      "sources": [
+        {
+          "title": "Azure AI サービスの概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/what-are-ai-services"
+        }
+      ]
+    },
+    {
+      "id": "PW-022",
+      "domain": "Workloads",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "AIモデルのバイアスを検出し、公平性を改善するプロセスを正しい順序に並べてください。",
+      "items": [
+        "改善されたモデルを再評価し、バイアスが許容範囲内かを確認する",
+        "トレーニングデータの偏りや不均衡を特定する",
+        "Fairlearnなどのツールでモデルの公平性メトリクスを測定する",
+        "データの再サンプリングやモデルの制約条件追加でバイアスを緩和する"
+      ],
+      "answerOrder": [1, 2, 3, 0],
+      "explanation": "バイアス改善のプロセスは、(1)まずトレーニングデータの偏りを特定し、(2)公平性メトリクスでバイアスの程度を定量的に測定し、(3)データ再サンプリングやモデル制約でバイアスを緩和し、(4)最後に再評価で改善を確認するという順序で行います。",
+      "tags": ["responsible-ai", "fairness", "bias"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning の公平性",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-fairness-ml"
+        }
+      ]
+    },
+    {
+      "id": "PW-023",
+      "domain": "Workloads",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "異常検出AIを使った製造設備の予防保全ワークフローを正しい順序に並べてください。",
+      "items": [
+        "検出された異常に基づいてメンテナンスのアラートを発行する",
+        "設備のセンサーからリアルタイムデータを収集する",
+        "正常な運転パターンの基準線（ベースライン）を学習する",
+        "新しいセンサーデータを基準線と比較して異常スコアを計算する"
+      ],
+      "answerOrder": [1, 2, 3, 0],
+      "explanation": "予防保全の異常検出は、(1)センサーからデータを収集し、(2)正常パターンのベースラインを学習し、(3)リアルタイムデータをベースラインと比較して異常スコアを算出し、(4)異常検出時にアラートを発行するという流れで行います。",
+      "tags": ["anomaly-detection", "manufacturing", "workload-type"],
+      "sources": [
+        {
+          "title": "Azure Anomaly Detector の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/anomaly-detector/overview"
+        }
+      ]
+    },
+    {
+      "id": "PW-024",
+      "domain": "Workloads",
+      "type": "order",
+      "difficulty": 3,
+      "prompt": "企業がAIモデルのデータガバナンスを確立するための手順を正しい順序に並べてください。",
+      "items": [
+        "データ利用の監査ログを定期的にレビューし、コンプライアンスを確認する",
+        "収集するデータの種類・目的・保存期間を定義するデータポリシーを策定する",
+        "データのアクセス権限を役割ベースで設定し、暗号化を適用する",
+        "個人データの匿名化・仮名化を実施し、トレーニングデータを準備する",
+        "データの収集元と変換履歴を記録するデータリネージを構築する"
+      ],
+      "answerOrder": [1, 4, 3, 2, 0],
+      "explanation": "データガバナンスの確立は、(1)データポリシーの策定（目的・範囲の定義）、(2)データリネージの構築（データの出所・変換の追跡）、(3)個人データの匿名化・仮名化（プライバシー保護）、(4)アクセス権限と暗号化の設定（セキュリティ）、(5)定期的な監査レビュー（継続的なコンプライアンス確認）の順序で実施します。",
+      "tags": ["responsible-ai", "privacy", "data-governance"],
+      "sources": [
+        {
+          "title": "Azure でのデータ ガバナンス",
+          "url": "https://learn.microsoft.com/ja-jp/azure/cloud-adoption-framework/govern/data-governance"
+        }
+      ]
+    },
+    {
+      "id": "PW-025",
+      "domain": "Workloads",
+      "type": "order",
+      "difficulty": 3,
+      "prompt": "責任あるAIの影響評価（Impact Assessment）を実施する手順を正しい順序に並べてください。",
+      "items": [
+        "特定されたリスクに対する緩和策を設計し実装する",
+        "AIシステムの意図された用途と対象ユーザーを明確に定義する",
+        "緩和策の有効性を検証し、残存リスクを文書化して承認を得る",
+        "AIシステムがステークホルダーに与え得るリスクと悪影響を特定する"
+      ],
+      "answerOrder": [1, 3, 0, 2],
+      "explanation": "影響評価は、(1)AIシステムの用途・対象を定義し、(2)潜在的なリスクと悪影響を特定し、(3)リスク緩和策を設計・実装し、(4)緩和策の有効性を検証して残存リスクを文書化するという順序で進めます。",
+      "tags": ["responsible-ai", "accountability", "risk-assessment"],
+      "sources": [
+        {
+          "title": "Microsoft の責任ある AI の影響評価",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW-026",
+      "domain": "Workloads",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下のシナリオのうち、「レコメンデーション（推薦）」のAIワークロードに該当するものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "動画配信サイトでユーザーの視聴履歴に基づいて次に見るべき動画を提案",
+          "ネットワークトラフィックの異常を検出してサイバー攻撃を防ぐ",
+          "来月の電力需要をキロワット時で予測する",
+          "音楽アプリでリスナーの嗜好に合った楽曲プレイリストを自動生成",
+          "X線画像から骨折の有無を判定する",
+          "ECサイトで閲覧中の商品と関連する商品を表示する"
+        ]
+      },
+      "answer": [0, 3, 5],
+      "explanation": "レコメンデーションはユーザーの行動や嗜好に基づいて関連アイテムを提案するワークロードです。動画の視聴提案、楽曲プレイリスト生成、関連商品表示がこれに該当します。ネットワーク異常検出は異常検出、電力需要予測は回帰/予測、X線骨折判定は画像分類です。",
+      "tags": ["recommendation", "workload-type"],
+      "sources": [
+        {
+          "title": "Azure AI Personalizer",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/personalizer/what-is-personalizer"
+        }
+      ]
+    },
+    {
+      "id": "PW-027",
+      "domain": "Workloads",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の取り組みのうち、責任あるAIの「プライバシーとセキュリティ」の原則に直接関連するものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "トレーニングデータに含まれる個人情報を匿名化してからモデルに使用する",
+          "AIモデルの推論速度を向上させるためにGPUを追加する",
+          "差分プライバシー技術を適用して個人のデータが推論結果から復元されないようにする",
+          "AIモデルの精度を向上させるためにより大量のデータを収集する",
+          "データへのアクセスを最小権限の原則に基づいて制御する",
+          "AIシステムの応答時間を短縮するためにキャッシュを導入する"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "プライバシーとセキュリティの原則に直接関連するのは、個人情報の匿名化（データ保護）、差分プライバシー技術の適用（推論からの個人データ復元防止）、最小権限の原則に基づくアクセス制御（セキュリティ）です。GPU追加やキャッシュ導入はパフォーマンス改善、大量データ収集は精度向上の施策であり、プライバシーとは直接関連しません。",
+      "tags": ["responsible-ai", "privacy", "security"],
+      "sources": [
+        {
+          "title": "Microsoft の責任ある AI の原則",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW-028",
+      "domain": "Workloads",
+      "type": "hotarea",
+      "difficulty": 3,
+      "prompt": "以下のシナリオのうち、「教師あり学習」のアプローチが最も適切なものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "過去の患者データ（症状と診断結果のペア）から新しい患者の疾患を予測する",
+          "ラベルなしの遺伝子発現データから類似した遺伝子プロファイルをグループ化する",
+          "自動運転車が試行錯誤で最適な運転操作を学習する",
+          "過去の取引データ（特徴量と不正フラグのペア）から新しい取引の不正を検出する",
+          "大量のニュース記事から話題のトピックを自動的に抽出する",
+          "住宅の特徴データ（面積・築年数等）と販売価格のペアから新しい住宅の価格を予測する"
+        ]
+      },
+      "answer": [0, 3, 5],
+      "explanation": "教師あり学習は入力と正解ラベルのペアでトレーニングします。症状→診断結果（分類）、取引データ→不正フラグ（分類）、住宅特徴→販売価格（回帰）はいずれもラベル付きデータを使う教師あり学習です。遺伝子のグループ化はクラスタリング（教師なし）、自動運転の試行錯誤は強化学習、トピック抽出は教師なし学習です。",
+      "tags": ["supervised-learning", "ml-concepts", "workload-type"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning のアルゴリズム選択",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-select-algorithms"
+        }
+      ]
+    },
+    {
+      "id": "PW-029",
+      "domain": "Workloads",
+      "type": "casestudy",
+      "difficulty": 2,
+      "prompt": "B社はオンライン小売企業で、年間売上の向上と顧客体験の改善にAIを活用しようとしています。具体的には、(1)過去の購買データを基に顧客を複数のセグメントに分けてマーケティング戦略を最適化したい、(2)Webサイトで閲覧中のユーザーに対してパーソナライズされた商品を提案したい、(3)来四半期の各商品カテゴリの売上を予測して在庫を最適化したい、と考えています。B社は責任あるAIガイドラインに従い、顧客のプライバシーを最大限保護する方針です。",
+      "subQuestions": [
+        {
+          "id": "PW-029-1",
+          "type": "single",
+          "prompt": "顧客を購買パターンに基づいて複数のセグメントに分けるために、最も適切なAIワークロードはどれですか。",
+          "choices": [
+            "分類（Classification）",
+            "回帰（Regression）",
+            "クラスタリング（Clustering）",
+            "異常検出（Anomaly Detection）"
+          ],
+          "answer": [2],
+          "explanation": "事前にグループの定義がない状態で顧客を購買パターンの類似性に基づいてセグメント分けするのは、教師なし学習のクラスタリングに該当します。分類は事前定義されたカテゴリが必要です。"
+        },
+        {
+          "id": "PW-029-2",
+          "type": "single",
+          "prompt": "ユーザーにパーソナライズされた商品を提案する機能に最も適したAIワークロードはどれですか。",
+          "choices": [
+            "異常検出（Anomaly Detection）",
+            "レコメンデーション（Recommendation）",
+            "クラスタリング（Clustering）",
+            "予測（Forecasting）"
+          ],
+          "answer": [1],
+          "explanation": "パーソナライズされた商品提案は、ユーザーの行動や嗜好を分析して関連商品を推薦するレコメンデーションのタスクです。"
+        },
+        {
+          "id": "PW-029-3",
+          "type": "single",
+          "prompt": "B社が顧客のプライバシーを保護するために取るべき最も重要な措置はどれですか。",
+          "choices": [
+            "AIモデルの精度を最大化する",
+            "すべてのデータを社内サーバーに保存する",
+            "顧客データの収集目的を明確にし、同意を取得し、個人を特定できないよう匿名化する",
+            "AIモデルのトレーニングに使用するGPUの数を増やす"
+          ],
+          "answer": [2],
+          "explanation": "プライバシーとセキュリティの原則に基づき、データ収集目的の明確化、顧客の同意取得、個人データの匿名化が最も重要です。精度の最大化やハードウェアの増強はプライバシー保護とは直接関係ありません。"
+        }
+      ],
+      "explanation": "このケーススタディでは、小売業における3つの異なるAIワークロード（クラスタリング、レコメンデーション、予測）の適切な選択と、プライバシー保護の実践を問います。ビジネス要件に応じて最適なワークロードを選択し、責任あるAIの原則に従って運用することが重要です。",
+      "tags": ["clustering", "recommendation", "forecasting", "responsible-ai", "privacy", "retail"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning の自動ML",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        },
+        {
+          "title": "Microsoft の責任ある AI の原則",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW-030",
+      "domain": "Workloads",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "C社は大手保険会社で、AIを活用した保険金請求の自動審査システムを開発しています。このシステムは、提出された請求書類をAI Document Intelligenceで読み取り、過去の請求データと照合して「承認」「要追加調査」「却下」を自動判定します。システムは月間10万件以上の請求を処理する必要があります。C社の規制当局から、AIの判断に対する説明責任と、すべての顧客に対する公平な扱いが求められています。",
+      "subQuestions": [
+        {
+          "id": "PW-030-1",
+          "type": "single",
+          "prompt": "請求を「承認」「要追加調査」「却下」に判定するAIワークロードの種類はどれですか。",
+          "choices": [
+            "回帰（Regression）",
+            "多クラス分類（Multi-class Classification）",
+            "異常検出（Anomaly Detection）",
+            "クラスタリング（Clustering）"
+          ],
+          "answer": [1],
+          "explanation": "3つの事前定義されたカテゴリ（承認・要追加調査・却下）のいずれかに請求を振り分けるのは、多クラス分類（Multi-class Classification）タスクです。"
+        },
+        {
+          "id": "PW-030-2",
+          "type": "multi",
+          "prompt": "規制当局の要求に応えるために、C社が実装すべき責任あるAIの施策をすべて選んでください。",
+          "choices": [
+            "各判定に対して、どの要因が決定に寄与したかを説明するレポートを生成する",
+            "年齢・性別・居住地域などの属性グループ別に判定結果の公平性を定期的に監査する",
+            "AIの判定速度を最大化するためにすべての人間によるレビューを廃止する",
+            "判定に不服がある場合の異議申し立てプロセスと人間によるレビュー経路を設ける"
+          ],
+          "answer": [0, 1, 3],
+          "explanation": "説明レポートの生成（透明性）、属性別の公平性監査（公平性）、異議申し立てプロセスの整備（アカウンタビリティ）はすべて規制対応に必要です。人間のレビューを完全に廃止することは信頼性と安全性の原則に反し、規制要件を満たしません。"
+        },
+        {
+          "id": "PW-030-3",
+          "type": "single",
+          "prompt": "C社のAIシステムで、特定の地域の請求者の却下率が他の地域より有意に高いことが判明しました。この問題に対処するために最初に行うべきことはどれですか。",
+          "choices": [
+            "その地域の請求をすべて自動承認に変更する",
+            "トレーニングデータにおける地域別のデータ分布と、モデルの地域別性能を分析する",
+            "AIシステムの使用を即座に全面停止する",
+            "その地域の顧客にAIの使用を通知しないようにする"
+          ],
+          "answer": [1],
+          "explanation": "バイアスが疑われる場合、最初にすべきことはトレーニングデータの偏りとモデルの属性別性能を分析し、根本原因を特定することです。全面自動承認や全面停止は過剰反応であり、通知の隠蔽は透明性の原則に反します。"
+        },
+        {
+          "id": "PW-030-4",
+          "type": "single",
+          "prompt": "提出された請求書類からデータを自動抽出するために使用するAzure AIサービスはどれですか。",
+          "choices": [
+            "Azure AI Vision",
+            "Azure AI Document Intelligence",
+            "Azure AI Language",
+            "Azure AI Search"
+          ],
+          "answer": [1],
+          "explanation": "Azure AI Document Intelligence（旧Form Recognizer）は、請求書、レシート、フォームなどのドキュメントから構造化データを自動抽出するサービスです。保険金請求書類のデータ抽出に最適です。"
+        }
+      ],
+      "explanation": "このケーススタディでは、保険業界におけるAI自動審査システムについて、ワークロードの種類（多クラス分類）、責任あるAIの包括的な実践（透明性・公平性・アカウンタビリティ）、バイアスへの対処法、適切なAzureサービスの選択を総合的に問います。規制産業でのAI活用には特に厳格な責任あるAIの実践が求められます。",
+      "tags": ["classification", "responsible-ai", "fairness", "transparency", "accountability", "azure-ai-services", "finance", "bias"],
+      "sources": [
+        {
+          "title": "Azure AI Document Intelligence の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/document-intelligence/overview"
+        },
+        {
+          "title": "Azure Machine Learning の責任ある AI ダッシュボード",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai-dashboard"
+        },
+        {
+          "title": "Azure Machine Learning の公平性",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-fairness-ml"
+        }
+      ]
+    }
+  ]
+}
