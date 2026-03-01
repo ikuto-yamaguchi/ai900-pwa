@@ -453,7 +453,23 @@ async function finishSession() {
     tagStats: computeTagStats()
   });
 
+  // Auto-sync weakness data to server (background, non-blocking)
+  syncWeaknessToServer().catch(e => console.warn('Weakness sync failed:', e));
+
   navigate('result');
+}
+
+/* -- Sync weakness data to Cloudflare KV for Claude Code -- */
+async function syncWeaknessToServer() {
+  const data = await exportWeaknessData();
+  if (!data) return;
+  try {
+    await fetch('/api/weakness', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: data
+    });
+  } catch { /* silent fail - offline is fine */ }
 }
 
 function computeDomainStats() {

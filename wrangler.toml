@@ -1,0 +1,6 @@
+name = "ai900-pwa"
+pages_build_output_dir = "public"
+
+[[kv_namespaces]]
+binding = "AI900_KV"
+id = "b2f7d9532a6a4ae095ed774816d3d4fb"
