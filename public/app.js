@@ -797,6 +797,9 @@ function renderSession(app) {
   // Render question body by type
   if (qData.type === 'casestudy') {
     renderCasestudy(page, qData, qIndex);
+  } else if (qData.type === 'dropdown') {
+    // Dropdown renders its own prompt (with placeholders replaced)
+    renderQuestionBody(page, qData, qIndex);
   } else {
     page.appendChild(el('div', { className: 'q-prompt' }, qData.prompt));
     renderQuestionBody(page, qData, qIndex);
@@ -1202,6 +1205,11 @@ function renderHotarea(container, qData, qIndex) {
 }
 
 function renderCasestudy(container, qData, qIndex) {
+  const sess = state.session;
+  const finished = sess.finished;
+  const revealed = sess._revealed && sess._revealed.has(qIndex);
+  const showResult = finished || revealed;
+
   // Scenario
   container.appendChild(el('div', { className: 'cs-scenario' }, qData.prompt));
 
@@ -1211,47 +1219,47 @@ function renderCasestudy(container, qData, qIndex) {
 
   const tabs = el('div', { className: 'cs-tabs' });
   subs.forEach((sq, si) => {
+    // Show per-sub grade indicator in tab
+    let tabLabel = `設問${si + 1}`;
+    if (showResult) {
+      const parentAnswer = getAnswer(qIndex) || {};
+      const subCorrect = gradeAnswer({ data: sq }, parentAnswer[sq.id]);
+      tabLabel += subCorrect ? ' ○' : ' ×';
+    }
     tabs.appendChild(el('button', {
       className: si === currentSub ? 'active' : '',
       onClick: () => { state._csSub = si; render(); }
-    }, `設問${si + 1}`));
+    }, tabLabel));
   });
   container.appendChild(tabs);
 
   // Current sub-question
   const sq = subs[currentSub];
-  const finished = state.session.finished;
   const parentAnswer = getAnswer(qIndex) || {};
 
   container.appendChild(el('div', { className: 'q-prompt' }, sq.prompt));
 
-  // Render sub-question body using a proxy
-  const subQIndex = `${qIndex}_sub_${sq.id}`;
-  // We store casestudy answers as { subId: answer }
-  const origGet = getAnswer;
-  const origSet = setAnswer;
-
-  // Temporarily override for sub-question rendering
-  const savedAnswers = state.session.answers;
-  const subAnswer = parentAnswer[sq.id];
-
   // Create a mini-render context
   const subContainer = el('div');
-  renderSubQuestion(subContainer, sq, qIndex, currentSub);
+  renderSubQuestion(subContainer, sq, qIndex, currentSub, showResult);
   container.appendChild(subContainer);
 
   // Explanation for current sub
   if ((state.showExplanation || finished) && sq.explanation) {
+    const subCorrect = gradeAnswer({ data: sq }, parentAnswer[sq.id]);
     const expEl = el('div', { className: 'explanation' },
-      el('h4', null, `設問${currentSub + 1} 解説`),
+      el('h4', { style: { color: showResult ? (subCorrect ? 'var(--ok)' : 'var(--err)') : 'var(--accent)' } },
+        showResult ? (subCorrect ? `設問${currentSub + 1} 正解!` : `設問${currentSub + 1} 不正解`) : `設問${currentSub + 1} 解説`),
       el('p', null, sq.explanation)
     );
     container.appendChild(expEl);
   }
 }
 
-function renderSubQuestion(container, sq, parentQIndex, subIndex) {
-  const finished = state.session.finished;
+function renderSubQuestion(container, sq, parentQIndex, subIndex, showResult) {
+  const sess = state.session;
+  const finished = sess.finished;
+  const locked = finished || (showResult && state.showExplanation);
   const parentAnswer = getAnswer(parentQIndex) || {};
   const current = parentAnswer[sq.id];
 
@@ -1265,12 +1273,12 @@ function renderSubQuestion(container, sq, parentQIndex, subIndex) {
         const selected = cur.includes(ci);
         let cls = 'choice-item';
         if (selected) cls += ' selected';
-        if (finished) {
+        if (showResult) {
           if (sq.answer.includes(ci)) cls += ' correct';
           else if (selected) cls += ' wrong';
         }
         list.appendChild(el('div', { className: cls, onClick: () => {
-          if (finished) return;
+          if (locked) return;
           const ans = { ...(getAnswer(parentQIndex) || {}) };
           let arr = [...(ans[sq.id] || [])];
           if (isMulti) {
@@ -1281,6 +1289,10 @@ function renderSubQuestion(container, sq, parentQIndex, subIndex) {
           }
           ans[sq.id] = arr;
           setAnswer(parentQIndex, ans);
+          // Clear revealed state on answer change
+          if (sess._revealed) sess._revealed.delete(parentQIndex);
+          delete sess.graded[parentQIndex];
+          state.showExplanation = false;
           render();
         }},
           el('div', { className: 'indicator' + (isMulti ? ' check' : '') }),
@@ -1295,7 +1307,7 @@ function renderSubQuestion(container, sq, parentQIndex, subIndex) {
       let html = sq.prompt;
       sq.dropdowns.forEach((dd, i) => {
         const selectId = `csdd-${parentQIndex}-${sq.id}-${i}`;
-        if (finished) {
+        if (showResult) {
           const uv = cur[i];
           const cv = dd.answer;
           const ok = uv === cv;
@@ -1310,7 +1322,7 @@ function renderSubQuestion(container, sq, parentQIndex, subIndex) {
         }
       });
       container.appendChild(el('div', { html }));
-      if (!finished) {
+      if (!showResult) {
         setTimeout(() => {
           sq.dropdowns.forEach((_, i) => {
             const s = document.getElementById(`csdd-${parentQIndex}-${sq.id}-${i}`);
