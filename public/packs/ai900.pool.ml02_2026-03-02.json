@@ -1,0 +1,670 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.pool.ml02",
+    "version": "2026-03-02",
+    "title": "機械学習 応用30問 #2",
+    "description": "機械学習の応用問題（第2弾）",
+    "language": "ja-JP",
+    "createdAt": "2026-03-02T12:00:00Z",
+    "domains": ["ML"]
+  },
+  "questions": [
+    {
+      "id": "PM2-001",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learningでモデルをリアルタイム推論エンドポイントとしてデプロイする場合、リクエストごとに即座に予測結果を返す方式を何と呼びますか。",
+      "choices": [
+        "バッチ推論（Batch Inference）",
+        "リアルタイム推論（Real-time Inference）",
+        "ストリーミング処理（Stream Processing）",
+        "非同期推論（Asynchronous Inference）"
+      ],
+      "answer": [1],
+      "explanation": "リアルタイム推論は、クライアントからのリクエストに対して即座に予測結果を返す方式です。REST APIエンドポイントとしてデプロイされ、低レイテンシが求められるシナリオに適しています。バッチ推論は大量データを一括処理する方式です。",
+      "tags": ["inference", "deployment", "real-time"],
+      "sources": [{"title": "Azure ML - マネージドオンラインエンドポイント", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-endpoints"}]
+    },
+    {
+      "id": "PM2-002",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "決定木（Decision Tree）モデルの利点として最も適切なものはどれですか。",
+      "choices": [
+        "常に最高の予測精度を達成する",
+        "モデルの判断過程が人間にとって解釈しやすい",
+        "大規模データでもメモリ使用量が極めて少ない",
+        "ハイパーパラメータの調整が不要である"
+      ],
+      "answer": [1],
+      "explanation": "決定木の最大の利点は解釈可能性（Interpretability）です。if-then形式のルールでデータを分割するため、モデルがどのような条件で判断を下しているかを視覚的に理解できます。精度はデータや他のアルゴリズムとの比較で変動し、ハイパーパラメータの調整も必要です。",
+      "tags": ["decision-tree", "interpretability"],
+      "sources": [{"title": "Azure ML - アルゴリズム選択", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/algorithm-cheat-sheet"}]
+    },
+    {
+      "id": "PM2-003",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "ランダムフォレスト（Random Forest）が単一の決定木よりも一般的に優れている主な理由はどれですか。",
+      "choices": [
+        "計算速度が単一の決定木よりも常に速い",
+        "複数の決定木を組み合わせることで過学習を軽減し汎化性能が向上する",
+        "特徴量のスケーリングが不要になる",
+        "ラベルなしデータでもトレーニングできる"
+      ],
+      "answer": [1],
+      "explanation": "ランダムフォレストはアンサンブル学習の一種で、複数の決定木を異なるデータサブセットと特徴量サブセットで構築し、その結果を集約します。これにより個々の決定木の過学習傾向を相殺し、より安定した予測を実現します。",
+      "tags": ["random-forest", "ensemble-learning", "overfitting"],
+      "sources": [{"title": "Azure ML - アルゴリズムチートシート", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/algorithm-cheat-sheet"}]
+    },
+    {
+      "id": "PM2-004",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "勾配ブースティング（Gradient Boosting）の説明として正しいものはどれですか。",
+      "choices": [
+        "複数のモデルを並列に学習させ、多数決で結果を決定する",
+        "弱学習器を逐次的に追加し、前のモデルの残差（誤差）を補正していく手法",
+        "ニューラルネットワークの層を深くして精度を向上させる手法",
+        "データをランダムにサンプリングして一つの強力なモデルを構築する手法"
+      ],
+      "answer": [1],
+      "explanation": "勾配ブースティングは、弱い学習器（通常は浅い決定木）を逐次的に追加し、各ステップで前のモデルの予測誤差を補正するように新しいモデルをトレーニングするアンサンブル手法です。XGBoostやLightGBMなどの実装が広く使われています。",
+      "tags": ["gradient-boosting", "ensemble-learning", "boosting"],
+      "sources": [{"title": "Azure ML - ブースティング決定木", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/component-reference/two-class-boosted-decision-tree"}]
+    },
+    {
+      "id": "PM2-005",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 3,
+      "prompt": "Azure Machine Learningのデータストア（Datastore）の主な役割はどれですか。",
+      "choices": [
+        "モデルのトレーニングコードを保存する",
+        "Azure上のストレージサービスへの接続情報を安全に管理する",
+        "トレーニング済みモデルのバージョンを管理する",
+        "コンピューティングリソースのスケーリングを制御する"
+      ],
+      "answer": [1],
+      "explanation": "データストアは、Azure Blob Storage、Azure Data Lake、Azure SQL Databaseなどのストレージサービスへの接続情報（認証情報を含む）を安全に格納・管理する仕組みです。これにより、コード内に認証情報をハードコードせずにデータにアクセスできます。",
+      "tags": ["datastore", "azure-ml", "data-management"],
+      "sources": [{"title": "Azure ML - データストア", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-data"}]
+    },
+    {
+      "id": "PM2-006",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "分類モデルで、偽陽性（False Positive）のコストが非常に高いシナリオ（例：正常な取引を不正と誤検知する）で最も重視すべき評価指標はどれですか。",
+      "choices": [
+        "再現率（Recall）",
+        "適合率（Precision）",
+        "AUC（曲線下面積）",
+        "RMSE（平均二乗誤差平方根）"
+      ],
+      "answer": [1],
+      "explanation": "適合率（Precision）は、陽性と予測したもののうち実際に陽性だった割合を示します。偽陽性のコストが高い場合（正常取引を不正と判定すると顧客に迷惑がかかるなど）、適合率を重視することで誤検知を減らすことができます。",
+      "tags": ["precision", "evaluation-metrics", "false-positive"],
+      "sources": [{"title": "Azure ML - 分類メトリック", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}]
+    },
+    {
+      "id": "PM2-007",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 3,
+      "prompt": "混同行列（Confusion Matrix）において、真陽性（TP）=80、偽陽性（FP）=20、偽陰性（FN）=10、真陰性（TN）=90 の場合、再現率（Recall）はいくつですか。",
+      "choices": [
+        "約80%（80/100）",
+        "約89%（80/90）",
+        "約85%（170/200）",
+        "約90%（90/100）"
+      ],
+      "answer": [1],
+      "explanation": "再現率 = TP / (TP + FN) = 80 / (80 + 10) = 80/90 ≈ 0.889（約89%）。再現率は実際に陽性のサンプル（TP + FN = 90）のうち、正しく陽性と予測できたサンプル（TP = 80）の割合です。",
+      "tags": ["confusion-matrix", "recall", "evaluation-metrics"],
+      "sources": [{"title": "Azure ML - 分類メトリック", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}]
+    },
+    {
+      "id": "PM2-008",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "K分割交差検証（K-Fold Cross-Validation）でK=5を指定した場合の説明として正しいものはどれですか。",
+      "choices": [
+        "データを5等分し、1つをテスト用、残り4つをトレーニング用として5回反復評価する",
+        "5つの異なるアルゴリズムでモデルを構築して比較する",
+        "データの5%をテスト用に確保する",
+        "モデルを5エポック分トレーニングする"
+      ],
+      "answer": [0],
+      "explanation": "K分割交差検証では、データをK個の等しいサイズのフォールドに分割し、各フォールドを順番にテスト用として使用し、残りでトレーニングを行います。K=5の場合、5回の学習・評価を行い、その平均性能でモデルを評価します。",
+      "tags": ["cross-validation", "k-fold", "model-evaluation"],
+      "sources": [{"title": "Azure ML - 交差検証", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-configure-cross-validation-data-splits"}]
+    },
+    {
+      "id": "PM2-009",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "アンサンブル学習（Ensemble Learning）の手法として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "バギング（Bagging）",
+        "ブースティング（Boosting）",
+        "ドロップアウト（Dropout）",
+        "スタッキング（Stacking）",
+        "バッチ正規化（Batch Normalization）"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "バギング（例：ランダムフォレスト）、ブースティング（例：XGBoost）、スタッキングはアンサンブル学習の代表的な手法です。ドロップアウトとバッチ正規化はニューラルネットワークの正則化・最適化技術であり、アンサンブル学習の手法ではありません。",
+      "tags": ["ensemble-learning", "bagging", "boosting", "stacking"],
+      "sources": [{"title": "Azure ML - アルゴリズムチートシート", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/algorithm-cheat-sheet"}]
+    },
+    {
+      "id": "PM2-010",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "Azure Machine Learningの責任あるAI（Responsible AI）ダッシュボードで提供される機能として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "モデルの誤差分析（Error Analysis）",
+        "データセットの自動収集",
+        "特徴量の重要度の可視化（Feature Importance）",
+        "モデルの公平性評価（Fairness Assessment）",
+        "自動的なモデルデプロイ"
+      ],
+      "answer": [0, 2, 3],
+      "explanation": "責任あるAIダッシュボードは、誤差分析（モデルがどこで失敗するか）、特徴量の重要度（どの特徴量が予測に影響を与えるか）、公平性評価（特定のグループに対する偏りがないか）などを可視化する機能を提供します。データの自動収集やモデルの自動デプロイは含まれません。",
+      "tags": ["responsible-ai", "error-analysis", "feature-importance", "fairness"],
+      "sources": [{"title": "Azure ML - 責任あるAIダッシュボード", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai-dashboard"}]
+    },
+    {
+      "id": "PM2-011",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learningの自動ML（Automated ML）で設定できるタスクの種類として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "分類（Classification）",
+        "回帰（Regression）",
+        "時系列予測（Time Series Forecasting）",
+        "強化学習（Reinforcement Learning）",
+        "画像セグメンテーション（Image Segmentation）"
+      ],
+      "answer": [0, 1, 2],
+      "explanation": "Azure MLの自動MLは、分類、回帰、時系列予測の3つのタスクタイプをサポートしています。強化学習は自動MLのタスクタイプではなく、画像セグメンテーションは自動MLの標準タスクとしては提供されていません。",
+      "tags": ["automated-ml", "task-types", "time-series"],
+      "sources": [{"title": "Azure ML - 自動MLタスクの設定", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"}]
+    },
+    {
+      "id": "PM2-012",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "データドリフト（Data Drift）の説明として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "本番環境の入力データの統計的分布がトレーニング時と変化すること",
+        "モデルのコードにバグが発生すること",
+        "季節変動や市場変化により入力データの特性が時間とともに変わること",
+        "モデルの予測精度が低下する原因の一つとなること",
+        "データベースのストレージ容量が不足すること"
+      ],
+      "answer": [0, 2, 3],
+      "explanation": "データドリフトは、本番環境で使用される入力データの統計的分布がトレーニング時のデータと異なる方向に変化する現象です。季節変動や市場の変化が原因となり得ます。データドリフトが発生するとモデルの予測精度が低下するため、Azure MLではデータドリフトの監視機能が提供されています。",
+      "tags": ["data-drift", "model-monitoring", "mlops"],
+      "sources": [{"title": "Azure ML - データドリフトの監視", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-monitor-datasets"}]
+    },
+    {
+      "id": "PM2-013",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "特徴量エンジニアリング（Feature Engineering）の具体的な手法として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "日付データから曜日や月などの新しい特徴量を作成する",
+        "カテゴリ変数をラベルエンコーディングで数値に変換する",
+        "モデルの学習率（Learning Rate）を調整する",
+        "既存の特徴量同士を掛け合わせて交互作用特徴量を作る",
+        "コンピューティングクラスターのノード数を増やす"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "特徴量エンジニアリングは、既存データから新しい特徴量を作成したり変換したりする手法です。日付からの特徴量抽出、カテゴリ変数のエンコーディング、交互作用特徴量の作成は代表的な手法です。学習率の調整はハイパーパラメータチューニング、ノード数の変更はインフラ設定であり特徴量エンジニアリングではありません。",
+      "tags": ["feature-engineering", "encoding", "data-preparation"],
+      "sources": [{"title": "Azure ML - データ変換", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"}]
+    },
+    {
+      "id": "PM2-014",
+      "domain": "ML",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "回帰モデルの評価において、決定係数（R²）が1.0に近い場合はモデルの {{0}} が高いことを示し、R²が0に近い場合はモデルが {{1}} のみで予測していることと同等であることを意味します。",
+      "dropdowns": [
+        {
+          "options": ["予測精度", "計算速度", "解釈可能性"],
+          "answer": 0
+        },
+        {
+          "options": ["平均値", "最大値", "中央値"],
+          "answer": 0
+        }
+      ],
+      "explanation": "決定係数（R²）はモデルの説明力を0～1で表す指標です。R²=1.0はモデルが完全にデータを説明していることを意味し、R²=0はモデルが単にターゲットの平均値を予測しているのと同等であることを意味します。",
+      "tags": ["r-squared", "regression", "evaluation-metrics"],
+      "sources": [{"title": "Azure ML - 回帰メトリック", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}]
+    },
+    {
+      "id": "PM2-015",
+      "domain": "ML",
+      "type": "dropdown",
+      "difficulty": 3,
+      "prompt": "バイアス-バリアンスのトレードオフにおいて、モデルが単純すぎてデータのパターンを捉えられない状態は {{0}} と呼ばれ、高い {{1}} を持ちます。一方、モデルが複雑すぎてノイズまで学習する状態は {{2}} と呼ばれ、高い {{3}} を持ちます。",
+      "dropdowns": [
+        {
+          "options": ["オーバーフィッティング", "アンダーフィッティング", "正則化"],
+          "answer": 1
+        },
+        {
+          "options": ["バイアス", "バリアンス", "エントロピー"],
+          "answer": 0
+        },
+        {
+          "options": ["オーバーフィッティング", "アンダーフィッティング", "正則化"],
+          "answer": 0
+        },
+        {
+          "options": ["バイアス", "バリアンス", "エントロピー"],
+          "answer": 1
+        }
+      ],
+      "explanation": "アンダーフィッティングはモデルの表現力が不足しており高バイアス（系統的な誤差）を示します。オーバーフィッティングはモデルが複雑すぎて高バリアンス（データの変動に対する敏感さ）を示します。最適なモデルはバイアスとバリアンスのバランスが取れた状態です。",
+      "tags": ["bias-variance-tradeoff", "underfitting", "overfitting"],
+      "sources": [{"title": "Azure ML - モデル評価", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}]
+    },
+    {
+      "id": "PM2-016",
+      "domain": "ML",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure MLパイプラインにおいて、データの取り込みから前処理、トレーニング、評価までの一連の処理を自動化する仕組みは {{0}} と呼ばれ、パイプラインの各ステップを定期的に自動実行するには {{1}} を設定します。",
+      "dropdowns": [
+        {
+          "options": ["MLパイプライン", "データストア", "エンドポイント"],
+          "answer": 0
+        },
+        {
+          "options": ["スケジュール", "アラート", "タグ"],
+          "answer": 0
+        }
+      ],
+      "explanation": "MLパイプラインは、データ準備からモデルのトレーニング・評価までのワークフローをステップごとに定義し自動化する仕組みです。スケジュールを設定することで、パイプラインを定期的（例：毎日、毎週）に自動実行できます。",
+      "tags": ["pipeline", "schedule", "automation", "azure-ml"],
+      "sources": [{"title": "Azure ML - パイプラインの概要", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-ml-pipelines"}]
+    },
+    {
+      "id": "PM2-017",
+      "domain": "ML",
+      "type": "dropdown",
+      "difficulty": 3,
+      "prompt": "AUC-ROC曲線は、横軸に {{0}} 、縦軸に {{1}} をプロットしたグラフです。AUC値が0.5の場合、モデルは {{2}} と同等の性能であることを意味します。",
+      "dropdowns": [
+        {
+          "options": ["偽陽性率（FPR）", "真陽性率（TPR）", "適合率（Precision）"],
+          "answer": 0
+        },
+        {
+          "options": ["偽陽性率（FPR）", "真陽性率（TPR）", "適合率（Precision）"],
+          "answer": 1
+        },
+        {
+          "options": ["ランダムな予測", "完璧な予測", "常に陰性と予測"],
+          "answer": 0
+        }
+      ],
+      "explanation": "ROC曲線は偽陽性率（FPR）を横軸、真陽性率（TPR）を縦軸にプロットします。AUC=0.5は対角線上にあり、ランダムな予測と同等の判別能力しかないことを示します。AUC=1.0は完璧な分類器を意味します。",
+      "tags": ["auc-roc", "evaluation-metrics", "classification"],
+      "sources": [{"title": "Azure ML - 分類メトリック", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}]
+    },
+    {
+      "id": "PM2-018",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下の機械学習アルゴリズムと、その主な特徴を正しく対応させてください。",
+      "left": ["線形回帰", "ロジスティック回帰", "K-means", "サポートベクターマシン（SVM）"],
+      "right": ["マージンを最大化する決定境界を見つける分類手法", "連続値の予測に使用される最も基本的な回帰手法", "データをK個のクラスターに分割する教師なし学習手法", "確率を出力する二値分類手法で、シグモイド関数を使用する"],
+      "answerMap": {
+        "線形回帰": "連続値の予測に使用される最も基本的な回帰手法",
+        "ロジスティック回帰": "確率を出力する二値分類手法で、シグモイド関数を使用する",
+        "K-means": "データをK個のクラスターに分割する教師なし学習手法",
+        "サポートベクターマシン（SVM）": "マージンを最大化する決定境界を見つける分類手法"
+      },
+      "explanation": "線形回帰は連続値予測の基本手法、ロジスティック回帰はシグモイド関数により確率を出力する分類手法、K-meansは教師なしのクラスタリング、SVMはクラス間のマージンを最大化する分類手法です。",
+      "tags": ["linear-regression", "logistic-regression", "k-means", "svm"],
+      "sources": [{"title": "Azure ML - アルゴリズムチートシート", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/algorithm-cheat-sheet"}]
+    },
+    {
+      "id": "PM2-019",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下の正則化手法と、その効果を正しく対応させてください。",
+      "left": ["L1正則化（Lasso）", "L2正則化（Ridge）", "Elastic Net", "ドロップアウト（Dropout）"],
+      "right": ["ニューラルネットワークでランダムにノードを無効化して過学習を防ぐ", "L1とL2を組み合わせた正則化手法", "係数の絶対値にペナルティを課し、不要な特徴量の係数を0にする", "係数の二乗にペナルティを課し、すべての係数を小さく抑える"],
+      "answerMap": {
+        "L1正則化（Lasso）": "係数の絶対値にペナルティを課し、不要な特徴量の係数を0にする",
+        "L2正則化（Ridge）": "係数の二乗にペナルティを課し、すべての係数を小さく抑える",
+        "Elastic Net": "L1とL2を組み合わせた正則化手法",
+        "ドロップアウト（Dropout）": "ニューラルネットワークでランダムにノードを無効化して過学習を防ぐ"
+      },
+      "explanation": "L1正則化は特徴量選択の効果があり不要な係数を0にします。L2正則化は全係数を小さく抑えます。Elastic Netは両方を組み合わせた手法です。ドロップアウトはニューラルネットワーク特有の正則化技術で、ランダムにノードを無効化して過学習を軽減します。",
+      "tags": ["regularization", "l1", "l2", "elastic-net", "dropout"],
+      "sources": [{"title": "Azure ML - 正則化", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/component-reference/linear-regression"}]
+    },
+    {
+      "id": "PM2-020",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のモデルデプロイ方式と、その適切なユースケースを正しく対応させてください。",
+      "left": ["リアルタイムエンドポイント", "バッチエンドポイント", "エッジデプロイ（IoTデバイス）"],
+      "right": ["インターネット接続が制限された環境でローカルに推論する", "大量のデータに対して非同期で一括推論する", "Webアプリからの個別リクエストに即座に応答する"],
+      "answerMap": {
+        "リアルタイムエンドポイント": "Webアプリからの個別リクエストに即座に応答する",
+        "バッチエンドポイント": "大量のデータに対して非同期で一括推論する",
+        "エッジデプロイ（IoTデバイス）": "インターネット接続が制限された環境でローカルに推論する"
+      },
+      "explanation": "リアルタイムエンドポイントはREST APIで低レイテンシの即時応答に適し、バッチエンドポイントは大量データの定期一括処理に使用し、エッジデプロイはIoTデバイスなどネットワーク接続が限定的な環境でローカル推論を実行します。",
+      "tags": ["deployment", "real-time", "batch", "edge"],
+      "sources": [{"title": "Azure ML - エンドポイントの種類", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-endpoints"}]
+    },
+    {
+      "id": "PM2-021",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下のハイパーパラメータチューニング戦略と、その探索方法を正しく対応させてください。",
+      "left": ["グリッドサーチ", "ランダムサーチ", "ベイズ最適化", "早期終了（Early Termination）"],
+      "right": ["パラメータ空間からランダムにサンプリングして探索する", "性能が低い実行を途中で打ち切りリソースを節約する", "指定したすべてのパラメータ組み合わせを網羅的に試す", "過去の実行結果を基に次に試すべきパラメータを確率モデルで推定する"],
+      "answerMap": {
+        "グリッドサーチ": "指定したすべてのパラメータ組み合わせを網羅的に試す",
+        "ランダムサーチ": "パラメータ空間からランダムにサンプリングして探索する",
+        "ベイズ最適化": "過去の実行結果を基に次に試すべきパラメータを確率モデルで推定する",
+        "早期終了（Early Termination）": "性能が低い実行を途中で打ち切りリソースを節約する"
+      },
+      "explanation": "グリッドサーチは全組み合わせを試す網羅的手法、ランダムサーチはランダムに試行する効率的な手法、ベイズ最適化は過去結果から学習して有望な領域を重点探索する手法です。早期終了は見込みの低い実験を途中で止めてコストを削減するポリシーです。",
+      "tags": ["hyperparameter-tuning", "grid-search", "random-search", "bayesian-optimization"],
+      "sources": [{"title": "Azure ML - ハイパーパラメータチューニング", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-tune-hyperparameters"}]
+    },
+    {
+      "id": "PM2-022",
+      "domain": "ML",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Azure ML Designerでモデルを構築する際の一般的なステップを正しい順序に並べてください。",
+      "items": [
+        "「モデルの評価」コンポーネントで性能を確認する",
+        "データセットをキャンバスにドラッグする",
+        "「データの分割」コンポーネントでトレーニング/テストに分割する",
+        "「モデルのトレーニング」コンポーネントでアルゴリズムを接続して学習する",
+        "「モデルのスコアリング」コンポーネントでテストデータの予測を生成する"
+      ],
+      "answerOrder": [1, 2, 3, 4, 0],
+      "explanation": "Designerでは、まずデータセットをキャンバスに配置し、データ分割でトレーニング/テストに分けます。次にアルゴリズムを選択してモデルをトレーニングし、テストデータでスコアリング（予測）を行い、最後にモデルの評価コンポーネントで性能指標を確認します。",
+      "tags": ["azure-ml-designer", "workflow", "model-evaluation"],
+      "sources": [{"title": "Azure ML Designer - チュートリアル", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/tutorial-designer-automobile-price-train-score"}]
+    },
+    {
+      "id": "PM2-023",
+      "domain": "ML",
+      "type": "order",
+      "difficulty": 3,
+      "prompt": "ハイパーパラメータチューニングの一般的な流れを正しい順序に並べてください。",
+      "items": [
+        "最適なハイパーパラメータでモデルを再トレーニングする",
+        "探索するハイパーパラメータの範囲を定義する",
+        "チューニング結果から最良のパラメータ組み合わせを選択する",
+        "探索戦略（グリッド/ランダム/ベイズ）を選択して実行する",
+        "最適化するプライマリメトリックを決定する"
+      ],
+      "answerOrder": [4, 1, 3, 2, 0],
+      "explanation": "まずプライマリメトリック（例：AUC、RMSE）を決め、次に探索するパラメータの範囲を定義します。探索戦略を選んで実行し、結果から最良の組み合わせを選択して、最終モデルを再トレーニングします。",
+      "tags": ["hyperparameter-tuning", "workflow", "azure-ml"],
+      "sources": [{"title": "Azure ML - ハイパーパラメータチューニング", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-tune-hyperparameters"}]
+    },
+    {
+      "id": "PM2-024",
+      "domain": "ML",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "モデルのデプロイからモニタリングまでのMLOps運用フローを正しい順序に並べてください。",
+      "items": [
+        "モデルをAzure MLモデルレジストリに登録する",
+        "必要に応じてモデルの再トレーニングをトリガーする",
+        "エンドポイントにデプロイしてトラフィックを割り当てる",
+        "本番環境でデータドリフトとモデル性能を監視する"
+      ],
+      "answerOrder": [0, 2, 3, 1],
+      "explanation": "まずトレーニング済みモデルをモデルレジストリに登録し、エンドポイントにデプロイしてトラフィックを設定します。本番環境でデータドリフトや性能低下を監視し、問題が検出された場合はモデルの再トレーニングをトリガーします。",
+      "tags": ["mlops", "deployment", "monitoring", "model-registry"],
+      "sources": [{"title": "Azure ML - MLOps", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-model-management-and-deployment"}]
+    },
+    {
+      "id": "PM2-025",
+      "domain": "ML",
+      "type": "order",
+      "difficulty": 3,
+      "prompt": "A/Bテストを使用してモデルの更新を本番環境にロールアウトする手順を正しい順序に並べてください。",
+      "items": [
+        "全トラフィックを新モデルに切り替える",
+        "新モデルをステージング環境でテストする",
+        "トラフィックの一部（例：10%）を新モデルに振り分ける",
+        "新旧モデルのKPIを比較分析する"
+      ],
+      "answerOrder": [1, 2, 3, 0],
+      "explanation": "まず新モデルをステージング環境でテストし、問題がなければ本番トラフィックの一部（例：10%）を新モデルに振り分けます。新旧モデルのKPIを比較し、新モデルが優れていることが確認できたら全トラフィックを切り替えます。",
+      "tags": ["a-b-testing", "deployment", "mlops", "traffic-splitting"],
+      "sources": [{"title": "Azure ML - マネージドオンラインエンドポイント", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-endpoints"}]
+    },
+    {
+      "id": "PM2-026",
+      "domain": "ML",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の項目のうち、分類モデルの評価指標として適切なものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "AUC-ROC",
+          "平均絶対誤差（MAE）",
+          "F1スコア",
+          "決定係数（R²）",
+          "混同行列（Confusion Matrix）",
+          "平均二乗誤差（MSE）"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "AUC-ROC、F1スコア、混同行列は分類モデルの評価に使用される指標・ツールです。MAE、R²、MSEは回帰モデルの評価指標であり、分類モデルの評価には通常使用しません。",
+      "tags": ["classification", "evaluation-metrics", "auc-roc", "f1-score", "confusion-matrix"],
+      "sources": [{"title": "Azure ML - 分類メトリック", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}]
+    },
+    {
+      "id": "PM2-027",
+      "domain": "ML",
+      "type": "hotarea",
+      "difficulty": 3,
+      "prompt": "以下の項目のうち、モデルのアンダーフィッティング（未学習）の兆候として該当するものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "トレーニング誤差とテスト誤差がともに高い",
+          "トレーニング誤差は低いがテスト誤差が高い",
+          "モデルがデータの基本的な傾向すら捉えられていない",
+          "トレーニングデータへの適合度が過度に高い",
+          "モデルの複雑さが不十分である可能性がある",
+          "特徴量が多すぎてノイズを学習している"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "アンダーフィッティングでは、トレーニング誤差・テスト誤差の両方が高く、モデルがデータの基本パターンを捉えられません。モデルの複雑さが不十分であることが原因です。一方、トレーニング誤差が低くテスト誤差が高い、過度な適合、ノイズの学習はオーバーフィッティングの兆候です。",
+      "tags": ["underfitting", "model-evaluation", "bias-variance"],
+      "sources": [{"title": "Azure ML - モデル評価", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"}]
+    },
+    {
+      "id": "PM2-028",
+      "domain": "ML",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の項目のうち、Azure Machine Learningの環境（Environment）で管理される要素として該当するものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "Pythonパッケージとそのバージョン",
+          "データセットの行数とカラム数",
+          "Dockerベースイメージ",
+          "モデルの精度スコア",
+          "Conda依存関係の定義",
+          "コンピューティングクラスターのサイズ"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "Azure MLの環境（Environment）は、トレーニングや推論の実行に必要なソフトウェア依存関係を定義します。Pythonパッケージとバージョン、Dockerベースイメージ、Conda依存関係の定義が含まれます。データセットの行数、モデル精度、コンピューティングサイズは環境の管理対象ではありません。",
+      "tags": ["environment", "azure-ml", "docker", "conda"],
+      "sources": [{"title": "Azure ML - 環境の管理", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-environments"}]
+    },
+    {
+      "id": "PM2-029",
+      "domain": "ML",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "D社はオンラインサブスクリプションサービスを提供しており、顧客の解約予測（チャーン予測）モデルを構築しています。\n\nデータセットには5万件の顧客データがあり、そのうち解約した顧客は5%（2,500件）、継続中の顧客は95%（47,500件）です。特徴量には利用頻度、契約期間、サポートへの問い合わせ回数、月額料金プランなどが含まれています。\n\n初期モデルは全体の正解率（Accuracy）が96%でしたが、実際に解約した顧客のうち検出できたのは30%に留まりました。チームはモデルの改善を計画しています。",
+      "subQuestions": [
+        {
+          "id": "PM2-029-1",
+          "type": "single",
+          "prompt": "正解率が96%にもかかわらず解約顧客の検出率が30%と低い主な原因はどれですか。",
+          "choices": [
+            "モデルの学習率が高すぎる",
+            "データセットのクラス不均衡（解約5%対継続95%）により、モデルが多数派クラスに偏って予測している",
+            "特徴量の数が多すぎる",
+            "トレーニングのエポック数が不足している"
+          ],
+          "answer": [1],
+          "explanation": "クラス不均衡なデータでは、モデルがすべてを多数派クラス（継続）と予測するだけでも95%の正解率を達成できます。そのため、少数派クラス（解約）の検出率が低くなります。正解率だけでは不均衡データの性能を適切に評価できません。"
+        },
+        {
+          "id": "PM2-029-2",
+          "type": "multi",
+          "prompt": "クラス不均衡に対処するための有効な手法を、以下からすべて選んでください。",
+          "choices": [
+            "少数派クラスをオーバーサンプリング（SMOTE等）する",
+            "クラスの重みをコスト関数に設定して少数派クラスの誤分類ペナルティを増やす",
+            "すべての特徴量を削除する",
+            "評価指標をAccuracyからF1スコアや再現率に変更する"
+          ],
+          "answer": [0, 1, 3],
+          "explanation": "オーバーサンプリング（SMOTE等）で少数派クラスを増やす、コスト関数でクラス重みを調整する、評価指標をF1スコアや再現率に変更することが有効です。特徴量の全削除はモデルの学習自体を不可能にします。"
+        },
+        {
+          "id": "PM2-029-3",
+          "type": "single",
+          "prompt": "解約予測のビジネス目的を考えると、「解約しそうな顧客を見逃さない」ことが最も重要です。この場合に最も重視すべき評価指標はどれですか。",
+          "choices": [
+            "正解率（Accuracy）",
+            "適合率（Precision）",
+            "再現率（Recall）",
+            "特異度（Specificity）"
+          ],
+          "answer": [2],
+          "explanation": "解約しそうな顧客を見逃さないことが重要な場合、再現率（Recall）を重視すべきです。再現率は実際に解約する顧客のうち、モデルが正しく検出できた割合を示します。再現率を高めることで、解約リスクのある顧客を幅広くキャッチできます。"
+        },
+        {
+          "id": "PM2-029-4",
+          "type": "single",
+          "prompt": "D社がモデルをAzure MLにデプロイした後、時間の経過とともに予測精度が低下しました。この原因として最も考えられるものはどれですか。",
+          "choices": [
+            "Azure MLのサービスがアップデートされた",
+            "データドリフトにより本番データの分布がトレーニング時と変化した",
+            "モデルのファイルサイズが大きくなった",
+            "エンドポイントのURLが変更された"
+          ],
+          "answer": [1],
+          "explanation": "本番環境で時間経過とともに予測精度が低下する最も一般的な原因はデータドリフトです。顧客の行動パターンや市場環境の変化により、入力データの分布がトレーニング時と異なってくることで、モデルの予測精度が低下します。"
+        }
+      ],
+      "explanation": "このケーススタディでは、クラス不均衡データにおけるモデル評価の落とし穴、不均衡への対処法、ビジネス目的に合った評価指標の選択、そしてデプロイ後のモデル性能低下（データドリフト）について実践的に問います。",
+      "tags": ["class-imbalance", "churn-prediction", "recall", "smote", "data-drift", "evaluation-metrics"],
+      "sources": [{"title": "Azure ML - 自動MLと不均衡データ", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"}, {"title": "Azure ML - データドリフト監視", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-monitor-datasets"}]
+    },
+    {
+      "id": "PM2-030",
+      "domain": "ML",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "E社は製造ラインの品質管理を改善するため、Azure Machine Learningを活用しています。\n\n製造工程から収集されるセンサーデータ（温度、圧力、振動、湿度など20種類）を特徴量として使用し、製品の良品/不良品を予測する二値分類モデルを構築しました。\n\nモデルは自動ML（Automated ML）で構築され、最終的にLightGBMアルゴリズムが最良モデルとして選択されました。現在、モデルを本番環境にデプロイするための準備を進めています。",
+      "subQuestions": [
+        {
+          "id": "PM2-030-1",
+          "type": "single",
+          "prompt": "自動MLがLightGBMを最良モデルとして選択した根拠を確認するには、Azure MLスタジオのどの機能を使用しますか。",
+          "choices": [
+            "データストアの接続テスト",
+            "自動ML実行の「モデル」タブで各モデルのメトリック比較を確認する",
+            "コンピューティングインスタンスのログファイルを参照する",
+            "パイプラインの実行履歴を確認する"
+          ],
+          "answer": [1],
+          "explanation": "自動ML実行の「モデル」タブでは、試行されたすべてのアルゴリズムの評価メトリック（AUC、F1スコア等）を比較でき、なぜ特定のモデルが最良と判断されたかを確認できます。"
+        },
+        {
+          "id": "PM2-030-2",
+          "type": "single",
+          "prompt": "E社のモデルをAzure MLのマネージドオンラインエンドポイントにデプロイする主なメリットはどれですか。",
+          "choices": [
+            "モデルのトレーニング時間が短縮される",
+            "インフラの管理をAzureに任せ、自動スケーリングや青緑デプロイが可能になる",
+            "トレーニングデータが自動的にバックアップされる",
+            "モデルの精度が自動的に向上する"
+          ],
+          "answer": [1],
+          "explanation": "マネージドオンラインエンドポイントは、インフラのプロビジョニングや管理をAzureが行うフルマネージドサービスです。自動スケーリング、青緑デプロイ（ゼロダウンタイム更新）、組み込みの監視機能などが提供されます。"
+        },
+        {
+          "id": "PM2-030-3",
+          "type": "single",
+          "prompt": "不良品を見逃すコスト（偽陰性）と、良品を不良品と誤判定するコスト（偽陽性）のどちらが高いかを考慮してモデルの閾値を調整する場合、不良品の見逃しを最小化するにはどうすべきですか。",
+          "choices": [
+            "分類閾値を上げて、より確信度が高い場合のみ不良品と判定する",
+            "分類閾値を下げて、少しでも不良品の可能性があれば検出する",
+            "分類閾値は変更せず、トレーニングデータを増やす",
+            "分類閾値は変更せず、特徴量の数を減らす"
+          ],
+          "answer": [1],
+          "explanation": "分類閾値を下げると、モデルがより積極的に不良品と判定するようになり、偽陰性（見逃し）が減少します。ただし、偽陽性（誤検知）は増加するため、ビジネスコストを考慮したバランスが重要です。"
+        },
+        {
+          "id": "PM2-030-4",
+          "type": "single",
+          "prompt": "モデルが「なぜこの製品を不良品と予測したか」を製造担当者に説明するために最も有用なAzure MLの機能はどれですか。",
+          "choices": [
+            "コンピューティングクラスターの使用状況レポート",
+            "責任あるAIダッシュボードのモデル解釈（Feature Importance）機能",
+            "データセットのプロファイリング機能",
+            "パイプラインの実行ログ"
+          ],
+          "answer": [1],
+          "explanation": "責任あるAIダッシュボードのモデル解釈機能では、グローバルおよびローカルの特徴量重要度を可視化できます。個々の予測について、どの特徴量（例：温度が閾値を超えた）が判断に影響したかを説明でき、製造担当者への説明に有用です。"
+        }
+      ],
+      "explanation": "このケーススタディでは、製造業の品質管理におけるML活用を題材に、自動MLの結果確認方法、マネージドエンドポイントのメリット、分類閾値の調整戦略、モデルの解釈可能性といった実践的なトピックを扱います。",
+      "tags": ["automated-ml", "lightgbm", "deployment", "threshold-tuning", "interpretability", "responsible-ai"],
+      "sources": [{"title": "Azure ML - 自動ML", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"}, {"title": "Azure ML - マネージドエンドポイント", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-endpoints"}, {"title": "Azure ML - 責任あるAIダッシュボード", "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai-dashboard"}]
+    }
+  ]
+}

@@ -476,9 +476,10 @@ async function finishSession() {
     tagStats: computeTagStats()
   });
 
-  // Auto-sync weakness data + check pool health (background, non-blocking)
+  // Background: sync weakness, check pool health, backup progress
   syncWeaknessToServer().catch(e => console.warn('Weakness sync failed:', e));
   checkPoolHealth().catch(e => console.warn('Pool health check failed:', e));
+  backupProgress().catch(e => console.warn('Backup failed:', e));
 
   navigate('result');
 }
@@ -549,6 +550,42 @@ async function checkPoolHealth() {
       console.log('Generation request already pending');
     }
   } catch { /* silent fail - offline is fine */ }
+}
+
+/* -- Backup learning progress to KV (survives browser data clear) -- */
+async function backupProgress() {
+  const sessions = await IDB.getAllSessions();
+  const history = await IDB.getAllHistory();
+  if (sessions.length === 0 && history.length === 0) return;
+  try {
+    await fetch('/api/backup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessions, history, backedUpAt: new Date().toISOString() })
+    });
+  } catch { /* silent */ }
+}
+
+async function restoreProgress() {
+  try {
+    const res = await fetch('/api/backup');
+    if (!res.ok) return false;
+    const data = await res.json();
+    if (!data.ok || !data.found) return false;
+    let restored = 0;
+    if (data.history) {
+      for (const h of data.history) {
+        try { await IDB.addHistory(h); restored++; } catch { /* dupe */ }
+      }
+    }
+    if (data.sessions) {
+      for (const s of data.sessions) {
+        try { await IDB.saveSession(s); } catch { /* dupe */ }
+      }
+    }
+    if (restored > 0) toast(`${restored}件の学習記録を復元しました`);
+    return restored > 0;
+  } catch { return false; }
 }
 
 function computeDomainStats() {
@@ -693,7 +730,6 @@ function render() {
     case 'session': renderSession(app); break;
     case 'result': renderResult(app); break;
     case 'packs': renderPacks(app); break;
-    case 'import': renderImport(app); break;
     case 'stats': renderStats(app); break;
     case 'settings': renderSettings(app); break;
     default: renderHome(app);
@@ -724,54 +760,32 @@ function renderHome(app) {
 
   // Start buttons
   const startCard = el('div', { className: 'card' },
-    el('h2', null, '学習を始める'),
-    el('div', { className: 'grid-2 mt-8' },
+    el('div', { className: 'grid-2' },
       el('button', { className: 'btn btn-primary btn-block', onClick: () => startSession('practice'), 'aria-label': '練習モード開始' }, '練習モード'),
       el('button', { className: 'btn btn-warn btn-block', onClick: () => startSession('exam'), 'aria-label': '模試モード開始' }, `模試 (${settings.timeLimit}分)`)
-    ),
-    el('p', { className: 'text-muted mt-8' }, `${settings.questionCount}問出題 / 苦手補正あり / 左右スワイプで移動`)
+    )
   );
   page.appendChild(startCard);
 
-  // Claude Code integration card
-  const aiCard = el('div', { className: 'card' },
-    el('h2', null, '苦手問題を追加'),
-    el('p', { className: 'text-muted mb-8' }, '苦手データをコピー → Claude Codeに貼り付けるだけで、苦手に特化した問題を生成・デプロイしてもらえます。'),
-    el('button', { className: 'btn btn-primary btn-block', onClick: copyWeaknessForClaude, 'aria-label': '苦手データコピー' },
-      '苦手データをコピー')
-  );
-  page.appendChild(aiCard);
+  // Pool status (compact)
+  IDB.getAllQuestions().then(async qs => {
+    const packs = await IDB.getAllPacks();
+    const enabledIds = new Set(packs.filter(p => p.enabled).map(p => p.id));
+    const activeQ = qs.filter(q => enabledIds.has(q.packId));
+    const allHistory = await IDB.getAllHistory();
+    const seenQids = new Set(allHistory.map(h => h.qid));
+    const unseenCount = activeQ.filter(q => !seenQids.has(q.qid)).length;
 
-  // Quick stats
-  IDB.getAllQuestions().then(qs => {
-    IDB.getAllPacks().then(packs => {
-      const enabled = packs.filter(p => p.enabled);
-      const enabledIds = new Set(enabled.map(p => p.id));
-      const activeQ = qs.filter(q => enabledIds.has(q.packId));
-      const qCard = el('div', { className: 'card' },
-        el('h2', null, '問題プール'),
-        el('div', { className: 'stat-row' }, el('span', { className: 'label' }, '有効パック'), el('span', { className: 'value' }, enabled.length)),
-        el('div', { className: 'stat-row' }, el('span', { className: 'label' }, '問題数'), el('span', { className: 'value' }, activeQ.length)),
-        ...DOMAINS.map(d => {
-          const cnt = activeQ.filter(q => q.domain === d).length;
-          return el('div', { className: 'stat-row' }, el('span', { className: 'label' }, DOMAIN_LABELS[d] || d), el('span', { className: 'value' }, cnt));
-        })
-      );
-      page.appendChild(qCard);
-    });
+    const poolCard = el('div', { className: 'card' },
+      el('div', { className: 'stat-row' }, el('span', { className: 'label' }, '問題数'), el('span', { className: 'value' }, activeQ.length)),
+      el('div', { className: 'stat-row' }, el('span', { className: 'label' }, '未解答'), el('span', { className: `value ${unseenCount > 50 ? 'good' : unseenCount > 20 ? 'mid' : 'bad'}` }, unseenCount))
+    );
+    page.appendChild(poolCard);
   });
 
   app.appendChild(header);
   app.appendChild(page);
-
-  // Bottom nav
-  const nav = el('div', { className: 'bottom-bar' },
-    navBtn('home', 'ホーム', icons.home, true),
-    navBtn('packs', 'パック', icons.pack),
-    navBtn('stats', '統計', icons.chart),
-    navBtn('settings', '設定', icons.gear)
-  );
-  app.appendChild(nav);
+  app.appendChild(renderBottomNav('home'));
 }
 
 function navBtn(route, label, icon, active = false) {
@@ -1490,47 +1504,25 @@ function renderPacks(app) {
   );
   const page = el('div', { className: 'page' });
 
-  // Actions
-  const actions = el('div', { className: 'grid-2 mb-16' },
-    el('button', { className: 'btn btn-primary btn-block', onClick: () => navigate('import') }, '+ パック追加'),
-    el('button', { className: 'btn btn-block', onClick: checkUpdates }, '更新チェック')
-  );
-  page.appendChild(actions);
-
-  // Repo list
-  IDB.getAllRepos().then(repos => {
-    if (repos.length > 0) {
-      const repoCard = el('div', { className: 'card mb-16' }, el('h2', null, '購読リポジトリ'));
-      repos.forEach(r => {
-        repoCard.appendChild(el('div', { className: 'flex-between mb-8' },
-          el('span', { className: 'text-muted', style: { fontSize: '13px', wordBreak: 'break-all' } }, r.url),
-          el('button', { className: 'btn btn-sm btn-danger', onClick: async () => { await IDB.deleteRepo(r.url); render(); } }, '削除')
-        ));
-      });
-      page.appendChild(repoCard);
-    }
-  });
+  page.appendChild(el('button', { className: 'btn btn-block mb-8', onClick: checkUpdates }, '新しいパックを確認'));
 
   // Pack list
   IDB.getAllPacks().then(packs => {
     if (packs.length === 0) {
-      page.appendChild(el('p', { className: 'text-muted text-center mt-16' }, 'パックがありません。追加してください。'));
+      page.appendChild(el('p', { className: 'text-muted text-center mt-16' }, 'パックがありません。'));
       return;
     }
     packs.forEach(p => {
       const item = el('div', { className: 'pack-item' },
         el('div', { className: 'pack-info' },
           el('div', { className: 'pack-title' }, p.title),
-          el('div', { className: 'pack-meta' }, `v${p.version} / ${p.questionCount}問 / ${p.domains ? p.domains.join(', ') : ''}`)
+          el('div', { className: 'pack-meta' }, `${p.questionCount}問`)
         ),
         el('button', {
           className: `toggle ${p.enabled ? 'on' : ''}`,
           onClick: async () => { p.enabled = !p.enabled; await IDB.savePack(p); render(); },
           'aria-label': p.enabled ? '無効にする' : '有効にする'
-        }),
-        el('button', { className: 'btn btn-sm btn-danger', style: { marginLeft: '8px' }, onClick: async () => {
-          if (confirm(`${p.title}を削除しますか？`)) { await IDB.deletePack(p.id); toast('削除しました'); render(); }
-        }}, '削除')
+        })
       );
       page.appendChild(item);
     });
@@ -1579,115 +1571,6 @@ async function checkUpdates() {
 }
 
 /* ---------- Import Page ---------- */
-function renderImport(app) {
-  const header = el('div', { className: 'header' },
-    el('button', { className: 'back-btn', onClick: () => navigate('packs'), 'aria-label': '戻る' }, '\u2190'),
-    el('h1', null, 'パック追加')
-  );
-  const page = el('div', { className: 'page' });
-
-  // A) Repository subscription
-  const repoCard = el('div', { className: 'card' },
-    el('h2', null, 'リポジトリ購読'),
-    el('p', { className: 'text-muted mb-8' }, 'index.json のURLを登録します。'),
-    el('input', { type: 'url', id: 'repo-url', placeholder: 'https://example.com/packs/index.json' }),
-    el('button', { className: 'btn btn-primary btn-block mt-8', onClick: addRepo }, '購読追加')
-  );
-  page.appendChild(repoCard);
-
-  // B) Pack URL
-  const urlCard = el('div', { className: 'card' },
-    el('h2', null, 'Pack URL追加'),
-    el('p', { className: 'text-muted mb-8' }, 'pack.jsonのURLを直接指定します。'),
-    el('input', { type: 'url', id: 'pack-url', placeholder: 'https://example.com/packs/mypack.json' }),
-    el('button', { className: 'btn btn-primary btn-block mt-8', onClick: addPackUrl }, 'パック取得')
-  );
-  page.appendChild(urlCard);
-
-  // C) Clipboard
-  const clipCard = el('div', { className: 'card' },
-    el('h2', null, 'クリップボード貼付'),
-    el('p', { className: 'text-muted mb-8' }, 'pack.json全文を貼り付けてください。'),
-    el('textarea', { id: 'clip-json', placeholder: '{"schema":"ai900-pack-v1","pack":{...},"questions":[...]}' }),
-    el('button', { className: 'btn btn-primary btn-block mt-8', onClick: addClipboard }, '取り込み')
-  );
-  page.appendChild(clipCard);
-
-  // D) File select
-  const fileCard = el('div', { className: 'card' },
-    el('h2', null, 'ファイル選択'),
-    el('input', { type: 'file', id: 'pack-file', accept: '.json' }),
-    el('button', { className: 'btn btn-primary btn-block mt-8', onClick: addFile }, 'ファイル取り込み')
-  );
-  page.appendChild(fileCard);
-
-  // Result area
-  page.appendChild(el('div', { id: 'import-result' }));
-
-  app.appendChild(header);
-  app.appendChild(page);
-}
-
-async function addRepo() {
-  const url = document.getElementById('repo-url')?.value?.trim();
-  if (!url) { toast('URLを入力してください'); return; }
-  await IDB.saveRepo({ url, addedAt: Date.now() });
-  toast('リポジトリを追加しました');
-  await checkUpdates();
-}
-
-async function addPackUrl() {
-  const url = document.getElementById('pack-url')?.value?.trim();
-  if (!url) { toast('URLを入力してください'); return; }
-  try {
-    toast('取得中...');
-    const resp = await fetch(url);
-    const json = await resp.json();
-    const result = await importPack(json);
-    showImportResult(result);
-  } catch (e) { toast('取得失敗: ' + e.message); }
-}
-
-async function addClipboard() {
-  const text = document.getElementById('clip-json')?.value?.trim();
-  if (!text) { toast('JSONを入力してください'); return; }
-  try {
-    const json = JSON.parse(text);
-    const result = await importPack(json);
-    showImportResult(result);
-  } catch (e) { toast('パース失敗: ' + e.message); }
-}
-
-async function addFile() {
-  const input = document.getElementById('pack-file');
-  if (!input?.files?.length) { toast('ファイルを選択してください'); return; }
-  try {
-    const text = await input.files[0].text();
-    const json = JSON.parse(text);
-    const result = await importPack(json);
-    showImportResult(result);
-  } catch (e) { toast('ファイル読み込み失敗: ' + e.message); }
-}
-
-function showImportResult(result) {
-  const area = document.getElementById('import-result');
-  if (!area) return;
-  area.innerHTML = '';
-  const card = el('div', { className: 'card' },
-    el('h2', null, '取り込み結果'),
-    el('div', { className: 'stat-row' }, el('span', { className: 'label' }, '追加'), el('span', { className: 'value good' }, result.added)),
-    el('div', { className: 'stat-row' }, el('span', { className: 'label' }, '重複スキップ'), el('span', { className: 'value' }, result.skipped)),
-    el('div', { className: 'stat-row' }, el('span', { className: 'label' }, '不正'), el('span', { className: 'value bad' }, result.invalid))
-  );
-  if (result.errors.length > 0) {
-    card.appendChild(el('div', { className: 'text-muted mt-8', style: { fontSize: '12px', maxHeight: '120px', overflow: 'auto' } },
-      result.errors.join('\n')
-    ));
-  }
-  area.appendChild(card);
-  toast(`${result.added}問追加しました`);
-}
-
 /* ---------- Stats Page ---------- */
 function renderStats(app) {
   const header = el('div', { className: 'header' }, el('h1', null, '統計'));
@@ -1752,13 +1635,6 @@ function renderStats(app) {
         }
         page.appendChild(weakCard);
 
-        // Generate weakness-based question prompt
-        const genCard = el('div', { className: 'card' },
-          el('h2', null, '苦手問題を追加'),
-          el('p', { className: 'text-muted mb-8' }, '苦手データをClaude Codeに渡すと、弱い分野の問題を生成・デプロイしてくれます。'),
-          el('button', { className: 'btn btn-primary btn-block', onClick: copyWeaknessForClaude }, '苦手データをコピー')
-        );
-        page.appendChild(genCard);
       });
 
       // Session history
@@ -1791,68 +1667,16 @@ function renderSettings(app) {
     el('label', null, '問題数'),
     el('input', { type: 'number', id: 'set-count', value: settings.questionCount, min: '5', max: '200' }),
     el('label', null, '模試制限時間 (分)'),
-    el('input', { type: 'number', id: 'set-time', value: settings.timeLimit, min: '1', max: '180' }),
-    el('label', null, '直近除外数'),
-    el('input', { type: 'number', id: 'set-recent', value: settings.recentExclude, min: '0', max: '500' }),
-    el('label', null, '苦手補正上限 (%)'),
-    el('input', { type: 'number', id: 'set-boost', value: Math.round(settings.weaknessBoostMax * 100), min: '0', max: '100' })
+    el('input', { type: 'number', id: 'set-time', value: settings.timeLimit, min: '1', max: '180' })
   );
   page.appendChild(examCard);
 
-  // Domain weights
-  const domainCard = el('div', { className: 'card' },
-    el('h2', null, '分野配分 (%)'),
-    ...DOMAINS.map(d => el('div', null,
-      el('label', null, `${DOMAIN_LABELS[d]} (${d})`),
-      el('input', { type: 'number', id: `set-dw-${d}`, value: settings.domainWeights[d] || 20, min: '0', max: '100', step: '0.5' })
-    )),
-    el('p', { className: 'text-muted mt-8', id: 'dw-total' }, `合計: ${Object.values(settings.domainWeights).reduce((a, b) => a + b, 0)}%`)
-  );
-  page.appendChild(domainCard);
-
-  // Type minimums
-  const typeCard = el('div', { className: 'card' },
-    el('h2', null, '模試 形式最低数'),
-    ...['match','order','dropdown','hotarea','casestudy'].map(t => el('div', null,
-      el('label', null, TYPE_LABELS[t]),
-      el('input', { type: 'number', id: `set-tm-${t}`, value: settings.typeMinimums[t] || 0, min: '0', max: '50' })
-    ))
-  );
-  page.appendChild(typeCard);
-
-  // UX settings
-  const uxCard = el('div', { className: 'card' },
-    el('h2', null, '操作設定'),
-    el('div', { className: 'flex-between', style: { padding: '8px 0' } },
-      el('span', null, '単一選択で自動次へ'),
-      el('button', {
-        id: 'set-autonext',
-        className: `toggle ${settings.autoNext ? 'on' : ''}`,
-        onClick: e => { e.currentTarget.classList.toggle('on'); },
-        'aria-label': '自動次へ切替'
-      })
-    ),
-    el('label', null, '自動次への遅延 (ms)'),
-    el('input', { type: 'number', id: 'set-autonext-delay', value: settings.autoNextDelay || 600, min: '200', max: '3000', step: '100' })
-  );
-  page.appendChild(uxCard);
-
   // Save
-  page.appendChild(el('button', { className: 'btn btn-primary btn-block mb-16', onClick: saveSettingsUI }, '設定を保存'));
+  page.appendChild(el('button', { className: 'btn btn-primary btn-block mb-16', onClick: saveSettingsUI }, '保存'));
 
   // Data management
   const dataCard = el('div', { className: 'card' },
-    el('h2', null, 'データ管理'),
-    el('button', { className: 'btn btn-danger btn-block mt-8', onClick: async () => {
-      if (confirm('全履歴を削除しますか？')) {
-        const db = await IDB.open();
-        const t = db.transaction(['history', 'sessions'], 'readwrite');
-        t.objectStore('history').clear();
-        t.objectStore('sessions').clear();
-        localStorage.removeItem('ai900_recent');
-        toast('履歴を削除しました');
-      }
-    }}, '履歴リセット'),
+    el('h2', null, 'データ'),
     el('button', { className: 'btn btn-danger btn-block mt-8', onClick: async () => {
       if (confirm('全データを削除しますか？（パック・履歴すべて）')) {
         indexedDB.deleteDatabase('ai900app');
@@ -1873,28 +1697,9 @@ function renderSettings(app) {
 function saveSettingsUI() {
   const count = parseInt(document.getElementById('set-count')?.value) || 50;
   const time = parseInt(document.getElementById('set-time')?.value) || 45;
-  const recent = parseInt(document.getElementById('set-recent')?.value) || 100;
-  const boost = (parseInt(document.getElementById('set-boost')?.value) || 30) / 100;
-
-  const dw = {};
-  for (const d of DOMAINS) dw[d] = parseFloat(document.getElementById(`set-dw-${d}`)?.value) || 20;
-  const dwTotal = Object.values(dw).reduce((a, b) => a + b, 0);
-  if (Math.abs(dwTotal - 100) > 1) {
-    toast(`分野配分の合計が${dwTotal}%です。100%にしてください。`);
-    return;
-  }
-
-  const tm = {};
-  for (const t of ['match','order','dropdown','hotarea','casestudy']) {
-    tm[t] = parseInt(document.getElementById(`set-tm-${t}`)?.value) || 0;
-  }
-
-  const autoNext = document.getElementById('set-autonext')?.classList?.contains('on') ?? true;
-  const autoNextDelay = parseInt(document.getElementById('set-autonext-delay')?.value) || 600;
-
-  settings = { ...settings, questionCount: count, timeLimit: time, domainWeights: dw, typeMinimums: tm, recentExclude: recent, weaknessBoostMax: boost, weaknessDays: 7, autoNext, autoNextDelay };
+  settings = { ...settings, questionCount: count, timeLimit: time };
   saveSettings(settings);
-  toast('設定を保存しました');
+  toast('保存しました');
 }
 
 /* ---------- Bottom Nav ---------- */
@@ -1915,6 +1720,12 @@ async function init() {
   }
 
   await IDB.open();
+
+  // Restore progress from cloud backup if local data is empty
+  const existingHistory = await IDB.getAllHistory();
+  if (existingHistory.length === 0) {
+    await restoreProgress();
+  }
 
   // Check if base pack needs loading
   const packs = await IDB.getAllPacks();

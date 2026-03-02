@@ -1,0 +1,601 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.pool.nlp02",
+    "version": "2026-03-02",
+    "title": "自然言語処理 応用30問 #2",
+    "description": "NLPの応用問題（第2弾）",
+    "language": "ja-JP",
+    "createdAt": "2026-03-02T12:00:00Z",
+    "domains": ["NLP"]
+  },
+  "questions": [
+    {
+      "id": "PN2-001",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Languageの感情分析において、文書レベルだけでなく文章内の特定の側面（アスペクト）に対する意見を分析できる機能はどれですか。",
+      "choices": [
+        "キーフレーズ抽出",
+        "オピニオンマイニング（Opinion Mining）",
+        "テキスト要約",
+        "エンティティリンク"
+      ],
+      "answer": [1],
+      "explanation": "オピニオンマイニング（Opinion Mining）は感情分析の拡張機能で、テキスト内の特定のアスペクト（例：「料理」「サービス」）に対する意見（肯定的・否定的）を詳細に分析します。通常の感情分析は文書全体の感情スコアのみを返しますが、オピニオンマイニングはアスペクトレベルの分析が可能です。",
+      "tags": ["opinion-mining", "sentiment-analysis", "azure-ai-language"]
+    },
+    {
+      "id": "PN2-002",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Speechで音声合成（Text-to-Speech）の出力をカスタマイズする際に、読み上げ速度、ピッチ、一時停止などを細かく制御するために使用するマークアップ言語はどれですか。",
+      "choices": [
+        "HTML（HyperText Markup Language）",
+        "SSML（Speech Synthesis Markup Language）",
+        "XML Schema",
+        "YAML"
+      ],
+      "answer": [1],
+      "explanation": "SSML（Speech Synthesis Markup Language）は、音声合成の出力をきめ細かく制御するためのXMLベースのマークアップ言語です。読み上げ速度（rate）、ピッチ（pitch）、音量（volume）、一時停止（break）、発音（phoneme）などを指定できます。",
+      "tags": ["ssml", "text-to-speech", "azure-ai-speech"]
+    },
+    {
+      "id": "PN2-003",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Languageのエンティティリンク（Entity Linking）機能の説明として最も適切なものはどれですか。",
+      "choices": [
+        "テキスト内のエンティティを検出し、Wikipediaなどの知識ベースの該当エントリにリンクする",
+        "2つの異なる文書間で同一のエンティティを自動的にマージする",
+        "エンティティ間の因果関係を自動的に推論する",
+        "テキスト内のすべての名詞を自動的にハイパーリンクに変換する"
+      ],
+      "answer": [0],
+      "explanation": "エンティティリンク（Entity Linking）は、テキスト内で検出されたエンティティを、Wikipediaなどの既知の知識ベースの対応するエントリに紐付ける機能です。例えば「Mars」が惑星の火星なのかチョコレートバーのブランドなのかを文脈から判断し、正しいWikipediaページにリンクします。",
+      "tags": ["entity-linking", "azure-ai-language", "disambiguation"]
+    },
+    {
+      "id": "PN2-004",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 3,
+      "prompt": "Azure AI Speechのカスタムニューラル音声（Custom Neural Voice）を作成する際に、Microsoft が求める要件として正しいものはどれですか。",
+      "choices": [
+        "最低100時間以上の録音データが必要である",
+        "音声提供者（声優など）の明示的な同意が必要である",
+        "英語の音声データのみが対象である",
+        "音声データはMicrosoftの指定スタジオで録音する必要がある"
+      ],
+      "answer": [1],
+      "explanation": "カスタムニューラル音声を作成するには、音声提供者（声の持ち主）から録音データの使用に関する明示的な同意を得ることが必須要件です。これはMicrosoftの責任あるAIの原則に基づく要件であり、音声の不正使用を防止するための措置です。",
+      "tags": ["custom-neural-voice", "responsible-ai", "azure-ai-speech"]
+    },
+    {
+      "id": "PN2-005",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "テキストから「人工知能」「クラウドコンピューティング」「機械学習」などの主要なフレーズを自動的に抽出するAzure AI Languageの機能はどれですか。",
+      "choices": [
+        "感情分析",
+        "言語検出",
+        "キーフレーズ抽出（Key Phrase Extraction）",
+        "PII検出"
+      ],
+      "answer": [2],
+      "explanation": "キーフレーズ抽出（Key Phrase Extraction）は、テキストから主要な概念やトピックを表すフレーズを自動的に抽出する機能です。文書の要点を素早く把握したい場合や、大量のテキストデータのインデックス作成に活用されます。",
+      "tags": ["key-phrase-extraction", "azure-ai-language"]
+    },
+    {
+      "id": "PN2-006",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Translatorのドキュメント翻訳機能について正しい説明はどれですか。",
+      "choices": [
+        "翻訳後のドキュメントは常にプレーンテキスト形式で出力される",
+        "元のドキュメントのフォーマット（表、画像配置、スタイル）を保持しながら翻訳できる",
+        "一度に翻訳できるのは1ファイルのみである",
+        "対応する入力形式はPDFのみである"
+      ],
+      "answer": [1],
+      "explanation": "Azure AI Translatorのドキュメント翻訳は、元のドキュメントのレイアウト、書式、スタイルを保持したまま翻訳を行います。Word、PDF、PowerPoint、Excelなど複数の形式に対応し、一括翻訳（バッチ処理）も可能です。",
+      "tags": ["document-translation", "azure-ai-translator"]
+    },
+    {
+      "id": "PN2-007",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 3,
+      "prompt": "Azure AI Speechの発音評価（Pronunciation Assessment）機能の主な用途として最も適切なものはどれですか。",
+      "choices": [
+        "音声ファイルのノイズレベルを測定する",
+        "話者の年齢を音声から推定する",
+        "語学学習者の発音の正確さや流暢さをスコアリングする",
+        "音声から話者の感情を検出する"
+      ],
+      "answer": [2],
+      "explanation": "発音評価（Pronunciation Assessment）は、語学学習のシナリオで利用される機能で、学習者の発音を参照テキストと比較し、正確さ（Accuracy）、流暢さ（Fluency）、完全性（Completeness）、韻律（Prosody）などの観点でスコアを返します。",
+      "tags": ["pronunciation-assessment", "azure-ai-speech", "language-learning"]
+    },
+    {
+      "id": "PN2-008",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Languageのテキスト要約機能が提供する2つの要約方式のうち、元のテキストから重要な文をそのまま抽出する方式はどれですか。",
+      "choices": [
+        "抽象型要約（Abstractive Summarization）",
+        "抽出型要約（Extractive Summarization）",
+        "会話型要約（Conversational Summarization）",
+        "キーフレーズ要約（Key Phrase Summarization）"
+      ],
+      "answer": [1],
+      "explanation": "抽出型要約（Extractive Summarization）は、元のテキストから最も重要な文をそのまま選択して要約を構成します。一方、抽象型要約（Abstractive Summarization）は元のテキストを基に新しい文章を生成して要約を作成します。",
+      "tags": ["summarization", "extractive", "azure-ai-language"]
+    },
+    {
+      "id": "PN2-009",
+      "domain": "NLP",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "SSMLタグで制御できる音声合成のパラメータとして正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "読み上げ速度（rate）",
+        "音声のピッチ（pitch）",
+        "翻訳先の言語",
+        "テキスト間の一時停止（break）",
+        "使用する音声（voice）"
+      ],
+      "answer": [0, 1, 3, 4],
+      "explanation": "SSMLでは、読み上げ速度（<prosody rate>）、ピッチ（<prosody pitch>）、一時停止（<break>）、使用音声（<voice>）などを制御できます。翻訳はSSMLの機能ではなく、Azure AI Translatorの機能です。",
+      "tags": ["ssml", "text-to-speech", "azure-ai-speech"]
+    },
+    {
+      "id": "PN2-010",
+      "domain": "NLP",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure AI Languageの感情分析が返す結果に含まれる情報として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "文書全体の感情ラベル（positive / negative / neutral / mixed）",
+        "各文ごとの感情スコア",
+        "テキストの翻訳結果",
+        "信頼度スコア（confidence score）",
+        "キーフレーズの一覧"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "感情分析は、文書全体および各文に対して感情ラベル（positive/negative/neutral/mixed）と信頼度スコアを返します。翻訳結果やキーフレーズの抽出はそれぞれ別の機能（Translator、キーフレーズ抽出）で提供されます。",
+      "tags": ["sentiment-analysis", "confidence-score", "azure-ai-language"]
+    },
+    {
+      "id": "PN2-011",
+      "domain": "NLP",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "Azure AI Speechのバッチ文字起こし（Batch Transcription）の特徴として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "Azure Blob Storageに保存された音声ファイルを入力として使用できる",
+        "リアルタイム処理のみ対応しており非同期処理は不可能である",
+        "複数の音声ファイルを一括で処理できる",
+        "話者分離（Diarization）を有効にして各話者の発話を区別できる",
+        "出力はWAV形式の音声ファイルのみである"
+      ],
+      "answer": [0, 2, 3],
+      "explanation": "バッチ文字起こしは、Azure Blob Storageの音声ファイルを非同期で一括処理する機能です。話者分離（Diarization）により複数の話者の発話を区別可能です。リアルタイム専用ではなく非同期処理に対応しており、出力はJSONなどのテキスト形式です。",
+      "tags": ["batch-transcription", "diarization", "azure-ai-speech"]
+    },
+    {
+      "id": "PN2-012",
+      "domain": "NLP",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "カスタム質問応答（Custom Question Answering）のナレッジベースを改善する方法として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "代替の質問フレーズ（Alternative Phrasing）を追加する",
+        "ナレッジベースのすべての回答を機械翻訳で置き換える",
+        "フォローアッププロンプト（Follow-up Prompts）で会話のフローを設計する",
+        "メタデータを使って質問応答ペアをフィルタリングする"
+      ],
+      "answer": [0, 2, 3],
+      "explanation": "ナレッジベースの改善には、代替質問フレーズの追加（多様な質問表現への対応）、フォローアッププロンプト（多段階の会話設計）、メタデータによるフィルタリング（コンテキストに応じた回答の絞り込み）が有効です。全回答を機械翻訳で置き換えることは品質低下のリスクがあり、改善方法としては不適切です。",
+      "tags": ["custom-question-answering", "knowledge-base", "improvement"]
+    },
+    {
+      "id": "PN2-013",
+      "domain": "NLP",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "Azure AI Languageの言語検出APIのレスポンスに含まれる情報として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "検出された言語の名前（例：Japanese）",
+        "ISO 639-1言語コード（例：ja）",
+        "テキストの自動翻訳結果",
+        "検出結果の信頼度スコア",
+        "テキストの文法エラー一覧"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "言語検出APIは、検出された言語の名前、ISO 639-1言語コード、および信頼度スコアを返します。テキストの自動翻訳はTranslatorの機能であり、文法チェック機能はLanguage APIには含まれません。",
+      "tags": ["language-detection", "api-response", "azure-ai-language"]
+    },
+    {
+      "id": "PN2-014",
+      "domain": "NLP",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "レストランのレビュー「料理は美味しかったが、サービスが遅すぎた」を感情分析した場合、文書全体の感情ラベルは {{0}} であり、オピニオンマイニングでは「料理」に対する感情は {{1}} と判定されます。",
+      "dropdowns": [
+        {
+          "options": ["positive", "negative", "mixed"],
+          "answer": 2
+        },
+        {
+          "options": ["positive", "negative", "neutral"],
+          "answer": 0
+        }
+      ],
+      "explanation": "肯定的な意見（料理は美味しい）と否定的な意見（サービスが遅い）が混在しているため、文書全体の感情は「mixed」です。オピニオンマイニングではアスペクト（側面）ごとに分析するため、「料理」に対する感情は「positive」と判定されます。",
+      "tags": ["sentiment-analysis", "opinion-mining", "mixed-sentiment"]
+    },
+    {
+      "id": "PN2-015",
+      "domain": "NLP",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure AI Speechにおいて、カスタム音声モデルを作成して認識精度を向上させる機能は {{0}} であり、企業独自の音声でテキストを読み上げるカスタムモデルを作成する機能は {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["カスタム音声認識（Custom Speech）", "カスタムニューラル音声（Custom Neural Voice）", "話者認識（Speaker Recognition）"],
+          "answer": 0
+        },
+        {
+          "options": ["カスタム音声認識（Custom Speech）", "カスタムニューラル音声（Custom Neural Voice）", "話者認識（Speaker Recognition）"],
+          "answer": 1
+        }
+      ],
+      "explanation": "カスタム音声認識（Custom Speech）は、業界固有の用語やアクセントに対応するために音声認識モデルをカスタマイズする機能です。カスタムニューラル音声（Custom Neural Voice）は、企業独自のブランドボイスなどカスタム音声を作成してText-to-Speechで使用する機能です。",
+      "tags": ["custom-speech", "custom-neural-voice", "azure-ai-speech"]
+    },
+    {
+      "id": "PN2-016",
+      "domain": "NLP",
+      "type": "dropdown",
+      "difficulty": 3,
+      "prompt": "Azure AI Languageのテキスト要約において、元のテキストから重要な文をそのまま選択する方式は {{0}} であり、元のテキストを基に新しい文章を生成してまとめる方式は {{1}} です。",
+      "dropdowns": [
+        {
+          "options": ["抽出型要約（Extractive）", "抽象型要約（Abstractive）", "会話型要約（Conversational）"],
+          "answer": 0
+        },
+        {
+          "options": ["抽出型要約（Extractive）", "抽象型要約（Abstractive）", "会話型要約（Conversational）"],
+          "answer": 1
+        }
+      ],
+      "explanation": "抽出型要約は元テキストの重要な文をそのまま選択して要約を構成するため、原文の正確な表現を保持します。抽象型要約はAIが元のテキストを理解した上で、新しい文章を生成して要約を作成する方式です。",
+      "tags": ["summarization", "extractive", "abstractive", "azure-ai-language"]
+    },
+    {
+      "id": "PN2-017",
+      "domain": "NLP",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "CLUにおいて、ユーザーの発話「近くのイタリアンレストランを探して」から抽出される「近く」は {{0}} エンティティであり、「イタリアン」は {{1}} エンティティです。",
+      "dropdowns": [
+        {
+          "options": ["場所（Location）", "料理ジャンル（CuisineType）", "日時（DateTime）"],
+          "answer": 0
+        },
+        {
+          "options": ["場所（Location）", "料理ジャンル（CuisineType）", "日時（DateTime）"],
+          "answer": 1
+        }
+      ],
+      "explanation": "CLUではユーザーが定義したエンティティカテゴリに基づいて発話から情報を抽出します。「近く」は場所に関する情報を示す場所エンティティ、「イタリアン」は料理の種類を示す料理ジャンルエンティティとして抽出されます。",
+      "tags": ["clu", "entity-extraction", "custom-entities"]
+    },
+    {
+      "id": "PN2-018",
+      "domain": "NLP",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のAzure AI Language機能と、それぞれの出力例を正しく対応させてください。",
+      "left": ["キーフレーズ抽出", "PII検出", "エンティティリンク", "言語検出"],
+      "right": ["ISO 639-1コード「ja」、信頼度 0.98", "「Azure」→ Wikipedia: Microsoft Azure", "[「人工知能」, 「クラウド」, 「機械学習」]", "「田中太郎」→ Person（マスキング: ****）"],
+      "answerMap": {
+        "キーフレーズ抽出": "[「人工知能」, 「クラウド」, 「機械学習」]",
+        "PII検出": "「田中太郎」→ Person（マスキング: ****）",
+        "エンティティリンク": "「Azure」→ Wikipedia: Microsoft Azure",
+        "言語検出": "ISO 639-1コード「ja」、信頼度 0.98"
+      },
+      "explanation": "キーフレーズ抽出は重要なフレーズのリストを返し、PII検出は個人情報を検出してカテゴリ分類とマスキングを行います。エンティティリンクは検出されたエンティティをWikipediaなどの知識ベースに紐付け、言語検出は言語コードと信頼度スコアを返します。",
+      "tags": ["azure-ai-language", "output-comparison"]
+    },
+    {
+      "id": "PN2-019",
+      "domain": "NLP",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下のAzure AI Speechのカスタマイズ機能と、その目的を正しく対応させてください。",
+      "left": ["カスタム音声認識（Custom Speech）", "カスタムニューラル音声（Custom Neural Voice）", "カスタムキーワード（Custom Keyword）", "発音評価（Pronunciation Assessment）"],
+      "right": ["学習者の発音の正確さや流暢さをスコアリングする", "業界固有の用語や騒音環境での音声認識精度を向上させる", "「Hey Cortana」のようなウェイクワードを独自に作成する", "企業独自のブランドボイスを合成音声として作成する"],
+      "answerMap": {
+        "カスタム音声認識（Custom Speech）": "業界固有の用語や騒音環境での音声認識精度を向上させる",
+        "カスタムニューラル音声（Custom Neural Voice）": "企業独自のブランドボイスを合成音声として作成する",
+        "カスタムキーワード（Custom Keyword）": "「Hey Cortana」のようなウェイクワードを独自に作成する",
+        "発音評価（Pronunciation Assessment）": "学習者の発音の正確さや流暢さをスコアリングする"
+      },
+      "explanation": "Custom Speechは音声認識精度の向上、Custom Neural Voiceはカスタム音声の作成、Custom Keywordはウェイクワードの定義、Pronunciation Assessmentは発音の評価に使われます。それぞれ異なる目的でAzure AI Speechをカスタマイズします。",
+      "tags": ["custom-speech", "custom-neural-voice", "custom-keyword", "pronunciation-assessment"]
+    },
+    {
+      "id": "PN2-020",
+      "domain": "NLP",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のシナリオと、最も適切なAzure AI Languageの機能を正しく対応させてください。",
+      "left": ["社内ヘルプデスクへの問い合わせメールを要約する", "医療記録から患者名と診断日を抽出する", "SNS投稿のブランドに対する評判を数値化する", "サポートチケットの言語を自動判定して担当チームに振り分ける"],
+      "right": ["感情分析", "固有表現認識（NER）", "テキスト要約", "言語検出"],
+      "answerMap": {
+        "社内ヘルプデスクへの問い合わせメールを要約する": "テキスト要約",
+        "医療記録から患者名と診断日を抽出する": "固有表現認識（NER）",
+        "SNS投稿のブランドに対する評判を数値化する": "感情分析",
+        "サポートチケットの言語を自動判定して担当チームに振り分ける": "言語検出"
+      },
+      "explanation": "メールの要約にはテキスト要約、固有名詞の抽出にはNER、評判の数値化には感情分析、言語の自動判定には言語検出がそれぞれ最適な機能です。",
+      "tags": ["azure-ai-language", "scenario-matching", "service-selection"]
+    },
+    {
+      "id": "PN2-021",
+      "domain": "NLP",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下のNLP関連のAzureサービスと、課金の計測単位を正しく対応させてください。",
+      "left": ["Azure AI Language（テキスト分析）", "Azure AI Translator（テキスト翻訳）", "Azure AI Speech（Speech-to-Text）", "Azure AI Speech（Text-to-Speech）"],
+      "right": ["合成された文字数", "翻訳された文字数", "分析されたテキストレコード数", "認識された音声の時間（時間単位）"],
+      "answerMap": {
+        "Azure AI Language（テキスト分析）": "分析されたテキストレコード数",
+        "Azure AI Translator（テキスト翻訳）": "翻訳された文字数",
+        "Azure AI Speech（Speech-to-Text）": "認識された音声の時間（時間単位）",
+        "Azure AI Speech（Text-to-Speech）": "合成された文字数"
+      },
+      "explanation": "Azure AI Languageはテキストレコード数で課金、Translatorは翻訳文字数で課金、Speech-to-Textは音声時間で課金、Text-to-Speechは合成文字数で課金されます。サービスごとに課金単位が異なるため、コスト見積りには各単位を理解することが重要です。",
+      "tags": ["pricing", "billing", "azure-ai-services"]
+    },
+    {
+      "id": "PN2-022",
+      "domain": "NLP",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Azure AI Speechのカスタム音声認識（Custom Speech）モデルを構築するステップを、正しい順序に並べてください。",
+      "items": [
+        "カスタムモデルをデプロイしてエンドポイントを作成する",
+        "音声データとトランスクリプトをアップロードする",
+        "Azure AI Speechリソースを作成しSpeech Studioを開く",
+        "カスタムモデルをトレーニングして精度をテストする"
+      ],
+      "answerOrder": [2, 1, 3, 0],
+      "explanation": "まずAzure AI Speechリソースを作成してSpeech Studioにアクセスし、次に音声データとトランスクリプトをアップロードします。その後カスタムモデルをトレーニング・テストし、最後にモデルをデプロイしてカスタムエンドポイントを作成します。",
+      "tags": ["custom-speech", "model-building", "speech-studio"]
+    },
+    {
+      "id": "PN2-023",
+      "domain": "NLP",
+      "type": "order",
+      "difficulty": 3,
+      "prompt": "多言語チャットボットを構築する際の推奨されるアーキテクチャ設計のステップを、正しい順序に並べてください。",
+      "items": [
+        "CLUモデルでインテントとエンティティを解析する",
+        "ユーザーの入力テキストの言語を検出する",
+        "解析結果に基づき適切な応答を生成し、ユーザーの言語に翻訳して返す",
+        "入力テキストをCLUモデルの対応言語に翻訳する"
+      ],
+      "answerOrder": [1, 3, 0, 2],
+      "explanation": "まずユーザー入力の言語を検出し、次にCLUモデルが対応する言語に翻訳します。その後CLUでインテントとエンティティを解析し、最後に応答を生成してユーザーの母国語に翻訳して返します。",
+      "tags": ["multilingual-bot", "clu", "translator", "architecture"]
+    },
+    {
+      "id": "PN2-024",
+      "domain": "NLP",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Azure AI Languageのカスタムテキスト分類（Custom Text Classification）モデルを構築するステップを、正しい順序に並べてください。",
+      "items": [
+        "テキストデータにカテゴリラベルを付与する",
+        "分類対象のテキストデータを収集してアップロードする",
+        "モデルをデプロイしてAPIエンドポイント経由で利用する",
+        "ラベル付きデータでモデルをトレーニングし評価する"
+      ],
+      "answerOrder": [1, 0, 3, 2],
+      "explanation": "まずテキストデータを収集・アップロードし、次にカテゴリラベルを付与します。その後ラベル付きデータでモデルをトレーニング・評価し、最後にデプロイしてAPIから利用します。",
+      "tags": ["custom-text-classification", "model-building", "azure-ai-language"]
+    },
+    {
+      "id": "PN2-025",
+      "domain": "NLP",
+      "type": "order",
+      "difficulty": 3,
+      "prompt": "SSML文書を使ったテキスト読み上げの処理の流れを、正しい順序に並べてください。",
+      "items": [
+        "合成された音声波形をスピーカーまたはファイルに出力する",
+        "SSML文書を解析してテキスト・音声・パラメータを取得する",
+        "SSMLタグに基づきピッチ・速度・一時停止などを適用して音声を合成する",
+        "SSML形式のテキストをAzure AI Speech APIに送信する"
+      ],
+      "answerOrder": [3, 1, 2, 0],
+      "explanation": "まずSSML文書をAzure AI Speech APIに送信し、APIがSSMLを解析してテキストや音声パラメータを取得します。次にSSMLタグの指定に基づいて音声を合成し、最後に合成音声をスピーカーやファイルに出力します。",
+      "tags": ["ssml", "text-to-speech", "processing-pipeline"]
+    },
+    {
+      "id": "PN2-026",
+      "domain": "NLP",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の項目のうち、Azure AI Languageの固有表現認識（NER）が検出できるエンティティカテゴリをすべて選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "人名（Person）",
+          "画像内のオブジェクト",
+          "日時（DateTime）",
+          "住所（Address）",
+          "音声のピッチ",
+          "組織名（Organization）"
+        ]
+      },
+      "answer": [0, 2, 3, 5],
+      "explanation": "NERは人名、日時、住所、組織名などのテキスト内のエンティティを検出・分類します。画像内のオブジェクト検出はComputer Visionの機能であり、音声のピッチはAzure AI Speechの領域です。NERはテキストに対してのみ動作します。",
+      "tags": ["ner", "entity-categories", "azure-ai-language"]
+    },
+    {
+      "id": "PN2-027",
+      "domain": "NLP",
+      "type": "hotarea",
+      "difficulty": 3,
+      "prompt": "以下のシナリオのうち、Azure AI Speechのリアルタイム音声翻訳（Speech Translation）で実現可能なものをすべて選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "英語の講演をリアルタイムで日本語字幕として表示する",
+          "テキスト文書を別の言語に翻訳する",
+          "フランス語の音声を英語のテキストに変換する",
+          "画像内の看板の文字を翻訳する",
+          "中国語の音声をスペイン語の音声にリアルタイム変換する",
+          "動画ファイルのメタデータを別の言語に変換する"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "Speech Translationは音声入力をリアルタイムで別の言語のテキストまたは音声に変換する機能です。英語→日本語字幕、フランス語音声→英語テキスト、中国語音声→スペイン語音声はすべてSpeech Translationで実現可能です。テキスト翻訳はTranslator、画像テキスト翻訳はOCR+Translator、メタデータ変換は対象外です。",
+      "tags": ["speech-translation", "real-time", "azure-ai-speech"]
+    },
+    {
+      "id": "PN2-028",
+      "domain": "NLP",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の項目のうち、Azure AI Translatorの機能として正しいものをすべて選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "テキスト翻訳（Text Translation）",
+          "音声認識（Speech-to-Text）",
+          "ドキュメント翻訳（Document Translation）",
+          "感情分析（Sentiment Analysis）",
+          "言語の自動検出（Language Auto-Detection）",
+          "カスタム翻訳モデル（Custom Translator）"
+        ]
+      },
+      "answer": [0, 2, 4, 5],
+      "explanation": "Azure AI Translatorの機能には、テキスト翻訳、ドキュメント翻訳（書式保持）、言語の自動検出、カスタム翻訳モデル（Custom Translator）が含まれます。音声認識はAzure AI Speechの機能であり、感情分析はAzure AI Languageの機能です。",
+      "tags": ["azure-ai-translator", "capabilities"]
+    },
+    {
+      "id": "PN2-029",
+      "domain": "NLP",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "D社は教育テクノロジー企業で、オンライン語学学習プラットフォームを開発しています。プラットフォームには以下の機能要件があります：\n(1) 学習者が英語の文章を読み上げると、発音の正確さと流暢さをリアルタイムでフィードバックする\n(2) 学習者のスピーキング内容をテキストに変換して画面に表示する\n(3) 教材テキストを自然な音声で読み上げるモデル音声を提供する（読み上げ速度は学習レベルに応じて調整可能）\n(4) 学習者が母国語で書いた文章を目標言語に翻訳してお手本として表示する",
+      "subQuestions": [
+        {
+          "id": "PN2-029-1",
+          "type": "single",
+          "prompt": "学習者の発音をリアルタイムで評価してスコアを返すために、最も適切なAzure AI Speechの機能はどれですか。",
+          "choices": [
+            "話者認識（Speaker Recognition）",
+            "発音評価（Pronunciation Assessment）",
+            "カスタム音声認識（Custom Speech）",
+            "音声翻訳（Speech Translation）"
+          ],
+          "answer": [1],
+          "explanation": "発音評価（Pronunciation Assessment）は、学習者の音声を参照テキストと比較して、正確さ、流暢さ、完全性、韻律などをスコアリングする機能です。語学学習アプリでの発音フィードバックに最適です。"
+        },
+        {
+          "id": "PN2-029-2",
+          "type": "single",
+          "prompt": "教材テキストのモデル音声において、学習レベルに応じて読み上げ速度を調整するために使用すべき技術はどれですか。",
+          "choices": [
+            "SSML（Speech Synthesis Markup Language）の prosody タグで rate を指定する",
+            "Azure AI Translatorで翻訳速度を調整する",
+            "カスタムニューラル音声で速度別の音声モデルを複数作成する",
+            "音声ファイルの再生速度をクライアント側で変更する"
+          ],
+          "answer": [0],
+          "explanation": "SSMLの <prosody rate=\"slow\"> タグを使用することで、Text-to-Speechの読み上げ速度を柔軟に制御できます。学習レベルに応じてrate値を変更するだけで、初級者向けのゆっくりした読み上げから上級者向けのナチュラルスピードまで対応可能です。"
+        },
+        {
+          "id": "PN2-029-3",
+          "type": "multi",
+          "prompt": "このプラットフォームで使用されるAzureサービスとして必要なものを、以下からすべて選んでください。",
+          "choices": [
+            "Azure AI Speech（Speech-to-Text / Text-to-Speech）",
+            "Azure AI Translator",
+            "Azure AI Vision",
+            "Azure AI Language（感情分析）"
+          ],
+          "answer": [0, 1],
+          "explanation": "発音評価、音声テキスト変換、テキスト読み上げにはAzure AI Speechが必要です。母国語から目標言語への翻訳にはAzure AI Translatorが必要です。Azure AI Visionは画像処理のサービスであり、Azure AI Languageの感情分析は語学学習プラットフォームの要件には含まれていません。"
+        }
+      ],
+      "explanation": "語学学習プラットフォームでは、Azure AI Speechの発音評価、Speech-to-Text、Text-to-Speech（SSML制御）、およびAzure AI Translatorのテキスト翻訳を組み合わせることで、包括的な学習体験を実現できます。",
+      "tags": ["pronunciation-assessment", "ssml", "speech-to-text", "text-to-speech", "translator", "education"]
+    },
+    {
+      "id": "PN2-030",
+      "domain": "NLP",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "E社はグローバルなSNSプラットフォームを運営しています。ユーザーの投稿に対する以下のモデレーションおよび分析機能の実装を計画しています：\n(1) 投稿テキストに含まれる個人情報（電話番号、メールアドレス、クレジットカード番号）を自動検出してマスキングする\n(2) 各投稿の感情傾向を分析し、特にネガティブな投稿が急増した場合にアラートを発する\n(3) 世界中のユーザーの投稿言語を自動判定して、地域別のトレンド分析に活用する\n(4) カスタマーサポート部門で、ユーザーの問い合わせ意図をAIで自動分類して適切な担当チームに振り分ける",
+      "subQuestions": [
+        {
+          "id": "PN2-030-1",
+          "type": "single",
+          "prompt": "投稿テキストから個人情報を検出してマスキングするために使用するAzure AI Languageの機能はどれですか。",
+          "choices": [
+            "固有表現認識（NER）",
+            "PII検出（PII Detection）",
+            "キーフレーズ抽出",
+            "テキスト要約"
+          ],
+          "answer": [1],
+          "explanation": "PII検出（Personally Identifiable Information Detection）は、テキスト内の個人情報を自動検出し、カテゴリ分類およびマスキング（墨消し）を行う機能です。電話番号、メールアドレス、クレジットカード番号などの機密情報の保護に最適です。"
+        },
+        {
+          "id": "PN2-030-2",
+          "type": "single",
+          "prompt": "ユーザーの問い合わせ意図を自動分類して担当チームに振り分けるために、最も適切なAzureサービスはどれですか。",
+          "choices": [
+            "Azure AI Translator",
+            "Azure AI Speech（Speech-to-Text）",
+            "Conversational Language Understanding（CLU）",
+            "Azure AI Language（テキスト要約）"
+          ],
+          "answer": [2],
+          "explanation": "CLU（Conversational Language Understanding）は、ユーザーの発話やテキストからインテント（意図）を自動分類する機能を提供します。問い合わせの種類（例：返金リクエスト、技術サポート、アカウント問題）をインテントとして定義し、適切なチームへの自動振り分けが実現できます。"
+        },
+        {
+          "id": "PN2-030-3",
+          "type": "multi",
+          "prompt": "このプラットフォームで使用するAzure AI Languageの機能の組み合わせとして必要なものを、以下からすべて選んでください。",
+          "choices": [
+            "PII検出",
+            "感情分析",
+            "言語検出",
+            "音声合成（Text-to-Speech）",
+            "CLU（Conversational Language Understanding）"
+          ],
+          "answer": [0, 1, 2, 4],
+          "explanation": "個人情報の保護にPII検出、ネガティブ投稿の監視に感情分析、地域別トレンド分析に言語検出、問い合わせの意図分類にCLUが必要です。音声合成はAzure AI Speechの機能であり、テキストベースのSNSモデレーションには不要です。"
+        }
+      ],
+      "explanation": "SNSプラットフォームのモデレーションと分析には、PII検出、感情分析、言語検出、CLUという複数のAzure AI Language機能を組み合わせて活用します。それぞれの機能が異なる課題を解決し、総合的なコンテンツ管理を実現します。",
+      "tags": ["pii-detection", "sentiment-analysis", "language-detection", "clu", "content-moderation", "scenario"]
+    }
+  ]
+}

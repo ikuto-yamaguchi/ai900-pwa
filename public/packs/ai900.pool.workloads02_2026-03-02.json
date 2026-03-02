@@ -1,0 +1,894 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.pool.workloads02",
+    "version": "2026-03-02",
+    "title": "Workloads 応用30問 #2",
+    "description": "AIワークロードと責任あるAIの応用問題（第2弾）",
+    "language": "ja-JP",
+    "createdAt": "2026-03-02T12:00:00Z",
+    "domains": ["Workloads"]
+  },
+  "questions": [
+    {
+      "id": "PW2-001",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "Azure Bot Serviceを使用してチャットボットを構築する際、ボットが複数のチャネル（Microsoft Teams、Slack、Webチャット等）に同時にデプロイできる理由として正しいものはどれですか。",
+      "choices": [
+        "各チャネルごとに個別のボットコードを記述する必要がある",
+        "Azure Bot Serviceのチャネルコネクタがチャネル間のプロトコル差異を抽象化するため",
+        "すべてのチャネルが同一の通信プロトコルを使用しているため",
+        "ボットのコードがクライアント側で実行されるため"
+      ],
+      "answer": [1],
+      "explanation": "Azure Bot Serviceはチャネルコネクタ機能を提供し、ボットのロジックを一度記述するだけで、Teams、Slack、LINE、Webチャットなど複数チャネルへのデプロイを可能にします。各チャネル固有のプロトコル差異はコネクタが吸収するため、ボット開発者はチャネルごとの実装を意識する必要がありません。",
+      "tags": ["azure-bot-service", "channels", "architecture"],
+      "sources": [
+        {
+          "title": "Azure Bot Service の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/bot-service/bot-service-overview"
+        }
+      ]
+    },
+    {
+      "id": "PW2-002",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "Microsoftの責任あるAI原則において、AIシステムが意図しない動作をした場合に誰が責任を負うかを明確にする原則はどれですか。",
+      "choices": [
+        "公平性（Fairness）",
+        "透明性（Transparency）",
+        "アカウンタビリティ（Accountability）",
+        "包括性（Inclusiveness）"
+      ],
+      "answer": [2],
+      "explanation": "アカウンタビリティ（説明責任）の原則は、AIシステムの設計・運用に関わる人々が、そのシステムの動作について責任を持つことを求めます。意図しない動作や悪影響が発生した場合に、誰が責任を負い、どのように対処するかのガバナンス体制を確立することが重要です。",
+      "tags": ["responsible-ai", "accountability", "governance"],
+      "sources": [
+        {
+          "title": "Microsoft の責任ある AI の原則",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW2-003",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "ある企業が、製品レビューの星の数（1〜5の整数値）を予測するAIモデルを構築する場合、最も適切なアプローチはどれですか。",
+      "choices": [
+        "クラスタリングを使用してレビューをグループ分けする",
+        "異常検出を使用して異常なレビューを特定する",
+        "分類を使用して5つのカテゴリ（1〜5星）のいずれかに割り当てる",
+        "回帰を使用して連続的な数値として予測する"
+      ],
+      "answer": [2],
+      "explanation": "星の数（1〜5）は離散的なカテゴリとして扱うのが最も適切です。これは多クラス分類タスクに該当します。回帰は連続値の予測に適しており、2.7や4.3のような中間値を出力する可能性があるため、整数の星評価には分類が適しています。",
+      "tags": ["classification", "workload-type", "nlp"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning の自動ML",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PW2-004",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure Cognitive Servicesのリソースをデプロイする際、「マルチサービスリソース」を使用する利点として最も正しいものはどれですか。",
+      "choices": [
+        "すべてのAIサービスが無料で使用できるようになる",
+        "単一のエンドポイントとキーで複数のAIサービス（Vision、Language、Speech等）にアクセスできる",
+        "各サービスの処理速度が個別リソースより高速になる",
+        "データがAzureリージョン外に自動的にバックアップされる"
+      ],
+      "answer": [1],
+      "explanation": "Azure AI Servicesのマルチサービスリソースを使用すると、単一のエンドポイントとAPIキーで複数のAIサービス（Vision、Language、Speech、Decision等）にアクセスできます。これにより、リソース管理が簡素化され、コスト管理も一元化されます。ただし、各サービスの処理性能は個別リソースと同等です。",
+      "tags": ["azure-ai-services", "resource-management", "deployment"],
+      "sources": [
+        {
+          "title": "Azure AI サービス リソースの作成",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/multi-service-resource"
+        }
+      ]
+    },
+    {
+      "id": "PW2-005",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "責任あるAIの原則に基づき、AIシステムが「人間の監視（Human Oversight）」を必要とする最も重要な理由はどれですか。",
+      "choices": [
+        "AIモデルのトレーニング時間を短縮するため",
+        "AIが常に最適な判断を下すことを保証できないため、重要な決定に人間が介在し最終判断を行うべきだから",
+        "AIシステムのクラウドコストを削減するため",
+        "データサイエンティストの雇用を維持するため"
+      ],
+      "answer": [1],
+      "explanation": "AIシステムは誤った判断やバイアスのある出力を生成する可能性があります。特に人命、財産、権利に影響する重要な意思決定では、AIの出力を人間がレビューし最終判断を行う「Human-in-the-loop」のアプローチが責任あるAIの核心です。これは信頼性と安全性、アカウンタビリティの原則に直結します。",
+      "tags": ["responsible-ai", "human-oversight", "reliability-safety"],
+      "sources": [
+        {
+          "title": "Microsoft の責任ある AI 基準",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW2-006",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 3,
+      "prompt": "Azure AI Servicesにおいて、カスタムドメインに特化した画像分類モデルを、少量のラベル付き画像（数十枚程度）で効率的にトレーニングできるサービスはどれですか。",
+      "choices": [
+        "Azure Machine Learning のAutoML",
+        "Azure AI Vision の Custom Vision",
+        "Azure AI Document Intelligence",
+        "Azure OpenAI Service の DALL-E"
+      ],
+      "answer": [1],
+      "explanation": "Azure AI Vision の Custom Vision は、転移学習を活用して少量のラベル付き画像（カテゴリあたり数十枚程度）でカスタム画像分類・物体検出モデルをトレーニングできるサービスです。AutoMLはより汎用的で大量のデータを扱う場合に適しています。Document IntelligenceはドキュメントのOCR/構造化、DALL-Eは画像生成サービスです。",
+      "tags": ["azure-ai-services", "custom-vision", "transfer-learning"],
+      "sources": [
+        {
+          "title": "Custom Vision とは",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/overview"
+        }
+      ]
+    },
+    {
+      "id": "PW2-007",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 3,
+      "prompt": "ある金融機関がAIを用いた融資審査システムを導入しています。規制当局から「モデルの判断理由を個々の申請者に説明できること」を求められました。この要件を満たすために最も適切なアプローチはどれですか。",
+      "choices": [
+        "より大量のトレーニングデータを収集してモデルの精度を向上させる",
+        "モデルの精度を犠牲にしてでも、決定木のような解釈しやすいモデルに切り替える",
+        "SHAP値などの事後説明手法を用いて、個々の予測に対する各特徴量の寄与度を算出する",
+        "モデルの出力結果のみを申請者に通知し、判断理由は開示しない"
+      ],
+      "answer": [2],
+      "explanation": "SHAP（SHapley Additive exPlanations）値は、個々の予測に対する各特徴量の寄与度を定量的に算出する手法で、複雑なモデルでも「なぜその判断に至ったか」を説明できます。精度を犠牲にする必要なく透明性を確保できるため、規制対応に最も適しています。Azure Machine Learningの責任あるAIダッシュボードにも統合されています。",
+      "tags": ["responsible-ai", "transparency", "explainability", "shap", "finance"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning での解釈可能性",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-machine-learning-interpretability"
+        }
+      ]
+    },
+    {
+      "id": "PW2-008",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 3,
+      "prompt": "Azure AI Searchにおいて、「セマンティック検索」が従来のキーワード検索と異なる点として最も正しいものはどれですか。",
+      "choices": [
+        "検索クエリを暗号化してセキュリティを強化する",
+        "クエリの意味的な意図を理解し、キーワードの完全一致ではなく文脈に基づいた関連性の高い結果を返す",
+        "検索結果をアルファベット順に自動的にソートする",
+        "検索インデックスのサイズを自動的に圧縮する"
+      ],
+      "answer": [1],
+      "explanation": "Azure AI Searchのセマンティック検索は、自然言語理解モデルを使用してクエリの意図と文書の意味を理解し、単純なキーワードマッチングを超えた文脈的な関連性に基づいて検索結果をランキングします。これにより、ユーザーの検索意図に合致した高品質な結果を返すことが可能になります。",
+      "tags": ["azure-ai-search", "semantic-search", "nlp"],
+      "sources": [
+        {
+          "title": "Azure AI Search のセマンティック検索",
+          "url": "https://learn.microsoft.com/ja-jp/azure/search/semantic-search-overview"
+        }
+      ]
+    },
+    {
+      "id": "PW2-009",
+      "domain": "Workloads",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure Bot Serviceで構築したチャットボットにAI機能を追加するために組み合わせて使用できるAzureサービスをすべて選んでください。",
+      "choices": [
+        "Azure AI Language（意図認識・エンティティ抽出）",
+        "Azure AI Speech（音声認識・音声合成）",
+        "Azure Virtual Machines（仮想マシン）",
+        "Azure OpenAI Service（自然言語生成）",
+        "Azure AI Translator（多言語翻訳）"
+      ],
+      "answer": [0, 1, 3, 4],
+      "explanation": "Azure Bot Serviceは、AI Language（CLU/LUIS による意図認識・エンティティ抽出）、AI Speech（音声入力・出力の追加）、OpenAI Service（GPTモデルによる自然言語応答生成）、AI Translator（リアルタイム多言語対応）と組み合わせてインテリジェントなボットを構築できます。Azure Virtual Machinesは汎用のコンピューティングサービスであり、ボットにAI機能を追加するサービスではありません。",
+      "tags": ["azure-bot-service", "azure-ai-services", "integration"],
+      "sources": [
+        {
+          "title": "Azure Bot Service の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/bot-service/bot-service-overview"
+        }
+      ]
+    },
+    {
+      "id": "PW2-010",
+      "domain": "Workloads",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "責任あるAIの「透明性（Transparency）」の原則を実現するための具体的な施策をすべて選んでください。",
+      "choices": [
+        "ユーザーがAIシステムと対話していることを明確に通知する",
+        "AIシステムのソースコードをすべてオープンソースとして公開する",
+        "AIシステムの能力と限界に関するドキュメント（モデルカード等）を提供する",
+        "AIの判断に影響を与えた要因をユーザーに理解しやすい形で提示する",
+        "AIモデルの学習率やバッチサイズなどのハイパーパラメータをユーザーに公開する"
+      ],
+      "answer": [0, 2, 3],
+      "explanation": "透明性の原則は、(1)ユーザーがAIと対話していることの明示、(2)AIの能力・限界・意図された用途の文書化（モデルカード）、(3)判断理由の提示を求めます。ソースコードの全面公開やハイパーパラメータの公開は透明性の必須要件ではなく、知的財産保護やセキュリティの観点から必ずしも推奨されません。",
+      "tags": ["responsible-ai", "transparency", "model-card"],
+      "sources": [
+        {
+          "title": "Microsoft の透明性に関する取り組み",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW2-011",
+      "domain": "Workloads",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "企業がAIシステムのデプロイ後に実施すべき継続的な監視項目として正しいものをすべて選んでください。",
+      "choices": [
+        "モデルの予測精度が時間経過とともに低下していないか（モデルドリフト）",
+        "入力データの分布が学習時と大きく変化していないか（データドリフト）",
+        "AIシステムの開発に使用したプログラミング言語のバージョン",
+        "特定のユーザーグループに対する予測性能の偏り（公平性の監視）",
+        "APIレスポンスタイムやエラー率などのサービス健全性指標"
+      ],
+      "answer": [0, 1, 3, 4],
+      "explanation": "AIシステムのデプロイ後は、モデルドリフト（予測精度の経時的変化）、データドリフト（入力データ分布の変化）、公平性の継続的監視、サービス健全性指標の監視が不可欠です。プログラミング言語のバージョンは開発環境の管理事項であり、モデルの運用監視項目ではありません。Azure Machine Learningの監視機能はこれらを統合的にサポートしています。",
+      "tags": ["monitoring", "model-drift", "data-drift", "responsible-ai", "mlops"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning のモデル監視",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-model-monitoring"
+        }
+      ]
+    },
+    {
+      "id": "PW2-012",
+      "domain": "Workloads",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "Azure OpenAI Serviceの「コンテンツフィルター」機能が検出・フィルタリングできるカテゴリとして正しいものをすべて選んでください。",
+      "choices": [
+        "ヘイトスピーチ（Hate）",
+        "暴力的コンテンツ（Violence）",
+        "JSON構文エラー",
+        "性的コンテンツ（Sexual）",
+        "自傷行為（Self-harm）"
+      ],
+      "answer": [0, 1, 3, 4],
+      "explanation": "Azure OpenAI Serviceのコンテンツフィルターは、ヘイトスピーチ、暴力的コンテンツ、性的コンテンツ、自傷行為の4つの有害カテゴリを検出・フィルタリングします。各カテゴリにはsafe、low、medium、highの重大度レベルがあり、フィルター設定をカスタマイズできます。JSON構文エラーの検出はコンテンツフィルターの対象外です。",
+      "tags": ["azure-openai", "content-filter", "responsible-ai", "safety"],
+      "sources": [
+        {
+          "title": "Azure OpenAI Service のコンテンツ フィルター",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/content-filter"
+        }
+      ]
+    },
+    {
+      "id": "PW2-013",
+      "domain": "Workloads",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "機械学習モデルの「過学習（Overfitting）」の兆候として正しいものをすべて選んでください。",
+      "choices": [
+        "トレーニングデータに対する精度が非常に高いが、テストデータに対する精度が大幅に低い",
+        "トレーニングデータとテストデータの両方で精度が均一に低い",
+        "モデルがトレーニングデータのノイズやランダムな変動まで学習してしまっている",
+        "新しい未知のデータに対する汎化性能が著しく低い"
+      ],
+      "answer": [0, 2, 3],
+      "explanation": "過学習は、モデルがトレーニングデータに過度に適合し、ノイズまで学習してしまう状態です。トレーニング精度は高いがテスト精度が低い（汎化性能が低い）ことが典型的な兆候です。トレーニングとテストの両方で精度が低い場合は「過少学習（Underfitting）」であり、過学習とは異なります。",
+      "tags": ["overfitting", "ml-concepts", "model-evaluation"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning のモデル評価",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PW2-014",
+      "domain": "Workloads",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure Bot Serviceでチャットボットを構築する際、ユーザーの発話から意図を認識するには {{0}} を使用し、ボットに音声入出力機能を追加するには {{1}} を使用します。",
+      "dropdowns": [
+        {
+          "options": [
+            "Azure AI Vision",
+            "Azure AI Language（CLU / LUIS）",
+            "Azure AI Speech",
+            "Azure AI Content Safety"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "Azure AI Vision",
+            "Azure AI Language（CLU / LUIS）",
+            "Azure AI Speech",
+            "Azure AI Content Safety"
+          ],
+          "answer": 2
+        }
+      ],
+      "explanation": "Azure AI Language の CLU（Conversational Language Understanding、旧LUIS）は、ユーザーの自然言語発話から意図（Intent）とエンティティ（Entity）を認識するサービスです。Azure AI Speechは音声テキスト変換（STT）とテキスト音声変換（TTS）を提供し、ボットに音声インターフェースを追加できます。",
+      "tags": ["azure-bot-service", "clu", "luis", "speech", "azure-ai-services"],
+      "sources": [
+        {
+          "title": "CLU の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/conversational-language-understanding/overview"
+        }
+      ]
+    },
+    {
+      "id": "PW2-015",
+      "domain": "Workloads",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "機械学習における評価指標で、分類モデルが「陽性」と予測したもののうち実際に陽性であった割合は {{0}} と呼ばれ、実際の陽性のうちモデルが正しく陽性と予測できた割合は {{1}} と呼ばれます。",
+      "dropdowns": [
+        {
+          "options": [
+            "精度（Accuracy）",
+            "適合率（Precision）",
+            "再現率（Recall）",
+            "F1スコア"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "精度（Accuracy）",
+            "適合率（Precision）",
+            "再現率（Recall）",
+            "F1スコア"
+          ],
+          "answer": 2
+        }
+      ],
+      "explanation": "適合率（Precision）は「陽性と予測したもののうち実際に陽性であった割合」（TP / (TP + FP)）で、偽陽性の少なさを測ります。再現率（Recall）は「実際の陽性のうち正しく陽性と予測できた割合」（TP / (TP + FN)）で、見逃しの少なさを測ります。",
+      "tags": ["evaluation-metrics", "precision", "recall", "classification"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning の分類メトリクス",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PW2-016",
+      "domain": "Workloads",
+      "type": "dropdown",
+      "difficulty": 3,
+      "prompt": "責任あるAIにおいて、AIシステムが特定の人口統計グループに対して不利な結果を系統的に生み出すことを {{0}} と呼びます。これに対処するためにMicrosoftが提供するオープンソースツールは {{1}} であり、モデルの予測根拠を個別に説明するための手法として {{2}} が広く使われています。",
+      "dropdowns": [
+        {
+          "options": [
+            "データドリフト",
+            "モデルバイアス",
+            "過学習",
+            "特徴量エンジニアリング"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "MLflow",
+            "Fairlearn",
+            "TensorBoard",
+            "Kubeflow"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "グリッドサーチ",
+            "バッチ正規化",
+            "SHAP（SHapley Additive exPlanations）",
+            "勾配降下法"
+          ],
+          "answer": 2
+        }
+      ],
+      "explanation": "モデルバイアスは、AIが特定のグループに不公平な結果を生み出す問題です。Fairlearnはバイアスを検出・緩和するMicrosoft提供のオープンソースツールで、Azure MLの責任あるAIダッシュボードに統合されています。SHAP値は個々の予測に対する各特徴量の寄与度を計算し、モデルの判断根拠を説明する手法です。",
+      "tags": ["responsible-ai", "bias", "fairlearn", "shap", "explainability"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning の責任ある AI ダッシュボード",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai-dashboard"
+        }
+      ]
+    },
+    {
+      "id": "PW2-017",
+      "domain": "Workloads",
+      "type": "dropdown",
+      "difficulty": 3,
+      "prompt": "Azure AI Servicesのデプロイオプションにおいて、データをクラウドに送信せずにオンプレミスやエッジデバイスでAIモデルを実行する方式は {{0}} と呼ばれ、インターネット接続が不安定な環境でもAI機能を使用できます。一方、Azure上のクラウドリソースを利用する標準的なデプロイ方式では {{1}} で課金されます。",
+      "dropdowns": [
+        {
+          "options": [
+            "ハイブリッドデプロイ",
+            "コンテナーデプロイ（Azure AI コンテナー）",
+            "サーバーレスデプロイ",
+            "マルチリージョンデプロイ"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "サブスクリプション固定料金のみ",
+            "API呼び出し回数やトランザクション量に基づく従量課金",
+            "データ保存量のみ",
+            "デプロイしたリージョン数に基づく課金"
+          ],
+          "answer": 1
+        }
+      ],
+      "explanation": "Azure AI コンテナー（Docker コンテナー）を使用すると、AI モデルをオンプレミスやエッジデバイスにデプロイでき、データのローカル処理が可能です。これはデータ主権やネットワーク接続の制約がある環境で有用です。クラウド版の標準課金モデルは、API呼び出し回数やトランザクション量に基づく従量課金（Pay-as-you-go）です。",
+      "tags": ["azure-ai-services", "container", "edge", "pricing", "deployment"],
+      "sources": [
+        {
+          "title": "Azure AI サービス コンテナー",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/cognitive-services-container-support"
+        }
+      ]
+    },
+    {
+      "id": "PW2-018",
+      "domain": "Workloads",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下の責任あるAI原則と、その原則に最も関連する具体的な実践例を正しく対応させてください。",
+      "left": [
+        "公平性（Fairness）",
+        "信頼性と安全性（Reliability & Safety）",
+        "プライバシーとセキュリティ",
+        "包括性（Inclusiveness）"
+      ],
+      "right": [
+        "視覚障がい者向けに画面読み上げ対応のAIインターフェースを設計する",
+        "トレーニングデータの匿名化と暗号化を実施する",
+        "医療AIの判定にフェイルセーフメカニズムと人間の最終確認を組み込む",
+        "採用AIが性別や民族に基づく偏りがないか定期的に監査する"
+      ],
+      "answerMap": {
+        "公平性（Fairness）": "採用AIが性別や民族に基づく偏りがないか定期的に監査する",
+        "信頼性と安全性（Reliability & Safety）": "医療AIの判定にフェイルセーフメカニズムと人間の最終確認を組み込む",
+        "プライバシーとセキュリティ": "トレーニングデータの匿名化と暗号化を実施する",
+        "包括性（Inclusiveness）": "視覚障がい者向けに画面読み上げ対応のAIインターフェースを設計する"
+      },
+      "explanation": "公平性はバイアスの監査・是正、信頼性と安全性はフェイルセーフと人間の監視、プライバシーとセキュリティはデータ保護、包括性はアクセシビリティ対応を含む多様なユーザーへの配慮に関連します。",
+      "tags": ["responsible-ai", "fairness", "reliability-safety", "privacy", "inclusiveness"],
+      "sources": [
+        {
+          "title": "Microsoft の責任ある AI の原則",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW2-019",
+      "domain": "Workloads",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下の機械学習の評価指標と、それぞれの指標が測定する内容を正しく対応させてください。",
+      "left": [
+        "精度（Accuracy）",
+        "適合率（Precision）",
+        "再現率（Recall）",
+        "AUC（Area Under the Curve）"
+      ],
+      "right": [
+        "陽性と予測した中で実際に陽性であった割合",
+        "分類モデルの閾値に依存しない全体的な識別能力",
+        "全体の予測のうち正しく予測できた割合",
+        "実際の陽性を正しく陽性と予測できた割合"
+      ],
+      "answerMap": {
+        "精度（Accuracy）": "全体の予測のうち正しく予測できた割合",
+        "適合率（Precision）": "陽性と予測した中で実際に陽性であった割合",
+        "再現率（Recall）": "実際の陽性を正しく陽性と予測できた割合",
+        "AUC（Area Under the Curve）": "分類モデルの閾値に依存しない全体的な識別能力"
+      },
+      "explanation": "Accuracyは全体の正答率、Precisionは陽性予測の正確性、Recallは陽性サンプルの検出率、AUCはROC曲線の下の面積で閾値に依存しない分類能力を表します。不均衡データではAccuracyだけでは不十分であり、用途に応じた指標の選択が重要です。",
+      "tags": ["evaluation-metrics", "accuracy", "precision", "recall", "auc"],
+      "sources": [
+        {
+          "title": "Azure ML の分類メトリクス",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PW2-020",
+      "domain": "Workloads",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下のAIの活用シナリオと、そのシナリオで最も重視すべき責任あるAI原則を正しく対応させてください。",
+      "left": [
+        "自動運転車の緊急時の意思決定AI",
+        "裁判所での再犯リスク予測AI",
+        "医療チャットボットが患者のデータを扱う場面",
+        "多言語対応のカスタマーサポートAI"
+      ],
+      "right": [
+        "プライバシーとセキュリティ",
+        "包括性（Inclusiveness）",
+        "公平性（Fairness）",
+        "信頼性と安全性（Reliability & Safety）"
+      ],
+      "answerMap": {
+        "自動運転車の緊急時の意思決定AI": "信頼性と安全性（Reliability & Safety）",
+        "裁判所での再犯リスク予測AI": "公平性（Fairness）",
+        "医療チャットボットが患者のデータを扱う場面": "プライバシーとセキュリティ",
+        "多言語対応のカスタマーサポートAI": "包括性（Inclusiveness）"
+      },
+      "explanation": "自動運転の緊急時は人命に直結するため信頼性と安全性が最重要、再犯予測は人種等の属性に基づくバイアスリスクがあるため公平性が最重要、患者データはHIPAA等の規制もあるためプライバシーとセキュリティが最重要、多言語対応は多様な言語・文化のユーザーへの配慮として包括性が最重要です。",
+      "tags": ["responsible-ai", "scenario-analysis", "principle-application"],
+      "sources": [
+        {
+          "title": "Microsoft の責任ある AI の原則",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW2-021",
+      "domain": "Workloads",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下の機械学習モデルの問題と、その問題に対する最も適切な対処法を正しく対応させてください。",
+      "left": [
+        "過学習（Overfitting）",
+        "過少学習（Underfitting）",
+        "データの不均衡（Class Imbalance）",
+        "データドリフト（Data Drift）"
+      ],
+      "right": [
+        "少数クラスのオーバーサンプリングやSMOTE手法を適用する",
+        "モデルの定期的な再トレーニングと入力データ分布の監視を実施する",
+        "正則化の適用、ドロップアウトの追加、トレーニングデータの増強を行う",
+        "より複雑なモデルの使用、特徴量の追加、トレーニング期間の延長を行う"
+      ],
+      "answerMap": {
+        "過学習（Overfitting）": "正則化の適用、ドロップアウトの追加、トレーニングデータの増強を行う",
+        "過少学習（Underfitting）": "より複雑なモデルの使用、特徴量の追加、トレーニング期間の延長を行う",
+        "データの不均衡（Class Imbalance）": "少数クラスのオーバーサンプリングやSMOTE手法を適用する",
+        "データドリフト（Data Drift）": "モデルの定期的な再トレーニングと入力データ分布の監視を実施する"
+      },
+      "explanation": "過学習にはモデルの複雑さを抑制する正則化・ドロップアウト、過少学習にはモデルの表現力を向上させる手法、データ不均衡にはオーバーサンプリング（SMOTE等）、データドリフトには継続的な監視と再トレーニングが有効です。",
+      "tags": ["overfitting", "underfitting", "class-imbalance", "data-drift", "ml-concepts"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning のモデル監視",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-model-monitoring"
+        }
+      ]
+    },
+    {
+      "id": "PW2-022",
+      "domain": "Workloads",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Azure Bot Serviceを使用してインテリジェントチャットボットを構築・デプロイするプロセスを正しい順序に並べてください。",
+      "items": [
+        "ボットを複数のチャネル（Teams、Web等）に接続しデプロイする",
+        "Azure portalでBot Serviceリソースを作成する",
+        "ダイアログフローとウォーターフォールステップを設計・実装する",
+        "Azure AI Language（CLU）で意図認識モデルをトレーニングし統合する",
+        "テストWebチャットでボットの動作を検証する"
+      ],
+      "answerOrder": [1, 3, 2, 4, 0],
+      "explanation": "(1)Bot Serviceリソースを作成し、(2)CLUで意図認識モデルをトレーニングして統合し、(3)ダイアログフローを設計・実装し、(4)テストWebチャットで検証し、(5)本番チャネルにデプロイするという順序が適切です。",
+      "tags": ["azure-bot-service", "clu", "development-lifecycle"],
+      "sources": [
+        {
+          "title": "Azure Bot Service のクイックスタート",
+          "url": "https://learn.microsoft.com/ja-jp/azure/bot-service/bot-service-quickstart-create-bot"
+        }
+      ]
+    },
+    {
+      "id": "PW2-023",
+      "domain": "Workloads",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "機械学習プロジェクトのライフサイクルを正しい順序に並べてください。",
+      "items": [
+        "モデルの性能を評価メトリクスで検証する",
+        "ビジネス課題を定義し、成功基準を明確にする",
+        "データの収集、前処理、特徴量エンジニアリングを行う",
+        "モデルを本番環境にデプロイし、継続的に監視する",
+        "アルゴリズムを選択し、モデルをトレーニングする"
+      ],
+      "answerOrder": [1, 2, 4, 0, 3],
+      "explanation": "MLプロジェクトは、(1)ビジネス課題の定義・成功基準の明確化、(2)データ収集・前処理・特徴量エンジニアリング、(3)アルゴリズム選択・モデルトレーニング、(4)性能評価、(5)デプロイ・継続的監視の順序で進めます。ビジネス理解から始まりデプロイ後の監視で完結するサイクルです。",
+      "tags": ["ml-lifecycle", "mlops", "development-process"],
+      "sources": [
+        {
+          "title": "Azure Machine Learning のライフサイクル",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/overview-what-is-azure-machine-learning"
+        }
+      ]
+    },
+    {
+      "id": "PW2-024",
+      "domain": "Workloads",
+      "type": "order",
+      "difficulty": 3,
+      "prompt": "企業が責任あるAIガバナンスフレームワークを組織全体に導入する手順を正しい順序に並べてください。",
+      "items": [
+        "全社的な責任あるAIの原則とポリシーを策定する",
+        "デプロイ済みAIシステムの定期的な監査と改善サイクルを運用する",
+        "AI開発者・利用者に向けた教育プログラムとガイドラインを整備する",
+        "責任あるAI委員会を設置し、レビュープロセスを確立する",
+        "パイロットプロジェクトでフレームワークを検証し、フィードバックを収集する"
+      ],
+      "answerOrder": [0, 3, 2, 4, 1],
+      "explanation": "(1)まず原則・ポリシーを策定し組織の方向性を定め、(2)AI委員会を設置してレビュー体制を構築し、(3)教育プログラムで全社への浸透を図り、(4)パイロットで実効性を検証してフィードバックを得て、(5)本格運用として定期監査・改善サイクルを回すという段階的アプローチが効果的です。",
+      "tags": ["responsible-ai", "governance", "organizational-framework"],
+      "sources": [
+        {
+          "title": "Microsoft の責任ある AI ガバナンス",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW2-025",
+      "domain": "Workloads",
+      "type": "order",
+      "difficulty": 3,
+      "prompt": "Azure AI Servicesを活用した知識ベースQ&Aシステムを構築する手順を正しい順序に並べてください。",
+      "items": [
+        "Azure AI Searchインデックスにドキュメントを格納しベクトル化する",
+        "ナレッジベースとなるドキュメント（FAQ、マニュアル等）を収集・整理する",
+        "ユーザーの質問に対してAI Searchで関連ドキュメントを検索し、Azure OpenAIで回答を生成する",
+        "回答の品質を評価し、ナレッジベースを継続的に更新する",
+        "Azure OpenAI Serviceのリソースを作成しモデルをデプロイする"
+      ],
+      "answerOrder": [1, 4, 0, 2, 3],
+      "explanation": "(1)ドキュメントの収集・整理、(2)OpenAIリソースの作成・モデルデプロイ、(3)AI Searchインデックスへのドキュメント格納とベクトル化、(4)RAGパターンで質問に対して検索・回答生成、(5)品質評価とナレッジベースの継続的更新という順序で構築します。これはRAG（Retrieval-Augmented Generation）アーキテクチャの典型的な構築フローです。",
+      "tags": ["azure-ai-search", "azure-openai", "rag", "knowledge-base"],
+      "sources": [
+        {
+          "title": "Azure AI Search と OpenAI の統合",
+          "url": "https://learn.microsoft.com/ja-jp/azure/search/search-what-is-azure-search"
+        }
+      ]
+    },
+    {
+      "id": "PW2-026",
+      "domain": "Workloads",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の説明のうち、Azure AI Servicesの「コンテナーデプロイ」のメリットに該当するものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "データをクラウドに送信せずにオンプレミスで処理できる",
+          "Azure AI Servicesの利用料金が完全に無料になる",
+          "インターネット接続が不安定な環境でもAI機能を使用できる",
+          "モデルのトレーニング速度が自動的に向上する",
+          "データ主権やコンプライアンス要件に対応できる",
+          "すべてのAI Servicesの機能がコンテナーで提供される"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "Azure AI Servicesのコンテナーデプロイのメリットは、(1)データのローカル処理（クラウド送信不要）、(2)オフライン/低接続環境での利用、(3)データ主権・コンプライアンス要件への対応です。コンテナーでも課金は発生し、すべてのサービスがコンテナー対応ではなく、トレーニング速度への直接的な影響もありません。",
+      "tags": ["azure-ai-services", "container", "edge", "data-sovereignty"],
+      "sources": [
+        {
+          "title": "Azure AI サービス コンテナーのサポート",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/cognitive-services-container-support"
+        }
+      ]
+    },
+    {
+      "id": "PW2-027",
+      "domain": "Workloads",
+      "type": "hotarea",
+      "difficulty": 3,
+      "prompt": "以下の項目のうち、Microsoftの責任あるAIの6つの原則に含まれるものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "公平性（Fairness）",
+          "収益性（Profitability）",
+          "透明性（Transparency）",
+          "スケーラビリティ（Scalability）",
+          "アカウンタビリティ（Accountability）",
+          "包括性（Inclusiveness）"
+        ]
+      },
+      "answer": [0, 2, 4, 5],
+      "explanation": "Microsoftの責任あるAIの6つの原則は、公平性（Fairness）、信頼性と安全性（Reliability & Safety）、プライバシーとセキュリティ（Privacy & Security）、包括性（Inclusiveness）、透明性（Transparency）、アカウンタビリティ（Accountability）です。収益性やスケーラビリティはビジネス上の考慮事項であり、責任あるAIの原則には含まれません。",
+      "tags": ["responsible-ai", "six-principles", "microsoft"],
+      "sources": [
+        {
+          "title": "Microsoft の責任ある AI の原則",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW2-028",
+      "domain": "Workloads",
+      "type": "hotarea",
+      "difficulty": 3,
+      "prompt": "以下のシナリオのうち、AIシステムの導入前に「責任あるAI影響評価（Impact Assessment）」が特に重要となる高リスクな用途を選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "社員食堂のメニュー推薦システム",
+          "刑事司法における再犯リスクの予測",
+          "社内ニュースレターの自動要約ツール",
+          "医療画像に基づく疾患の自動診断支援",
+          "採用プロセスにおける候補者のスクリーニングAI",
+          "オフィスの室温を自動調整するスマートサーモスタット"
+        ]
+      },
+      "answer": [1, 3, 4],
+      "explanation": "刑事司法の再犯予測（個人の自由に直結）、医療診断支援（患者の健康・生命に影響）、採用スクリーニング（雇用機会・生計に影響）は、人権や基本的権利に大きな影響を及ぼすハイリスクなAI用途であり、影響評価が特に重要です。メニュー推薦、ニュースレター要約、室温調整は相対的にリスクが低い用途です。",
+      "tags": ["responsible-ai", "impact-assessment", "high-risk-ai", "governance"],
+      "sources": [
+        {
+          "title": "Microsoft の責任ある AI の影響評価ガイド",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "PW2-029",
+      "domain": "Workloads",
+      "type": "casestudy",
+      "difficulty": 2,
+      "prompt": "D社は大手通信会社で、毎月数百万件のカスタマーサポート問い合わせを処理しています。現在は全件をオペレーターが電話対応していますが、コスト削減と顧客満足度向上のため、AIチャットボットの導入を検討しています。ボットはWebサイト、モバイルアプリ、Microsoft Teamsの3チャネルで利用可能にし、日本語と英語に対応する予定です。複雑な問い合わせは人間のオペレーターにエスカレーションする仕組みも必要です。D社はGDPR（EU一般データ保護規則）の対象企業です。",
+      "subQuestions": [
+        {
+          "id": "PW2-029-1",
+          "type": "single",
+          "prompt": "D社が複数のチャネル（Web、モバイル、Teams）にチャットボットを展開するために最も適したAzureサービスはどれですか。",
+          "choices": [
+            "Azure Functions",
+            "Azure Bot Service",
+            "Azure Logic Apps",
+            "Azure App Service"
+          ],
+          "answer": [1],
+          "explanation": "Azure Bot Serviceは、単一のボットロジックを複数のチャネル（Webチャット、Teams、LINE、Slack等）に同時にデプロイできるチャネルコネクタを提供します。マルチチャネル対応のチャットボット構築に最適なサービスです。"
+        },
+        {
+          "id": "PW2-029-2",
+          "type": "single",
+          "prompt": "チャットボットに日本語と英語の多言語対応を追加するために組み合わせるべきAzure AIサービスはどれですか。",
+          "choices": [
+            "Azure AI Vision",
+            "Azure AI Translator",
+            "Azure AI Anomaly Detector",
+            "Azure AI Content Safety"
+          ],
+          "answer": [1],
+          "explanation": "Azure AI Translatorは、リアルタイムのテキスト翻訳を提供するサービスです。チャットボットに統合することで、ユーザーの言語を検出し、日本語と英語の間で自動翻訳を行う多言語対応を実現できます。"
+        },
+        {
+          "id": "PW2-029-3",
+          "type": "multi",
+          "prompt": "D社がGDPRに準拠してチャットボットを運用するために必要な措置をすべて選んでください。",
+          "choices": [
+            "チャットボットとの会話データの保存期間と目的を明確にし、ユーザーの同意を取得する",
+            "ユーザーが自分の個人データの削除を要求できる仕組みを実装する",
+            "すべての会話データを無期限に保存する",
+            "チャットボットが収集する個人データの種類と処理目的をプライバシーポリシーに記載する"
+          ],
+          "answer": [0, 1, 3],
+          "explanation": "GDPRでは、データの保存期間と目的の明確化・同意取得（第6条）、個人データの削除権（忘れられる権利、第17条）、プライバシーポリシーでの情報提供（第13条・14条）が求められます。無期限のデータ保存はGDPRのデータ最小化原則に反します。"
+        }
+      ],
+      "explanation": "このケーススタディでは、大規模カスタマーサポートのAIチャットボット化について、適切なAzureサービスの選択（Bot Service、Translator）、GDPR準拠のプライバシー保護施策を問います。責任あるAIの原則に基づいた実装と、規制要件への対応を総合的に評価します。",
+      "tags": ["azure-bot-service", "translator", "gdpr", "privacy", "responsible-ai", "multi-channel"],
+      "sources": [
+        {
+          "title": "Azure Bot Service の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/bot-service/bot-service-overview"
+        },
+        {
+          "title": "Azure AI Translator の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/translator/translator-overview"
+        }
+      ]
+    },
+    {
+      "id": "PW2-030",
+      "domain": "Workloads",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "E社は自動車メーカーで、工場の品質管理にAIを導入することを検討しています。具体的には、(1)組立ラインのカメラ映像からネジの締め忘れや部品の欠落などの製造不良を自動検出したい、(2)工作機械のセンサーデータから故障の予兆をリアルタイムで検知し予防保全を行いたい、(3)過去の品質データから月次の不良率を数値で予測し生産計画に反映したいと考えています。工場はインターネット接続が不安定な遠隔地にあり、データの外部送信に対して厳格なセキュリティポリシーがあります。",
+      "subQuestions": [
+        {
+          "id": "PW2-030-1",
+          "type": "single",
+          "prompt": "組立ラインのカメラ映像から製造不良を検出するAIワークロードの種類として最も適切なものはどれですか。",
+          "choices": [
+            "回帰（Regression）",
+            "クラスタリング（Clustering）",
+            "画像分類/物体検出（Computer Vision）",
+            "自然言語処理（NLP）"
+          ],
+          "answer": [2],
+          "explanation": "カメラ映像からネジの締め忘れや部品の欠落を検出するタスクは、画像分類（正常/不良の分類）や物体検出（欠落部品の位置特定）のコンピュータービジョンワークロードに該当します。"
+        },
+        {
+          "id": "PW2-030-2",
+          "type": "single",
+          "prompt": "工作機械のセンサーデータから故障の予兆を検知するタスクに最も適切なAIワークロードはどれですか。",
+          "choices": [
+            "レコメンデーション（Recommendation）",
+            "異常検出（Anomaly Detection）",
+            "感情分析（Sentiment Analysis）",
+            "テキスト分類（Text Classification）"
+          ],
+          "answer": [1],
+          "explanation": "センサーデータの正常パターンからの逸脱を検知して故障の予兆を察知するタスクは、異常検出（Anomaly Detection）ワークロードに該当します。正常な運転パターンを学習し、リアルタイムデータとの差異を検出します。"
+        },
+        {
+          "id": "PW2-030-3",
+          "type": "single",
+          "prompt": "過去の品質データから月次の不良率を数値で予測するタスクに最も適切なAIワークロードはどれですか。",
+          "choices": [
+            "分類（Classification）",
+            "クラスタリング（Clustering）",
+            "回帰/予測（Regression / Forecasting）",
+            "異常検出（Anomaly Detection）"
+          ],
+          "answer": [2],
+          "explanation": "月次の不良率（例：2.3%、1.8%など）を数値として予測するタスクは、連続値の予測である回帰/時系列予測（Forecasting）ワークロードに該当します。過去のデータから将来のトレンドを予測します。"
+        },
+        {
+          "id": "PW2-030-4",
+          "type": "single",
+          "prompt": "インターネット接続が不安定で、データの外部送信に厳格なポリシーがある工場でAI機能を利用するために最も適切なデプロイ方式はどれですか。",
+          "choices": [
+            "Azure AI Servicesのクラウドエンドポイントを直接呼び出す",
+            "Azure AI Servicesのコンテナーをオンプレミスにデプロイする",
+            "Azure Virtual Desktopからクラウドにアクセスする",
+            "毎日バッチ処理でデータをクラウドにアップロードする"
+          ],
+          "answer": [1],
+          "explanation": "Azure AI Servicesのコンテナーデプロイにより、AIモデルを工場のオンプレミス環境で直接実行でき、データを外部に送信する必要がありません。インターネット接続が不安定な環境でも安定して動作し、データ主権とセキュリティポリシーに準拠できます。"
+        }
+      ],
+      "explanation": "このケーススタディでは、製造業の品質管理における複数のAIワークロード（画像分類/物体検出、異常検出、回帰/予測）の選択と、オフライン環境でのAIデプロイ（コンテナー）を総合的に問います。実際のビジネスシナリオにおける適切なAIワークロードの識別と、データ主権を考慮したデプロイ戦略の理解が求められます。",
+      "tags": ["computer-vision", "anomaly-detection", "regression", "container", "edge", "manufacturing", "quality-control"],
+      "sources": [
+        {
+          "title": "Azure AI Vision の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview"
+        },
+        {
+          "title": "Azure AI サービス コンテナー",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/cognitive-services-container-support"
+        }
+      ]
+    }
+  ]
+}

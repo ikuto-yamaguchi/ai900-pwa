@@ -1,0 +1,581 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.pool.cv02",
+    "version": "2026-03-02",
+    "title": "Computer Vision 応用30問 #2",
+    "description": "Computer Visionの応用問題（第2弾）",
+    "language": "ja-JP",
+    "createdAt": "2026-03-02T12:00:00Z",
+    "domains": ["CV"]
+  },
+  "questions": [
+    {
+      "id": "PC2-001",
+      "domain": "CV",
+      "type": "single",
+      "prompt": "Azure AI Visionの画像分析4.0で新たに追加された「背景除去（Background Removal）」機能の出力として正しいものはどれですか。",
+      "choices": [
+        "前景のみを残したアルファマット（透過PNG）画像",
+        "背景だけを切り出した画像",
+        "背景をぼかしたJPEG画像",
+        "前景と背景を別フォルダに保存したZIPファイル"
+      ],
+      "answer": [0],
+      "explanation": "Azure AI Visionの背景除去機能は、画像の前景部分を残しつつ背景を透過にしたアルファマット画像（透過PNG）を返します。背景だけの切り出しやぼかし加工ではありません。",
+      "tags": ["azure-ai-vision", "background-removal"]
+    },
+    {
+      "id": "PC2-002",
+      "domain": "CV",
+      "type": "single",
+      "prompt": "Custom Visionの画像分類で「Multilabel（マルチラベル）」分類を選択した場合の動作として正しいものはどれですか。",
+      "choices": [
+        "1つの画像に対して最も確率の高い1つのタグのみが返される",
+        "1つの画像に対して複数のタグが同時に割り当てられる可能性がある",
+        "複数の画像をまとめて一括分類する",
+        "1つの画像を複数のモデルで同時に評価する"
+      ],
+      "answer": [1],
+      "explanation": "Multilabel（マルチラベル）分類では、1つの画像に対して複数のタグが同時に割り当てられます。例えば「屋外」と「晴天」と「海」のように重複するタグを許容します。Multiclass（マルチクラス）分類は最も確率の高い1つのタグのみを返します。",
+      "tags": ["custom-vision", "multilabel-classification"]
+    },
+    {
+      "id": "PC2-003",
+      "domain": "CV",
+      "type": "single",
+      "prompt": "Azure AI VisionのOCR機能（Read API）が対応しているテキストの種類として正しいものはどれですか。",
+      "choices": [
+        "印刷テキストのみ",
+        "手書きテキストのみ",
+        "印刷テキストと手書きテキストの両方",
+        "QRコードとバーコードのみ"
+      ],
+      "answer": [2],
+      "explanation": "Azure AI VisionのRead APIは、印刷テキストと手書きテキストの両方を認識できます。複数の言語にも対応しており、画像やPDFからテキストを抽出します。",
+      "tags": ["ocr", "read-api"]
+    },
+    {
+      "id": "PC2-004",
+      "domain": "CV",
+      "type": "single",
+      "prompt": "Azure AI Visionの画像分析で返される「タグ（Tags）」機能の説明として最も正確なものはどれですか。",
+      "choices": [
+        "画像に含まれる物体や概念を表すキーワードのリストが信頼度スコアと共に返される",
+        "画像の解像度やファイル形式などのメタデータが返される",
+        "画像全体を説明する長文の段落が返される",
+        "画像内のすべてのピクセルにラベルが割り当てられる"
+      ],
+      "answer": [0],
+      "explanation": "Azure AI Visionのタグ機能は、画像内に含まれる物体、シーン、アクション、設定などの概念を表すキーワードのリストを、それぞれの信頼度スコア（0〜1）と共に返します。",
+      "tags": ["azure-ai-vision", "image-tags"]
+    },
+    {
+      "id": "PC2-005",
+      "domain": "CV",
+      "type": "single",
+      "prompt": "Custom Visionでトレーニングしたモデルをエッジデバイス（IoTデバイスなど）で実行するために使用できるエクスポート形式として正しいものはどれですか。",
+      "choices": [
+        "Azure Blob Storageファイル形式",
+        "ONNX（Open Neural Network Exchange）形式",
+        "Azure SQL Database形式",
+        "Power BI レポート形式"
+      ],
+      "answer": [1],
+      "explanation": "Custom Visionのモデルはコンパクトドメインを使用してトレーニングした場合、ONNX、TensorFlow、CoreML、DockerFileなどの形式にエクスポートでき、エッジデバイスやモバイルデバイスでオフライン推論が可能です。",
+      "tags": ["custom-vision", "onnx", "edge-deployment"]
+    },
+    {
+      "id": "PC2-006",
+      "domain": "CV",
+      "type": "single",
+      "prompt": "Azure AI Visionの「People Detection（人物検出）」機能で返される情報として正しいものはどれですか。",
+      "choices": [
+        "検出された人物の名前と年齢",
+        "検出された人物のバウンディングボックスと信頼度スコア",
+        "検出された人物の感情分析結果",
+        "検出された人物の歩行速度と方向"
+      ],
+      "answer": [1],
+      "explanation": "Azure AI Visionの人物検出機能は、画像内で検出された各人物のバウンディングボックス（位置座標）と信頼度スコアを返します。個人の特定や感情分析は別の機能です。",
+      "tags": ["azure-ai-vision", "people-detection"]
+    },
+    {
+      "id": "PC2-007",
+      "domain": "CV",
+      "type": "single",
+      "prompt": "Custom Visionでモデルの性能を評価する指標のうち、「再現率（Recall）」が示す意味として正しいものはどれですか。",
+      "choices": [
+        "モデルが正と予測したもののうち、実際に正であった割合",
+        "実際に正であるもののうち、モデルが正しく検出できた割合",
+        "全データのうち正しく分類されたデータの割合",
+        "モデルの推論にかかる平均時間"
+      ],
+      "answer": [1],
+      "explanation": "再現率（Recall）は、実際に正であるサンプルのうち、モデルが正しく検出（正と予測）できた割合です。見逃しが少ないほど再現率は高くなります。精度（Precision）は正と予測したもののうち実際に正であった割合です。",
+      "tags": ["custom-vision", "evaluation-metrics", "recall"]
+    },
+    {
+      "id": "PC2-008",
+      "domain": "CV",
+      "type": "single",
+      "prompt": "Azure AI Visionのマルチモーダル埋め込み（Multimodal Embeddings）機能で実現できることとして最も適切なものはどれですか。",
+      "choices": [
+        "画像とテキストを同じベクトル空間に変換し、テキストによる画像検索を可能にする",
+        "複数の画像を1つの画像に結合する",
+        "画像の解像度を自動的に向上させる",
+        "画像内のすべてのテキストを翻訳する"
+      ],
+      "answer": [0],
+      "explanation": "マルチモーダル埋め込みは、画像とテキストを同じベクトル空間に変換することで、テキストによる画像検索（例：「赤い車」というクエリで画像を検索）や画像の類似度比較を可能にします。",
+      "tags": ["azure-ai-vision", "multimodal-embeddings", "vector-search"]
+    },
+    {
+      "id": "PC2-009",
+      "domain": "CV",
+      "type": "multi",
+      "prompt": "Azure AI Visionの画像分析4.0で利用可能な機能を、以下からすべて選んでください。",
+      "choices": [
+        "画像キャプション（Image Captioning）",
+        "背景除去（Background Removal）",
+        "リアルタイム動画ストリーミング",
+        "マルチモーダル埋め込み（Multimodal Embeddings）",
+        "3Dモデルの自動生成"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "画像分析4.0では、画像キャプション、Dense Captioning、タグ付け、物体検出、人物検出、背景除去、スマートクロッピング、マルチモーダル埋め込みなどの機能が利用可能です。リアルタイム動画ストリーミングや3Dモデル生成は含まれません。",
+      "tags": ["azure-ai-vision", "image-analysis-4.0", "capabilities"]
+    },
+    {
+      "id": "PC2-010",
+      "domain": "CV",
+      "type": "multi",
+      "prompt": "Custom Visionで物体検出モデルをトレーニングする際に必要なものを、以下からすべて選んでください。",
+      "choices": [
+        "物体を囲むバウンディングボックスの座標情報",
+        "各バウンディングボックスに付与するタグ（ラベル）",
+        "物体のピクセル単位のマスク画像",
+        "トレーニング用の画像データ（1タグあたり最低15枚推奨）"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "Custom Visionの物体検出では、トレーニング画像に対してバウンディングボックス（矩形領域）の座標とタグ（ラベル）を付与する必要があります。1タグあたり最低15枚の画像が推奨されます。ピクセル単位のマスクは不要です。",
+      "tags": ["custom-vision", "object-detection", "training-requirements"]
+    },
+    {
+      "id": "PC2-011",
+      "domain": "CV",
+      "type": "multi",
+      "prompt": "Azure Video Indexerの「ブランド検出」機能に関する説明として正しいものを、以下からすべて選んでください。",
+      "choices": [
+        "音声内で言及されたブランド名をテキストとして検出できる",
+        "映像内に映ったブランドのロゴを視覚的に検出できる",
+        "検出されたブランドの株価情報を自動取得する",
+        "カスタムブランドリストを登録して検出対象を拡張できる"
+      ],
+      "answer": [0, 1, 3],
+      "explanation": "Azure Video Indexerのブランド検出は、音声トランスクリプションからのブランド名検出と映像内のロゴの視覚的検出の両方に対応しています。また、カスタムブランドリストを登録して独自のブランドも検出対象にできます。",
+      "tags": ["video-indexer", "brand-detection"]
+    },
+    {
+      "id": "PC2-012",
+      "domain": "CV",
+      "type": "multi",
+      "prompt": "Face APIの「顔検出」で取得できるフェイスアトリビュート（顔属性）を、以下からすべて選んでください。",
+      "choices": [
+        "ぼかし（Blur）レベル",
+        "露出（Exposure）レベル",
+        "血液型",
+        "メガネの有無（Glasses）",
+        "顔のアクセサリー（Accessories）"
+      ],
+      "answer": [0, 1, 3, 4],
+      "explanation": "Face APIの顔検出では、ぼかしレベル、露出レベル、メガネの有無、アクセサリー（帽子・マスク等）、頭部の姿勢、ノイズレベルなどの属性を取得できます。血液型のような生体情報は画像から判定できません。",
+      "tags": ["face-api", "face-attributes"]
+    },
+    {
+      "id": "PC2-013",
+      "domain": "CV",
+      "type": "multi",
+      "prompt": "Custom Visionのモデルをエクスポートできる形式を、以下からすべて選んでください。",
+      "choices": [
+        "ONNX",
+        "TensorFlow",
+        "CoreML（iOS向け）",
+        "Azure SQL形式",
+        "DockerFile"
+      ],
+      "answer": [0, 1, 2, 4],
+      "explanation": "Custom Visionのコンパクトドメインでトレーニングしたモデルは、ONNX、TensorFlow（TFLite含む）、CoreML（iOS向け）、DockerFile（Linux/Windows）の形式にエクスポートできます。Azure SQL形式というエクスポート形式は存在しません。",
+      "tags": ["custom-vision", "model-export", "edge-deployment"]
+    },
+    {
+      "id": "PC2-014",
+      "domain": "CV",
+      "type": "dropdown",
+      "prompt": "Custom Visionにおいて、標準ドメインでトレーニングしたモデルはAzureの {{0}} でのみ推論を実行できますが、コンパクトドメインでトレーニングしたモデルは {{1}} にもエクスポートして実行できます。",
+      "dropdowns": [
+        {
+          "options": ["クラウドAPI", "エッジデバイス", "ローカルPC"],
+          "answer": 0
+        },
+        {
+          "options": ["クラウドAPIのみ", "エッジデバイスやモバイルデバイス", "Azure SQLデータベース"],
+          "answer": 1
+        }
+      ],
+      "explanation": "Custom Visionの標準ドメインはクラウドAPIでのみ推論を実行します。コンパクトドメインを選択すると、ONNX等にエクスポートしてエッジデバイスやモバイルデバイスでオフライン推論が可能になります。",
+      "tags": ["custom-vision", "compact-domain", "deployment"]
+    },
+    {
+      "id": "PC2-015",
+      "domain": "CV",
+      "type": "dropdown",
+      "prompt": "OCRの処理において、Azure AI VisionのRead APIは {{0}} 形式のファイルに対応しており、結果はテキストが {{1}} の階層構造で返されます。",
+      "dropdowns": [
+        {
+          "options": ["画像ファイル（JPEG/PNG等）のみ", "画像ファイルとPDFの両方", "PDFファイルのみ"],
+          "answer": 1
+        },
+        {
+          "options": ["段落→単語→文字", "ページ→行→単語", "文書→セクション→段落"],
+          "answer": 1
+        }
+      ],
+      "explanation": "Read APIはJPEG、PNG、BMP、TIFF、PDFなどの形式に対応しています。結果は「ページ→行→単語」の階層構造で返され、各要素にバウンディングポリゴンの座標が含まれます。",
+      "tags": ["ocr", "read-api", "output-structure"]
+    },
+    {
+      "id": "PC2-016",
+      "domain": "CV",
+      "type": "dropdown",
+      "prompt": "Azure AI Visionでは、画像からアダルトコンテンツを検出する機能として {{0}} カテゴリ、暴力的なコンテンツを検出する機能として {{1}} カテゴリが用意されています。",
+      "dropdowns": [
+        {
+          "options": ["Adult", "Violence", "Racy"],
+          "answer": 0
+        },
+        {
+          "options": ["Gore", "Hate", "Violence"],
+          "answer": 2
+        }
+      ],
+      "explanation": "Azure AI Visionのコンテンツモデレーション機能は、Adult（成人向けコンテンツ）、Racy（性的な示唆を含むコンテンツ）、Gore（流血・暴力的なコンテンツ）のカテゴリで不適切な画像を検出します。ここではAdultとViolence/Goreに相当する機能が用意されています。",
+      "tags": ["azure-ai-vision", "content-moderation"]
+    },
+    {
+      "id": "PC2-017",
+      "domain": "CV",
+      "type": "dropdown",
+      "prompt": "画像検索システムを構築する際、Azure AI Visionのマルチモーダル埋め込みを使うと画像は {{0}} に変換され、テキストクエリも同じ {{0}} に変換されるため、{{1}} を計算して類似画像を検索できます。",
+      "dropdowns": [
+        {
+          "options": ["ベクトル（数値配列）", "JSON文字列", "Base64エンコード"],
+          "answer": 0
+        },
+        {
+          "options": ["ファイルサイズの差", "コサイン類似度", "ピクセルの差分"],
+          "answer": 1
+        }
+      ],
+      "explanation": "マルチモーダル埋め込みでは、画像とテキストを同じベクトル空間の数値配列に変換します。検索時にはコサイン類似度などのベクトル間距離を計算して、クエリに類似した画像を検索します。",
+      "tags": ["multimodal-embeddings", "vector-search", "cosine-similarity"]
+    },
+    {
+      "id": "PC2-018",
+      "domain": "CV",
+      "type": "match",
+      "prompt": "以下のCustom Visionのモデル評価指標と、その定義を正しく対応させてください。",
+      "left": ["精度（Precision）", "再現率（Recall）", "AP（Average Precision）"],
+      "right": ["精度と再現率の総合的な性能を1つの値で表す", "正と予測した中で実際に正だった割合", "実際に正であるものを正しく検出できた割合"],
+      "answerMap": {
+        "精度（Precision）": "正と予測した中で実際に正だった割合",
+        "再現率（Recall）": "実際に正であるものを正しく検出できた割合",
+        "AP（Average Precision）": "精度と再現率の総合的な性能を1つの値で表す"
+      },
+      "explanation": "精度（Precision）は偽陽性の少なさ、再現率（Recall）は見逃しの少なさを示します。AP（Average Precision）は精度-再現率曲線の下の面積として算出され、モデルの総合性能を1つの値で表します。",
+      "tags": ["custom-vision", "evaluation-metrics"]
+    },
+    {
+      "id": "PC2-019",
+      "domain": "CV",
+      "type": "match",
+      "prompt": "以下のAzure AI Visionの機能と、その入出力の説明を正しく対応させてください。",
+      "left": ["タグ付け（Tagging）", "Dense Captioning", "スマートクロッピング", "背景除去"],
+      "right": ["前景を残した透過画像を出力", "指定アスペクト比で被写体中心のサムネイルを出力", "画像内の複数領域に個別のキャプションを生成", "キーワードのリストを信頼度スコア付きで出力"],
+      "answerMap": {
+        "タグ付け（Tagging）": "キーワードのリストを信頼度スコア付きで出力",
+        "Dense Captioning": "画像内の複数領域に個別のキャプションを生成",
+        "スマートクロッピング": "指定アスペクト比で被写体中心のサムネイルを出力",
+        "背景除去": "前景を残した透過画像を出力"
+      },
+      "explanation": "タグ付けはキーワードリスト、Dense Captioningは複数領域の個別キャプション、スマートクロッピングは主要被写体を中心にしたサムネイル、背景除去は前景のみの透過画像を出力します。",
+      "tags": ["azure-ai-vision", "feature-comparison"]
+    },
+    {
+      "id": "PC2-020",
+      "domain": "CV",
+      "type": "match",
+      "prompt": "以下のVideo Indexerのインサイト機能と、その分析対象を正しく対応させてください。",
+      "left": ["トランスクリプション", "キーフレーム抽出", "トピック推論", "感情分析"],
+      "right": ["映像内の代表的な静止画像を選出", "話されている内容のテキスト化", "発話者の感情（喜び・悲しみ等）を判定", "動画の内容から主題やテーマを推定"],
+      "answerMap": {
+        "トランスクリプション": "話されている内容のテキスト化",
+        "キーフレーム抽出": "映像内の代表的な静止画像を選出",
+        "トピック推論": "動画の内容から主題やテーマを推定",
+        "感情分析": "発話者の感情（喜び・悲しみ等）を判定"
+      },
+      "explanation": "トランスクリプションは音声のテキスト化、キーフレーム抽出は映像の代表フレーム選出、トピック推論は動画内容からの主題推定、感情分析は発話の感情判定を行います。",
+      "tags": ["video-indexer", "insight-features"]
+    },
+    {
+      "id": "PC2-021",
+      "domain": "CV",
+      "type": "match",
+      "prompt": "以下のDocument Intelligenceの事前構築済みモデルと、対象文書の種類を正しく対応させてください。",
+      "left": ["Invoice（請求書）モデル", "Receipt（領収書）モデル", "ID Document（身分証明書）モデル", "Business Card（名刺）モデル"],
+      "right": ["パスポートや運転免許証", "店舗のレシートや売上伝票", "取引先への支払い請求文書", "氏名・会社名・連絡先が記載されたカード"],
+      "answerMap": {
+        "Invoice（請求書）モデル": "取引先への支払い請求文書",
+        "Receipt（領収書）モデル": "店舗のレシートや売上伝票",
+        "ID Document（身分証明書）モデル": "パスポートや運転免許証",
+        "Business Card（名刺）モデル": "氏名・会社名・連絡先が記載されたカード"
+      },
+      "explanation": "Document Intelligenceの事前構築済みモデルは、それぞれ対象文書に特化したフィールド抽出を行います。請求書モデルは請求文書、領収書モデルはレシート、身分証明書モデルはパスポートや免許証、名刺モデルは名刺のデータ抽出に対応しています。",
+      "tags": ["document-intelligence", "prebuilt-models"]
+    },
+    {
+      "id": "PC2-022",
+      "domain": "CV",
+      "type": "order",
+      "prompt": "Face APIを使用して顔識別（Face Identification）を実装する手順を正しい順序に並べてください。",
+      "items": [
+        "PersonGroupをトレーニングする",
+        "PersonGroupを作成し、Personを登録する",
+        "識別したい画像から顔を検出する（Face Detect）",
+        "検出された顔をPersonGroupと照合する（Face Identify）"
+      ],
+      "answerOrder": [1, 0, 2, 3],
+      "explanation": "顔識別の手順は：(1) PersonGroupの作成とPersonの登録 → (2) PersonGroupのトレーニング → (3) 識別対象画像の顔検出 → (4) 検出した顔のPersonGroupとの照合、の順です。",
+      "tags": ["face-api", "face-identification", "implementation-steps"]
+    },
+    {
+      "id": "PC2-023",
+      "domain": "CV",
+      "type": "order",
+      "prompt": "Azure AI VisionのOCR（Read API）を使用して非同期で大きなPDFからテキストを抽出する処理手順を正しい順序に並べてください。",
+      "items": [
+        "Operation-Locationヘッダーに含まれるURLでステータスをポーリングする",
+        "Read APIエンドポイントにPDFファイルを送信する（POST）",
+        "ステータスが「succeeded」になったら結果を取得する（GET）",
+        "返されたJSONからページ→行→単語の階層でテキストを取り出す"
+      ],
+      "answerOrder": [1, 0, 2, 3],
+      "explanation": "Read APIの非同期処理は：(1) PDFをPOSTで送信 → (2) Operation-LocationのURLをポーリング → (3) 成功時に結果をGETで取得 → (4) JSON構造からテキストを取り出す、の順です。",
+      "tags": ["ocr", "read-api", "async-processing"]
+    },
+    {
+      "id": "PC2-024",
+      "domain": "CV",
+      "type": "order",
+      "prompt": "Custom Visionで構築したモデルを本番環境にデプロイするまでの手順を正しい順序に並べてください。",
+      "items": [
+        "モデルを「公開（Publish）」して予測エンドポイントを発行する",
+        "予測エンドポイントにテスト画像を送信して動作確認する",
+        "トレーニング済みイテレーションの性能（Precision/Recall）を評価する",
+        "コンパクトドメインの場合はONNX等にエクスポートも可能"
+      ],
+      "answerOrder": [2, 0, 1, 3],
+      "explanation": "デプロイ手順は：(1) トレーニング済みモデルの性能評価 → (2) モデルの公開（Publish） → (3) 予測エンドポイントでのテスト → (4) 必要に応じてエッジ向けエクスポート、の順です。",
+      "tags": ["custom-vision", "deployment", "publish"]
+    },
+    {
+      "id": "PC2-025",
+      "domain": "CV",
+      "type": "order",
+      "prompt": "マルチモーダル埋め込みを使ったテキストベースの画像検索システムを構築する手順を正しい順序に並べてください。",
+      "items": [
+        "検索クエリのテキストをベクトルに変換する",
+        "コサイン類似度を計算して最も類似度の高い画像を返す",
+        "画像コレクションの各画像をベクトルに変換してインデックスに保存する",
+        "ベクトルインデックス（Azure AI Searchなど）をセットアップする"
+      ],
+      "answerOrder": [3, 2, 0, 1],
+      "explanation": "画像検索システム構築は：(1) ベクトルインデックスのセットアップ → (2) 画像コレクションのベクトル化とインデックス保存 → (3) 検索クエリのベクトル変換 → (4) コサイン類似度計算と結果返却、の順です。",
+      "tags": ["multimodal-embeddings", "vector-search", "system-architecture"]
+    },
+    {
+      "id": "PC2-026",
+      "domain": "CV",
+      "type": "hotarea",
+      "prompt": "以下のAzure AI Visionの画像分析機能のうち、出力にバウンディングボックス（矩形座標）が含まれるものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "物体検出（Object Detection）",
+          "画像キャプション（Image Captioning）",
+          "Dense Captioning（密キャプション）",
+          "人物検出（People Detection）",
+          "タグ付け（Tagging）",
+          "スマートクロッピング（Smart Cropping）"
+        ]
+      },
+      "answer": [0, 2, 3],
+      "explanation": "物体検出は検出した物体ごとのバウンディングボックスを返します。Dense Captioningは画像内の各領域のバウンディングボックスとキャプションを返します。人物検出は検出した人物ごとのバウンディングボックスを返します。画像キャプション、タグ付け、スマートクロッピングの出力にはバウンディングボックスは含まれません。",
+      "tags": ["azure-ai-vision", "bounding-box", "output-format"]
+    },
+    {
+      "id": "PC2-027",
+      "domain": "CV",
+      "type": "hotarea",
+      "prompt": "以下の選択肢のうち、Azure AI Vision（コンピュータービジョン）のサービスで直接実行できる処理を選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "画像内のテキストの読み取り（OCR）",
+          "自然言語テキストの感情分析",
+          "画像のカラーパレット（支配色）の分析",
+          "テキストの言語検出",
+          "画像内の有名人の認識",
+          "音声からテキストへの変換"
+        ]
+      },
+      "answer": [0, 2, 4],
+      "explanation": "Azure AI Visionのサービスで直接実行できるのは、OCR（テキスト読み取り）、カラーパレット分析（画像の支配色やアクセントカラーの検出）、有名人の認識です。テキストの感情分析や言語検出はLanguageサービス、音声変換はSpeechサービスの機能です。",
+      "tags": ["azure-ai-vision", "service-scope"]
+    },
+    {
+      "id": "PC2-028",
+      "domain": "CV",
+      "type": "hotarea",
+      "prompt": "以下のシナリオのうち、Document Intelligence（旧Form Recognizer）の事前構築済みモデルで対応できるものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "レストランのレシートから合計金額を抽出する",
+          "手書きの小説原稿のテキストを抽出する",
+          "運転免許証から氏名と生年月日を抽出する",
+          "名刺から会社名と電話番号を抽出する",
+          "風景写真から撮影場所を推定する",
+          "請求書から請求番号と支払期限を抽出する"
+        ]
+      },
+      "answer": [0, 2, 3, 5],
+      "explanation": "Document Intelligenceの事前構築済みモデルは、レシート、身分証明書（運転免許証・パスポート）、名刺、請求書に対応しています。手書き小説のテキスト抽出にはOCRが適しており、風景写真の場所推定はDocument Intelligenceの対象外です。",
+      "tags": ["document-intelligence", "prebuilt-models", "supported-documents"]
+    },
+    {
+      "id": "PC2-029",
+      "domain": "CV",
+      "type": "casestudy",
+      "prompt": "D社は全国に100店舗を展開するアパレルチェーンです。店舗運営の効率化と顧客体験向上のために、以下のAIビジョンプロジェクトを計画しています。\n\n1. 試着室の混雑管理：各店舗の試着室エリアにカメラを設置し、待ち人数をリアルタイムで表示する\n2. 商品タグの自動読み取り：商品に付いたタグ（品番、サイズ、価格）を従業員がスマホで撮影すると自動で在庫システムに登録される\n3. 類似商品の検索：顧客がスマホで撮影した服の写真から、店舗にある類似デザインの商品を検索して提案する\n4. SNS投稿の自動モデレーション：公式SNSに投稿された画像が不適切なコンテンツを含んでいないかチェックする",
+      "subQuestions": [
+        {
+          "id": "PC2-029-1",
+          "type": "single",
+          "prompt": "試着室エリアの待ち人数をリアルタイムで把握するために最適なAzureの機能はどれですか。",
+          "choices": [
+            "Custom Visionの画像分類",
+            "Azure AI Visionの空間分析（Spatial Analysis）",
+            "Face APIの顔検出",
+            "Azure Video Indexerのシーン検出"
+          ],
+          "answer": [1],
+          "explanation": "空間分析は、カメラ映像から特定エリア内の人数をリアルタイムでカウントする機能を持ちます。個人を識別する必要がなく、人数の集計と待機状況の監視に最適です。"
+        },
+        {
+          "id": "PC2-029-2",
+          "type": "single",
+          "prompt": "商品タグから品番・サイズ・価格を読み取るために最も適切なサービスはどれですか。",
+          "choices": [
+            "Azure AI VisionのOCR（Read API）",
+            "Custom Visionの画像分類",
+            "Face APIの顔検出",
+            "Azure AI Visionの画像キャプション"
+          ],
+          "answer": [0],
+          "explanation": "商品タグに印刷された品番、サイズ、価格などの文字情報を読み取るには、OCR（Read API）が最適です。テキストの位置と内容を正確に抽出できます。"
+        },
+        {
+          "id": "PC2-029-3",
+          "type": "single",
+          "prompt": "顧客が撮影した服の写真から類似商品を検索する機能に最も適切な技術はどれですか。",
+          "choices": [
+            "Azure AI Visionの画像タグ付け",
+            "Azure AI Visionのマルチモーダル埋め込みによるベクトル類似度検索",
+            "Custom Visionの物体検出",
+            "Azure AI VisionのOCR"
+          ],
+          "answer": [1],
+          "explanation": "マルチモーダル埋め込みを使って商品画像をベクトル化し、顧客が撮影した画像のベクトルとの類似度を計算することで、視覚的に類似した商品を効率的に検索できます。"
+        }
+      ],
+      "explanation": "アパレル店舗のAIビジョン活用では、(1) 人数カウントに空間分析、(2) テキスト読み取りにOCR、(3) 類似画像検索にマルチモーダル埋め込み、(4) コンテンツモデレーションに画像分析のアダルト/暴力検出が、それぞれ最適な技術選択です。",
+      "tags": ["retail-scenario", "spatial-analysis", "ocr", "multimodal-embeddings", "content-moderation"]
+    },
+    {
+      "id": "PC2-030",
+      "domain": "CV",
+      "type": "casestudy",
+      "prompt": "E社は建設現場の安全管理を行う会社です。複数の大規模建設現場を監視するために、カメラとAIビジョン技術を活用した安全管理システムの構築を計画しています。\n\n1. ヘルメット着用確認：現場のカメラ映像から、ヘルメットを着用していない作業員を検知してアラートを出す\n2. 立入禁止エリア監視：危険な区域に人が入ったことをリアルタイムで検知する\n3. 現場日報のデジタル化：手書きの現場日報（日付、天候、作業内容、安全点検結果）をスキャンしてデータベースに登録する\n4. 安全教育動画の分析：過去の安全教育動画からキーワードごとに該当シーンを検索できるようにする",
+      "subQuestions": [
+        {
+          "id": "PC2-030-1",
+          "type": "single",
+          "prompt": "ヘルメット未着用の作業員を検知するために最も適切なアプローチはどれですか。",
+          "choices": [
+            "Azure AI Visionの事前構築済み物体検出",
+            "Custom Visionでヘルメット着用/未着用を学習させた物体検出モデル",
+            "Face APIの顔検出",
+            "Azure AI VisionのOCR"
+          ],
+          "answer": [1],
+          "explanation": "ヘルメットの着用有無を検出するには、ヘルメットを着用した作業員と未着用の作業員の画像でトレーニングしたCustom Visionの物体検出モデルが最適です。事前構築済みモデルではヘルメットの着用状態を判定できません。"
+        },
+        {
+          "id": "PC2-030-2",
+          "type": "single",
+          "prompt": "立入禁止エリアへの人の侵入をリアルタイムで検知するために最も適切な機能はどれですか。",
+          "choices": [
+            "Custom Visionの画像分類",
+            "Azure AI Visionの画像タグ付け",
+            "Azure AI Visionの空間分析（Spatial Analysis）",
+            "Azure Video Indexerの顔検出"
+          ],
+          "answer": [2],
+          "explanation": "空間分析のゾーン検知機能を使用すると、定義したエリア（立入禁止区域）に人が侵入した際にリアルタイムでイベントを生成し、アラートを発することができます。"
+        },
+        {
+          "id": "PC2-030-3",
+          "type": "single",
+          "prompt": "手書きの現場日報から構造化データを抽出するために最も適切なサービスはどれですか。",
+          "choices": [
+            "Azure AI VisionのOCRのみ",
+            "Document Intelligence（旧Form Recognizer）のカスタムモデル",
+            "Custom Visionの画像分類",
+            "Azure AI Visionの画像キャプション"
+          ],
+          "answer": [1],
+          "explanation": "現場日報のような定型フォームから日付、天候、作業内容などの特定フィールドを構造化データとして抽出するには、Document Intelligenceのカスタムモデルが最適です。独自の帳票レイアウトを学習させることで、フィールドごとにデータを正確に抽出できます。"
+        },
+        {
+          "id": "PC2-030-4",
+          "type": "single",
+          "prompt": "安全教育動画からキーワードごとにシーンを検索可能にするために最も適切なサービスはどれですか。",
+          "choices": [
+            "Azure AI Visionの画像分析",
+            "Custom Visionの画像分類",
+            "Azure Video Indexer",
+            "Face APIの顔識別"
+          ],
+          "answer": [2],
+          "explanation": "Azure Video Indexerは動画を分析して、トランスクリプション（文字起こし）、トピック抽出、キーワードインデックスを自動生成するため、キーワードで動画内の特定シーンを検索することが可能になります。"
+        }
+      ],
+      "explanation": "建設現場の安全管理システムでは、(1) ヘルメット着用確認にCustom Visionの物体検出、(2) 立入禁止エリア監視に空間分析、(3) 日報のデジタル化にDocument Intelligenceのカスタムモデル、(4) 動画分析にVideo Indexer、をそれぞれ使用します。",
+      "tags": ["construction-safety", "custom-vision", "spatial-analysis", "document-intelligence", "video-indexer"]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schema": "ai900-pack-index-v1",
-  "updatedAt": "2026-03-01T23:33:09.482Z",
+  "updatedAt": "2026-03-02T12:12:46.916Z",
   "packs": [
     {
       "id": "ai900.auto.20260302",
@@ -94,10 +94,50 @@
       "minAppVersion": "1.0.0"
     },
     {
+      "id": "ai900.pool.cv02",
+      "title": "Computer Vision 応用30問 #2",
+      "version": "2026-03-02",
+      "url": "/packs/ai900.pool.cv02_2026-03-02.json",
+      "questionCount": 30,
+      "domains": [
+        "CV"
+      ],
+      "types": [
+        "single",
+        "multi",
+        "dropdown",
+        "match",
+        "order",
+        "hotarea",
+        "casestudy"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
       "id": "ai900.pool.genai01",
       "title": "生成AI 応用30問",
       "version": "2026-03-02",
       "url": "/packs/ai900.pool.genai01_2026-03-02.json",
+      "questionCount": 30,
+      "domains": [
+        "GenAI"
+      ],
+      "types": [
+        "single",
+        "multi",
+        "dropdown",
+        "match",
+        "order",
+        "hotarea",
+        "casestudy"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
+      "id": "ai900.pool.genai02",
+      "title": "生成AI 応用30問 #2",
+      "version": "2026-03-02",
+      "url": "/packs/ai900.pool.genai02_2026-03-02.json",
       "questionCount": 30,
       "domains": [
         "GenAI"
@@ -134,6 +174,26 @@
       "minAppVersion": "1.0.0"
     },
     {
+      "id": "ai900.pool.ml02",
+      "title": "機械学習 応用30問 #2",
+      "version": "2026-03-02",
+      "url": "/packs/ai900.pool.ml02_2026-03-02.json",
+      "questionCount": 30,
+      "domains": [
+        "ML"
+      ],
+      "types": [
+        "single",
+        "multi",
+        "dropdown",
+        "match",
+        "order",
+        "hotarea",
+        "casestudy"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
       "id": "ai900.pool.nlp01",
       "title": "自然言語処理 応用30問",
       "version": "2026-03-02",
@@ -154,10 +214,50 @@
       "minAppVersion": "1.0.0"
     },
     {
+      "id": "ai900.pool.nlp02",
+      "title": "自然言語処理 応用30問 #2",
+      "version": "2026-03-02",
+      "url": "/packs/ai900.pool.nlp02_2026-03-02.json",
+      "questionCount": 30,
+      "domains": [
+        "NLP"
+      ],
+      "types": [
+        "single",
+        "multi",
+        "dropdown",
+        "match",
+        "order",
+        "hotarea",
+        "casestudy"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
       "id": "ai900.pool.workloads01",
       "title": "Workloads 応用30問",
       "version": "2026-03-02",
       "url": "/packs/ai900.pool.workloads01_2026-03-02.json",
+      "questionCount": 30,
+      "domains": [
+        "Workloads"
+      ],
+      "types": [
+        "single",
+        "multi",
+        "dropdown",
+        "match",
+        "order",
+        "hotarea",
+        "casestudy"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
+      "id": "ai900.pool.workloads02",
+      "title": "Workloads 応用30問 #2",
+      "version": "2026-03-02",
+      "url": "/packs/ai900.pool.workloads02_2026-03-02.json",
       "questionCount": 30,
       "domains": [
         "Workloads"
