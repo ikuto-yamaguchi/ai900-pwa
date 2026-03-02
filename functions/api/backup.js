@@ -31,6 +31,21 @@ export async function onRequestPost(context) {
       expirationTtl: 86400 * 90,
     });
 
+    // Signal for daemon: new data available
+    await context.env.AI900_KV.put('last_backup_at', backup.savedAt);
+
+    // Trigger trainer via Cloudflare Tunnel (fire-and-forget, non-blocking)
+    const tunnelUrl = await context.env.AI900_KV.get('trainer_tunnel_url');
+    if (tunnelUrl) {
+      context.waitUntil(
+        fetch(`${tunnelUrl}/trigger`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ event: 'session_complete', savedAt: backup.savedAt }),
+        }).catch(() => {}) // Silent fail if trainer is offline
+      );
+    }
+
     return json({
       ok: true,
       savedAt: backup.savedAt,

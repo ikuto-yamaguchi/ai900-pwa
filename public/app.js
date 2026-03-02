@@ -238,6 +238,28 @@ async function selectQuestions() {
 
   if (pool.length === 0) return [];
 
+  // Try AI-curated session first
+  try {
+    const res = await fetch('/api/next-session');
+    const data = await res.json();
+    if (data.ok && data.session && !data.session.consumed && data.session.questions) {
+      const age = Date.now() - new Date(data.session.updatedAt).getTime();
+      if (age < 7200000) { // Use if less than 2 hours old
+        const curated = [];
+        for (const item of data.session.questions) {
+          const q = pool.find(p => p.qid === item.qid);
+          if (q) curated.push(q);
+        }
+        if (curated.length >= settings.questionCount * 0.7) {
+          console.log(`Using AI-curated session: ${curated.length} questions (${data.session.sessionType})`);
+          // Mark as consumed
+          fetch('/api/next-session', { method: 'POST' }).catch(() => {});
+          return curated;
+        }
+      }
+    }
+  } catch { /* fall through to weighted random */ }
+
   // Build set of ALL question IDs the user has ever answered (not just recent)
   const allHistory = await IDB.getAllHistory();
   const everSeenQids = new Set(allHistory.map(h => h.qid));
@@ -497,59 +519,35 @@ async function syncWeaknessToServer() {
   } catch { /* silent fail - offline is fine */ }
 }
 
-/* -- Pool health: request new questions when unseen ratio drops -- */
+/* -- Pool health: queue generation request for local daemon -- */
 async function checkPoolHealth() {
-  const UNSEEN_THRESHOLD = 0.4; // Trigger generation when <40% unseen
-  const TARGET_UNSEEN = 0.5;    // Aim for 50% unseen after generation
+  const UNSEEN_THRESHOLD = 0.4;
 
   const allQuestions = await IDB.getAllQuestions();
   const totalQuestions = allQuestions.length;
   if (totalQuestions === 0) return;
 
-  // Count unique question IDs user has ever answered
   const allHistory = await IDB.getAllHistory();
   const seenQids = new Set(allHistory.map(h => h.qid));
   const uniqueSeen = seenQids.size;
-
   const unseenRatio = (totalQuestions - uniqueSeen) / totalQuestions;
 
-  console.log(`Pool health: ${uniqueSeen}/${totalQuestions} seen (${Math.round((1 - unseenRatio) * 100)}%), unseen ratio: ${Math.round(unseenRatio * 100)}%`);
+  console.log(`Pool health: ${uniqueSeen}/${totalQuestions} seen, unseen: ${Math.round(unseenRatio * 100)}%`);
 
-  if (unseenRatio >= UNSEEN_THRESHOLD) return; // Pool is healthy
+  if (unseenRatio >= UNSEEN_THRESHOLD) return;
 
-  // Calculate how many questions needed to reach target
-  const needed = Math.ceil(uniqueSeen / TARGET_UNSEEN) - totalQuestions;
-  if (needed < 10) return; // Not worth generating less than 10
-
-  // Get weakness data for targeting
+  const needed = Math.min(Math.max(Math.ceil(uniqueSeen * 0.5) - (totalQuestions - uniqueSeen), 15), 50);
   const weaknessJson = await exportWeaknessData();
   const weakness = weaknessJson ? JSON.parse(weaknessJson) : null;
 
-  // Find which domains are under-represented
-  const domainCounts = {};
-  for (const q of allQuestions) domainCounts[q.domain] = (domainCounts[q.domain] || 0) + 1;
-
   try {
-    const res = await fetch('/api/generate-request', {
+    await fetch('/api/generate-request', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        unseenRatio,
-        totalQuestions,
-        uniqueSeen,
-        needed,
-        weakness,
-        domains: DOMAINS,
-        domainCounts
-      })
+      body: JSON.stringify({ unseenRatio, totalQuestions, uniqueSeen, needed, weakness, domains: DOMAINS })
     });
-    const result = await res.json();
-    if (result.ok && result.status === 'queued') {
-      console.log(`Generation request queued: ${needed} questions needed (request: ${result.requestId})`);
-    } else if (result.status === 'already_pending') {
-      console.log('Generation request already pending');
-    }
-  } catch { /* silent fail - offline is fine */ }
+    console.log(`Generation request queued: ${needed} questions needed`);
+  } catch { /* offline is fine */ }
 }
 
 /* -- Backup learning progress to KV (survives browser data clear) -- */
@@ -767,7 +765,7 @@ function renderHome(app) {
   );
   page.appendChild(startCard);
 
-  // Pool status (compact)
+  // Pool status + coach message (loaded async)
   IDB.getAllQuestions().then(async qs => {
     const packs = await IDB.getAllPacks();
     const enabledIds = new Set(packs.filter(p => p.enabled).map(p => p.id));
@@ -781,6 +779,44 @@ function renderHome(app) {
       el('div', { className: 'stat-row' }, el('span', { className: 'label' }, '未解答'), el('span', { className: `value ${unseenCount > 50 ? 'good' : unseenCount > 20 ? 'mid' : 'bad'}` }, unseenCount))
     );
     page.appendChild(poolCard);
+
+    // Fetch AI coach strategy
+    try {
+      const res = await fetch('/api/strategy');
+      const data = await res.json();
+      if (data.ok && data.strategy) {
+        const s = data.strategy;
+        const coachCard = el('div', { className: 'card' });
+        coachCard.appendChild(el('h2', null, 'AI Coach'));
+
+        if (s.coachMessage) {
+          coachCard.appendChild(el('p', { style: { fontSize: '14px', lineHeight: '1.6', marginBottom: '8px' } }, s.coachMessage));
+        }
+
+        if (s.analysis) {
+          const a = s.analysis;
+          if (a.readiness !== undefined) {
+            coachCard.appendChild(el('div', { className: 'stat-row' },
+              el('span', { className: 'label' }, '合格推定'),
+              el('span', { className: `value ${a.readiness >= 70 ? 'good' : a.readiness >= 50 ? 'mid' : 'bad'}` }, `${a.readiness}%`)
+            ));
+          }
+          if (a.overallAccuracy !== undefined) {
+            coachCard.appendChild(el('div', { className: 'stat-row' },
+              el('span', { className: 'label' }, '正答率'),
+              el('span', { className: `value ${a.overallAccuracy >= 70 ? 'good' : a.overallAccuracy >= 50 ? 'mid' : 'bad'}` }, `${a.overallAccuracy}%`)
+            ));
+          }
+          if (a.weakPoints && a.weakPoints.length > 0) {
+            coachCard.appendChild(el('div', { style: { marginTop: '6px' } },
+              ...a.weakPoints.slice(0, 3).map(w => el('div', { className: 'tag-chip' }, w))
+            ));
+          }
+        }
+
+        page.appendChild(coachCard);
+      }
+    } catch { /* coach data not available yet */ }
   });
 
   app.appendChild(header);
