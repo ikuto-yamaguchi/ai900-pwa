@@ -1,6 +1,6 @@
 {
   "schema": "ai900-pack-index-v1",
-  "updatedAt": "2026-03-02T12:12:46.916Z",
+  "updatedAt": "2026-03-02T16:19:27.000Z",
   "packs": [
     {
       "id": "ai900.auto.20260302",
@@ -45,6 +45,30 @@
         "hotarea",
         "multi",
         "match",
+        "casestudy"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
+      "id": "ai900.auto.20260303005023",
+      "title": "自動補充パック (50問)",
+      "version": "2026-03-03",
+      "url": "/packs/ai900.auto.20260303005023_2026-03-03.json",
+      "questionCount": 50,
+      "domains": [
+        "Workloads",
+        "ML",
+        "CV",
+        "NLP",
+        "GenAI"
+      ],
+      "types": [
+        "single",
+        "multi",
+        "dropdown",
+        "match",
+        "order",
+        "hotarea",
         "casestudy"
       ],
       "minAppVersion": "1.0.0"

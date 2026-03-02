@@ -1,0 +1,1659 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.auto.20260303005023",
+    "version": "2026-03-03",
+    "title": "自動補充パック (50問)",
+    "description": "Claude Code自動生成",
+    "language": "ja-JP",
+    "createdAt": "2026-03-03T00:50:23+09:00",
+    "domains": [
+      "Workloads",
+      "ML",
+      "CV",
+      "NLP",
+      "GenAI"
+    ]
+  },
+  "questions": [
+    {
+      "id": "AG-7683",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "工場の生産ラインにおいて、ネットワーク接続が不安定な環境でもリアルタイムに製品の外観検査を行いたい場合、最も適切なAzureのデプロイ方法はどれですか。",
+      "choices": [
+        "Azure Machine Learning のマネージドオンラインエンドポイントにデプロイする",
+        "Azure IoT Edge にカスタムビジョンモデルをコンテナとしてデプロイする",
+        "Azure Functions でHTTPトリガーのAPIを作成する",
+        "Azure Cognitive Services のクラウドAPIを直接呼び出す"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "ネットワーク接続が不安定な環境では、エッジデバイス上でモデルを実行する必要があります。Azure IoT Edge を使えば、Custom Vision でトレーニングしたモデルをコンテナとしてエッジデバイスにデプロイし、ローカルで推論を実行できます。",
+      "tags": [
+        "edge",
+        "real-time",
+        "custom-vision",
+        "iot-edge"
+      ],
+      "sources": [
+        {
+          "title": "Azure IoT Edge とは",
+          "url": "https://learn.microsoft.com/ja-jp/azure/iot-edge/about-iot-edge"
+        }
+      ]
+    },
+    {
+      "id": "AG-7684",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "医療画像のAI分析システムを設計する際、患者の個人情報保護の観点から最も重要な考慮事項はどれですか。",
+      "choices": [
+        "モデルの推論速度を最大化する",
+        "データの匿名化と暗号化を行い、アクセス制御を適用する",
+        "最も精度の高いモデルアーキテクチャを選択する",
+        "トレーニングデータの量を最大化する"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "医療データは極めてセンシティブな個人情報です。責任あるAIのプライバシーとセキュリティの原則に基づき、データの匿名化、暗号化、適切なアクセス制御が最も重要な考慮事項です。",
+      "tags": [
+        "privacy",
+        "responsible-ai",
+        "healthcare"
+      ],
+      "sources": [
+        {
+          "title": "責任あるAI - プライバシーとセキュリティ",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "AG-7685",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "小売店で顧客の動線をリアルタイムに分析し、混雑状況に応じてスタッフを配置したい場合、最も適切なAzure AIサービスはどれですか。",
+      "choices": [
+        "Azure AI Language",
+        "Azure AI Vision の空間分析（Spatial Analysis）",
+        "Azure AI Translator",
+        "Azure AI Content Safety"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "Azure AI Visionの空間分析は、ビデオストリームからリアルタイムで人々の動きや密度を分析できます。店舗の混雑状況の監視やスタッフ配置の最適化に最適です。",
+      "tags": [
+        "real-time",
+        "azure-ai-vision",
+        "spatial-analysis"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Vision 空間分析",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/intro-to-spatial-analysis-public-preview"
+        }
+      ]
+    },
+    {
+      "id": "AG-7686",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 1,
+      "prompt": "AIシステムの透明性の原則を最もよく実践している例はどれですか。",
+      "choices": [
+        "AIモデルの精度を99%以上に向上させた",
+        "AIが判断を下した理由をユーザーに説明できるようにした",
+        "AIシステムの処理速度を2倍に改善した",
+        "AIシステムのコストを半分に削減した"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "透明性の原則は、AIシステムがどのように動作し、なぜその判断を下したかを人々が理解できるようにすることを求めます。判断理由の説明はこの原則の実践例です。",
+      "tags": [
+        "responsible-ai",
+        "transparency"
+      ],
+      "sources": [
+        {
+          "title": "責任あるAIの原則",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "AG-7687",
+      "domain": "Workloads",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "エッジデバイスでAIモデルを実行する利点として正しいものをすべて選んでください。",
+      "choices": [
+        "ネットワーク遅延を削減できる",
+        "トレーニングに必要なデータ量が減る",
+        "インターネット接続がなくても推論を実行できる",
+        "データをクラウドに送信せずに処理できるためプライバシーが向上する",
+        "モデルの精度が自動的に向上する"
+      ],
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "エッジコンピューティングの利点は、低遅延（ネットワーク遅延の削減）、オフライン推論（接続不要）、プライバシー向上（データがローカルに留まる）です。トレーニングデータ量の削減やモデル精度の自動向上とは関係ありません。",
+      "tags": [
+        "edge",
+        "privacy",
+        "real-time"
+      ],
+      "sources": [
+        {
+          "title": "Azure IoT Edge",
+          "url": "https://learn.microsoft.com/ja-jp/azure/iot-edge/about-iot-edge"
+        }
+      ]
+    },
+    {
+      "id": "AG-7688",
+      "domain": "Workloads",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure AI Content Safetyが検出できるコンテンツカテゴリとして正しいものをすべて選んでください。",
+      "choices": [
+        "暴力（Violence）",
+        "著作権侵害（Copyright）",
+        "ヘイト（Hate）",
+        "自傷行為（Self-harm）",
+        "性的コンテンツ（Sexual）"
+      ],
+      "answer": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "explanation": "Azure AI Content Safetyは、暴力、ヘイト、自傷行為、性的コンテンツの4つのカテゴリを検出できます。著作権侵害の検出はContent Safetyの標準カテゴリには含まれません。",
+      "tags": [
+        "content-safety",
+        "responsible-ai"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Content Safety",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/content-safety/overview"
+        }
+      ]
+    },
+    {
+      "id": "AG-7689",
+      "domain": "Workloads",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure AI サービスで、画像内のテキストを読み取るには {{0}} を使用し、テキストの感情を分析するには {{1}} を使用します。",
+      "dropdowns": [
+        {
+          "options": [
+            "Azure AI Vision（OCR）",
+            "Azure AI Language",
+            "Azure AI Speech"
+          ],
+          "answer": 0
+        },
+        {
+          "options": [
+            "Azure AI Vision",
+            "Azure AI Language",
+            "Azure AI Translator"
+          ],
+          "answer": 1
+        }
+      ],
+      "explanation": "画像内のテキストの読み取り（OCR）はAzure AI Visionの機能です。テキストの感情分析はAzure AI Languageのセンチメント分析機能で行います。",
+      "tags": [
+        "azure-ai-services",
+        "ocr",
+        "sentiment-analysis"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI サービスとは",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/what-are-ai-services"
+        }
+      ]
+    },
+    {
+      "id": "AG-7690",
+      "domain": "Workloads",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "責任あるAIにおいて、AIモデルが特定の人種や性別に対して不当に不利な結果を出さないようにする原則は {{0}} であり、AIシステムが予期しない状況でも安全に動作し続けることを求める原則は {{1}} です。",
+      "dropdowns": [
+        {
+          "options": [
+            "透明性",
+            "公平性",
+            "アカウンタビリティ"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "信頼性と安全性",
+            "包括性",
+            "プライバシーとセキュリティ"
+          ],
+          "answer": 0
+        }
+      ],
+      "explanation": "公平性（Fairness）は、AIシステムが人種・性別・年齢などの属性に基づいて不当な差別をしないことを求めます。信頼性と安全性（Reliability & Safety）は、AIが予期しない状況でも安全かつ確実に動作することを求めます。",
+      "tags": [
+        "responsible-ai",
+        "fairness",
+        "reliability"
+      ],
+      "sources": [
+        {
+          "title": "責任あるAIの原則",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "AG-7691",
+      "domain": "Workloads",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のAIワークロードと、最も適切なAzureサービスを正しく対応させてください。",
+      "left": [
+        "ドキュメントからの情報抽出",
+        "リアルタイム映像の人物カウント",
+        "多言語カスタマーサポートの自動化",
+        "コールセンターの通話分析"
+      ],
+      "right": [
+        "Azure AI Document Intelligence",
+        "Azure AI Vision 空間分析",
+        "Azure AI Language + Translator",
+        "Azure AI Speech + Language"
+      ],
+      "answerMap": {
+        "ドキュメントからの情報抽出": "Azure AI Document Intelligence",
+        "リアルタイム映像の人物カウント": "Azure AI Vision 空間分析",
+        "多言語カスタマーサポートの自動化": "Azure AI Language + Translator",
+        "コールセンターの通話分析": "Azure AI Speech + Language"
+      },
+      "explanation": "Document Intelligenceはフォームや請求書からの情報抽出、空間分析はビデオからの人物検出・カウント、Language+Translatorは多言語テキスト処理、Speech+Languageは音声のテキスト変換と分析に適しています。",
+      "tags": [
+        "match-concepts",
+        "azure-ai-services"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI サービス",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/what-are-ai-services"
+        }
+      ]
+    },
+    {
+      "id": "AG-7692",
+      "domain": "Workloads",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "AIプロジェクトのライフサイクルにおける一般的な手順を正しい順序に並べてください。",
+      "items": [
+        "モデルを本番環境にデプロイする",
+        "ビジネス課題を定義し、必要なデータを特定する",
+        "データを収集・前処理し、探索的分析を行う",
+        "モデルをトレーニングし、評価指標で性能を検証する"
+      ],
+      "answerOrder": [
+        1,
+        2,
+        3,
+        0
+      ],
+      "explanation": "AIプロジェクトは、(1)ビジネス課題の定義とデータの特定、(2)データの収集・前処理・探索的分析、(3)モデルのトレーニングと評価、(4)本番環境へのデプロイ、の順で進めます。",
+      "tags": [
+        "ai-lifecycle",
+        "ml-concepts"
+      ],
+      "sources": [
+        {
+          "title": "Azure ML ライフサイクル",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/overview-what-is-azure-machine-learning"
+        }
+      ]
+    },
+    {
+      "id": "AG-7693",
+      "domain": "Workloads",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下のシナリオのうち、Azure AI サービスの「責任あるAI」のプライバシーとセキュリティ原則に違反するものを選んでください。",
+      "grid": {
+        "cols": 2,
+        "rows": 3,
+        "cells": [
+          "顧客データを暗号化して保存する",
+          "従業員の同意なく顔認識で勤怠管理を行う",
+          "AIモデルのアクセスをロールベースで制御する",
+          "個人を特定できるデータをログに記録し、誰でも閲覧可能にする",
+          "データ処理の目的をプライバシーポリシーで明示する",
+          "トレーニングデータの匿名化処理を行う"
+        ]
+      },
+      "answer": [
+        1,
+        3
+      ],
+      "explanation": "従業員の同意なく顔認識で勤怠管理を行うことは、プライバシーの侵害です。また、個人を特定できるデータを誰でも閲覧可能にすることもプライバシーとセキュリティの原則に違反します。",
+      "tags": [
+        "privacy",
+        "responsible-ai",
+        "security"
+      ],
+      "sources": [
+        {
+          "title": "責任あるAI",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "AG-7694",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "機械学習モデルがトレーニングデータに対しても検証データに対しても低い精度を示している場合、この問題は何と呼ばれますか。",
+      "choices": [
+        "過学習（Overfitting）",
+        "未学習（Underfitting）",
+        "データドリフト（Data Drift）",
+        "概念ドリフト（Concept Drift）"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "未学習（Underfitting）は、モデルがトレーニングデータのパターンを十分に学習できておらず、トレーニングデータに対しても検証データに対しても精度が低い状態です。モデルが単純すぎるか、トレーニングが不十分な場合に発生します。",
+      "tags": [
+        "underfitting",
+        "model-evaluation"
+      ],
+      "sources": [
+        {
+          "title": "過学習と未学習",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-manage-ml-pitfalls"
+        }
+      ]
+    },
+    {
+      "id": "AG-7695",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "不正取引検出モデルのトレーニングにおいて、正常取引が99%、不正取引が1%というデータセットを使用する場合に発生する問題と、推奨される対処法はどれですか。",
+      "choices": [
+        "データドリフトの問題であり、モデルの再トレーニングで対処する",
+        "クラス不均衡の問題であり、少数クラスのオーバーサンプリングや重み付けで対処する",
+        "過学習の問題であり、正則化パラメータの調整で対処する",
+        "未学習の問題であり、より複雑なモデルに変更して対処する"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "正常取引99%、不正取引1%はクラス不均衡（Class Imbalance）の典型例です。少数クラスのオーバーサンプリング（SMOTE等）、コスト感応学習（重み付け）、適切な評価指標（F1スコア、AUC等）の使用が推奨されます。",
+      "tags": [
+        "class-imbalance",
+        "ml-concepts",
+        "fraud-detection"
+      ],
+      "sources": [
+        {
+          "title": "Azure ML - 不均衡データの処理",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-manage-ml-pitfalls"
+        }
+      ]
+    },
+    {
+      "id": "AG-7696",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "二値分類モデルの性能を評価する際、「実際に陽性であるサンプルのうち、モデルが正しく陽性と予測した割合」を表す指標はどれですか。",
+      "choices": [
+        "精度（Precision）",
+        "再現率（Recall）",
+        "正解率（Accuracy）",
+        "F1スコア"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "再現率（Recall）は、実際に陽性であるサンプルのうちモデルが正しく陽性と予測した割合（TP / (TP + FN)）です。精度（Precision）はモデルが陽性と予測したもののうち実際に陽性の割合、正解率は全体の正答率、F1スコアは精度と再現率の調和平均です。",
+      "tags": [
+        "model-evaluation",
+        "classification-metrics"
+      ],
+      "sources": [
+        {
+          "title": "分類モデルの評価",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml-results"
+        }
+      ]
+    },
+    {
+      "id": "AG-7697",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "本番環境にデプロイされた機械学習モデルの予測精度が時間の経過とともに低下しています。入力データの統計的分布がトレーニング時と大きく異なっていることが確認されました。この現象は何ですか。",
+      "choices": [
+        "過学習（Overfitting）",
+        "未学習（Underfitting）",
+        "データドリフト（Data Drift）",
+        "特徴量エンジニアリングの不足"
+      ],
+      "answer": [
+        2
+      ],
+      "explanation": "データドリフトは、本番環境の入力データの統計的分布がトレーニング時のデータと異なる状態です。季節変動、市場変化、ユーザー行動の変化などが原因で発生し、モデルの予測精度の低下につながります。Azure MLのデータセットモニターでドリフトを検出できます。",
+      "tags": [
+        "data-drift",
+        "model-monitoring"
+      ],
+      "sources": [
+        {
+          "title": "データドリフトの検出",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-monitor-datasets"
+        }
+      ]
+    },
+    {
+      "id": "AG-7698",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learning の自動ML（Automated ML）が自動的に行ってくれる処理はどれですか。",
+      "choices": [
+        "ビジネス要件の定義",
+        "アルゴリズムの選択とハイパーパラメータの最適化",
+        "データの収集とラベル付け",
+        "本番環境へのデプロイとモニタリング"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "自動ML（Automated ML）は、複数のアルゴリズムとハイパーパラメータの組み合わせを自動的に試行し、最適なモデルを選択します。ビジネス要件の定義、データ収集・ラベル付け、本番デプロイ・モニタリングは自動MLの範囲外です。",
+      "tags": [
+        "ml-concepts",
+        "automated-ml"
+      ],
+      "sources": [
+        {
+          "title": "自動ML",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "AG-7699",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "未学習（Underfitting）を解消するための対策として適切なものをすべて選んでください。",
+      "choices": [
+        "モデルの複雑さを増す（例：より多くの層や特徴量を追加する）",
+        "正則化の強度を下げる",
+        "トレーニングのエポック数を増やす",
+        "トレーニングデータの量を減らす",
+        "特徴量を削除してモデルを単純にする"
+      ],
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "未学習の対策は、モデルの複雑さを増す、正則化を弱める、トレーニング時間を延ばすことです。データを減らしたりモデルを単純化すると、未学習がさらに悪化します。",
+      "tags": [
+        "underfitting",
+        "ml-concepts",
+        "model-tuning"
+      ],
+      "sources": [
+        {
+          "title": "過学習と未学習の対処",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-manage-ml-pitfalls"
+        }
+      ]
+    },
+    {
+      "id": "AG-7700",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "回帰モデルの評価指標として適切なものをすべて選んでください。",
+      "choices": [
+        "決定係数（R²）",
+        "平均絶対誤差（MAE）",
+        "AUC（Area Under the Curve）",
+        "二乗平均平方根誤差（RMSE）",
+        "F1スコア"
+      ],
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "回帰モデルの評価指標には、決定係数（R²）、平均絶対誤差（MAE）、二乗平均平方根誤差（RMSE）などがあります。AUCとF1スコアは分類モデルの評価指標です。",
+      "tags": [
+        "model-evaluation",
+        "regression-metrics"
+      ],
+      "sources": [
+        {
+          "title": "回帰モデルの評価",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml-results"
+        }
+      ]
+    },
+    {
+      "id": "AG-7701",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "教師あり学習に分類される機械学習タスクをすべて選んでください。",
+      "choices": [
+        "分類（Classification）",
+        "クラスタリング（Clustering）",
+        "回帰（Regression）",
+        "異常検出（Anomaly Detection）"
+      ],
+      "answer": [
+        0,
+        2
+      ],
+      "explanation": "教師あり学習は、入力データと正解ラベルのペアから学習する手法です。分類と回帰が教師あり学習に該当します。クラスタリングは教師なし学習、異常検出は一般的に教師なし学習または半教師あり学習に分類されます。",
+      "tags": [
+        "ml-concepts",
+        "supervised-learning"
+      ],
+      "sources": [
+        {
+          "title": "機械学習の種類",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/algorithm-cheat-sheet"
+        }
+      ]
+    },
+    {
+      "id": "AG-7702",
+      "domain": "ML",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "本番環境のMLモデルにおいて、入力データの分布がトレーニング時と異なる現象を {{0}} と呼び、この問題を検出するためにAzure Machine Learningでは {{1}} を使用できます。",
+      "dropdowns": [
+        {
+          "options": [
+            "過学習",
+            "データドリフト",
+            "概念ドリフト"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "自動ML",
+            "データセットモニター",
+            "デザイナー"
+          ],
+          "answer": 1
+        }
+      ],
+      "explanation": "データドリフトは、本番データの分布がトレーニングデータの分布から逸脱する現象です。Azure MLのデータセットモニターを使ってドリフトを検出し、アラートを設定できます。",
+      "tags": [
+        "data-drift",
+        "model-monitoring",
+        "azure-ml"
+      ],
+      "sources": [
+        {
+          "title": "データドリフトの検出",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-monitor-datasets"
+        }
+      ]
+    },
+    {
+      "id": "AG-7703",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下の機械学習の問題と、最も適切な評価指標を正しく対応させてください。",
+      "left": [
+        "二値分類（不正検出）",
+        "多クラス分類（画像分類）",
+        "回帰（売上予測）",
+        "クラスタリング（顧客セグメント）"
+      ],
+      "right": [
+        "AUC-ROC",
+        "マクロF1スコア",
+        "RMSE（二乗平均平方根誤差）",
+        "シルエットスコア"
+      ],
+      "answerMap": {
+        "二値分類（不正検出）": "AUC-ROC",
+        "多クラス分類（画像分類）": "マクロF1スコア",
+        "回帰（売上予測）": "RMSE（二乗平均平方根誤差）",
+        "クラスタリング（顧客セグメント）": "シルエットスコア"
+      },
+      "explanation": "不正検出のようなクラス不均衡な二値分類にはAUC-ROCが適しています。多クラス分類にはマクロF1スコア、回帰にはRMSE、クラスタリングにはシルエットスコアが代表的な評価指標です。",
+      "tags": [
+        "model-evaluation",
+        "ml-concepts",
+        "match-concepts"
+      ],
+      "sources": [
+        {
+          "title": "自動ML結果の評価",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml-results"
+        }
+      ]
+    },
+    {
+      "id": "AG-7704",
+      "domain": "ML",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learning デザイナーで回帰モデルを構築する際の一般的なパイプラインの手順を正しい順序に並べてください。",
+      "items": [
+        "モデルのスコアリングと評価指標の確認",
+        "データセットをパイプラインキャンバスに追加する",
+        "データの前処理（欠損値処理、正規化等）を行う",
+        "データを学習用と検証用に分割し、モデルをトレーニングする"
+      ],
+      "answerOrder": [
+        1,
+        2,
+        3,
+        0
+      ],
+      "explanation": "デザイナーでのパイプラインは、(1)データセットの追加、(2)前処理モジュールの適用、(3)データ分割とモデルトレーニング、(4)スコアリングと評価、の順で構築します。",
+      "tags": [
+        "azure-ml",
+        "designer",
+        "ml-pipeline"
+      ],
+      "sources": [
+        {
+          "title": "Azure ML デザイナー",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-designer"
+        }
+      ]
+    },
+    {
+      "id": "AG-7705",
+      "domain": "ML",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下のうち、クラス不均衡（Class Imbalance）問題への対処法として有効なものを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "少数クラスのオーバーサンプリング（SMOTE等）",
+          "特徴量の数を減らす",
+          "評価指標をAccuracyからF1スコアに変更する",
+          "多数クラスのアンダーサンプリング",
+          "学習率を大きくする",
+          "コスト感応学習（クラスに重みを付与）"
+        ]
+      },
+      "answer": [
+        0,
+        2,
+        3,
+        5
+      ],
+      "explanation": "クラス不均衡への対処法として、少数クラスのオーバーサンプリング、F1スコアなど不均衡に強い評価指標の使用、多数クラスのアンダーサンプリング、コスト感応学習が有効です。特徴量の削減や学習率の変更は直接的な対処法ではありません。",
+      "tags": [
+        "class-imbalance",
+        "model-evaluation",
+        "ml-concepts"
+      ],
+      "sources": [
+        {
+          "title": "不均衡データの処理",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-manage-ml-pitfalls"
+        }
+      ]
+    },
+    {
+      "id": "AG-7706",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Visionの画像分析4.0で、画像内の特定のオブジェクトの位置を矩形座標で取得したい場合に使用する機能はどれですか。",
+      "choices": [
+        "タグ付け（Tagging）",
+        "物体検出（Object Detection）",
+        "画像キャプション（Image Captioning）",
+        "画像分類（Image Classification）"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "物体検出はイメージ内の各オブジェクトの位置をバウンディングボックス（矩形座標）で返します。タグ付けはオブジェクトの種類をラベルとして返しますが位置情報はありません。キャプションはテキスト説明、分類はカテゴリを返します。",
+      "tags": [
+        "azure-ai-vision",
+        "object-detection"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Vision 画像分析",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-image-analysis"
+        }
+      ]
+    },
+    {
+      "id": "AG-7707",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Custom Visionで画像分類モデルをトレーニングする際の最小要件として正しいものはどれですか。",
+      "choices": [
+        "各タグに最低5枚の画像が必要",
+        "各タグに最低50枚の画像が必要",
+        "各タグに最低100枚の画像が必要",
+        "各タグに最低1000枚の画像が必要"
+      ],
+      "answer": [
+        0
+      ],
+      "explanation": "Custom Visionでは、各タグ（クラス）に最低5枚の画像があればトレーニングを開始できます。ただし、より高い精度を得るには、各タグに少なくとも50枚以上の画像を用意することが推奨されます。",
+      "tags": [
+        "custom-vision",
+        "training-requirements"
+      ],
+      "sources": [
+        {
+          "title": "Custom Vision の要件",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/getting-started-build-a-classifier"
+        }
+      ]
+    },
+    {
+      "id": "AG-7708",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Visionの顔検出機能で取得できる情報として正しいものはどれですか。",
+      "choices": [
+        "個人の名前と身元情報",
+        "顔の位置、年齢の推定、感情の推定",
+        "顔の位置、マスク着用の有無、ぼかしレベル",
+        "顔の位置と指紋データ"
+      ],
+      "answer": [
+        2
+      ],
+      "explanation": "Azure AI Visionの顔検出は、顔の位置（バウンディングボックス）、マスク着用の有無、顔のぼかしレベル、頭部姿勢などの属性を返します。責任あるAIの方針により、年齢や感情の推定機能は制限されています。個人の身元情報や指紋データは取得できません。",
+      "tags": [
+        "azure-ai-vision",
+        "face-detection",
+        "responsible-ai"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI 顔検出",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/concept-face-detection"
+        }
+      ]
+    },
+    {
+      "id": "AG-7709",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Document Intelligenceを使用して請求書から情報を抽出する場合、事前構築済みモデルで自動的に抽出できるフィールドはどれですか。",
+      "choices": [
+        "請求書のデザインテンプレート",
+        "ベンダー名、請求日、合計金額、明細行",
+        "PDFのメタデータとフォントサイズ",
+        "請求書の印刷設定情報"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "Azure AI Document Intelligenceの請求書（Invoice）事前構築済みモデルは、ベンダー名、請求日、合計金額、税額、明細行（品目、数量、単価）などのフィールドを自動的に抽出できます。",
+      "tags": [
+        "document-intelligence",
+        "ocr",
+        "invoice"
+      ],
+      "sources": [
+        {
+          "title": "Document Intelligence 請求書モデル",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/document-intelligence/concept-invoice"
+        }
+      ]
+    },
+    {
+      "id": "AG-7710",
+      "domain": "CV",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure AI Visionの画像分析APIで取得できる情報をすべて選んでください。",
+      "choices": [
+        "画像の自然言語キャプション",
+        "画像内のオブジェクトのタグ一覧",
+        "画像の撮影に使用したカメラの機種",
+        "画像内のテキスト（OCR）",
+        "画像がアダルトコンテンツかどうかの判定"
+      ],
+      "answer": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "explanation": "Azure AI Visionの画像分析APIは、キャプション生成、タグ付け、OCR（テキスト読み取り）、アダルト/不快なコンテンツの検出などの機能を提供します。カメラの機種情報はEXIFデータであり、画像分析APIの機能ではありません。",
+      "tags": [
+        "azure-ai-vision",
+        "image-analysis"
+      ],
+      "sources": [
+        {
+          "title": "画像分析の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-image-analysis"
+        }
+      ]
+    },
+    {
+      "id": "AG-7711",
+      "domain": "CV",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Custom Visionプロジェクトで利用可能なプロジェクトタイプをすべて選んでください。",
+      "choices": [
+        "画像分類（Classification）",
+        "物体検出（Object Detection）",
+        "画像生成（Image Generation）",
+        "セマンティックセグメンテーション（Semantic Segmentation）"
+      ],
+      "answer": [
+        0,
+        1
+      ],
+      "explanation": "Custom Visionでは、画像分類と物体検出の2種類のプロジェクトを作成できます。画像生成やセマンティックセグメンテーションはCustom Visionではサポートされていません。",
+      "tags": [
+        "custom-vision",
+        "project-types"
+      ],
+      "sources": [
+        {
+          "title": "Custom Vision とは",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/overview"
+        }
+      ]
+    },
+    {
+      "id": "AG-7712",
+      "domain": "CV",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "画像から人物の顔の位置を検出するには {{0}} を使用し、特定の製品ロゴを画像から検出するカスタムモデルを作成するには {{1}} を使用します。",
+      "dropdowns": [
+        {
+          "options": [
+            "Azure AI Vision（顔検出）",
+            "Custom Vision（物体検出）",
+            "Azure AI Document Intelligence"
+          ],
+          "answer": 0
+        },
+        {
+          "options": [
+            "Azure AI Vision（タグ付け）",
+            "Custom Vision（物体検出）",
+            "Azure AI Vision（キャプション）"
+          ],
+          "answer": 1
+        }
+      ],
+      "explanation": "顔の検出はAzure AI Visionの組み込み顔検出機能で行えます。特定の製品ロゴのようなカスタムオブジェクトの検出には、Custom Visionの物体検出プロジェクトでモデルをトレーニングする必要があります。",
+      "tags": [
+        "azure-ai-vision",
+        "custom-vision",
+        "face-detection"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Vision vs Custom Vision",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview"
+        }
+      ]
+    },
+    {
+      "id": "AG-7713",
+      "domain": "CV",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のコンピュータービジョンタスクと、最も適切なAzureサービス/機能を正しく対応させてください。",
+      "left": [
+        "手書き文字のテキスト抽出",
+        "小売店の棚の商品検出",
+        "ビデオ内の人物の動線追跡",
+        "名刺からの連絡先情報抽出"
+      ],
+      "right": [
+        "Azure AI Vision OCR（Read API）",
+        "Custom Vision 物体検出",
+        "Azure AI Vision 空間分析",
+        "Azure AI Document Intelligence 名刺モデル"
+      ],
+      "answerMap": {
+        "手書き文字のテキスト抽出": "Azure AI Vision OCR（Read API）",
+        "小売店の棚の商品検出": "Custom Vision 物体検出",
+        "ビデオ内の人物の動線追跡": "Azure AI Vision 空間分析",
+        "名刺からの連絡先情報抽出": "Azure AI Document Intelligence 名刺モデル"
+      },
+      "explanation": "OCR（Read API）は手書き・印刷テキストの読み取り、Custom Visionは特定の物体のカスタム検出、空間分析はビデオからの人物追跡、Document Intelligenceの名刺モデルは名刺からの構造化情報抽出に最適です。",
+      "tags": [
+        "azure-ai-vision",
+        "custom-vision",
+        "document-intelligence",
+        "match-concepts"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Vision の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview"
+        }
+      ]
+    },
+    {
+      "id": "AG-7714",
+      "domain": "CV",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下のうち、Azure AI Document Intelligence の事前構築済みモデルとして提供されているドキュメントタイプを選んでください。",
+      "grid": {
+        "cols": 3,
+        "rows": 2,
+        "cells": [
+          "請求書（Invoice）",
+          "ソースコード（Source Code）",
+          "領収書（Receipt）",
+          "身分証明書（ID Document）",
+          "音声ファイル（Audio File）",
+          "名刺（Business Card）"
+        ]
+      },
+      "answer": [
+        0,
+        2,
+        3,
+        5
+      ],
+      "explanation": "Azure AI Document Intelligenceは、請求書、領収書、身分証明書、名刺などの事前構築済みモデルを提供しています。ソースコードや音声ファイルは対応していません。",
+      "tags": [
+        "document-intelligence",
+        "prebuilt-models"
+      ],
+      "sources": [
+        {
+          "title": "Document Intelligence モデル一覧",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/document-intelligence/overview"
+        }
+      ]
+    },
+    {
+      "id": "AG-7715",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Speechのテキスト読み上げ（Text-to-Speech）で、より自然で人間に近い音声を生成するために使用される技術はどれですか。",
+      "choices": [
+        "ルールベースの音素変換",
+        "ニューラルテキスト読み上げ（Neural TTS）",
+        "波形連結合成",
+        "フォルマント合成"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "Azure AI Speechのニューラルテキスト読み上げ（Neural TTS）は、ディープニューラルネットワークを使用して、非常に自然で人間に近い音声を合成します。従来のルールベースや連結合成と比較して、大幅に自然な音質を実現しています。",
+      "tags": [
+        "text-to-speech",
+        "neural-tts",
+        "azure-ai-speech"
+      ],
+      "sources": [
+        {
+          "title": "テキスト読み上げの概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/text-to-speech"
+        }
+      ]
+    },
+    {
+      "id": "AG-7716",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Speechで、カスタムニューラル音声（Custom Neural Voice）を作成する主な目的はどれですか。",
+      "choices": [
+        "音声認識の精度を向上させる",
+        "ブランド固有のユニークな音声でテキスト読み上げを行う",
+        "リアルタイム翻訳の遅延を削減する",
+        "音声ファイルのノイズを除去する"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "カスタムニューラル音声は、企業やブランド独自の音声を作成し、テキスト読み上げに使用するための機能です。自社のブランドアイデンティティに合った一貫性のある音声体験を提供できます。",
+      "tags": [
+        "text-to-speech",
+        "custom-neural-voice",
+        "azure-ai-speech"
+      ],
+      "sources": [
+        {
+          "title": "カスタムニューラル音声",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/custom-neural-voice"
+        }
+      ]
+    },
+    {
+      "id": "AG-7717",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Languageのエンティティ認識（Named Entity Recognition）で、「東京都千代田区丸の内1-9-2」というテキストから抽出されるエンティティのカテゴリはどれですか。",
+      "choices": [
+        "Person（人名）",
+        "Location（場所）",
+        "DateTime（日時）",
+        "Quantity（数量）"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "「東京都千代田区丸の内1-9-2」は住所であり、エンティティ認識ではLocation（場所）カテゴリとして抽出されます。より詳細には、Address（住所）サブカテゴリに分類されます。",
+      "tags": [
+        "azure-ai-language",
+        "named-entity-recognition"
+      ],
+      "sources": [
+        {
+          "title": "名前付きエンティティの認識",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/named-entity-recognition/overview"
+        }
+      ]
+    },
+    {
+      "id": "AG-7718",
+      "domain": "NLP",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AI Translatorでドキュメント翻訳機能を使用する場合に正しい説明はどれですか。",
+      "choices": [
+        "テキストファイル（.txt）のみ翻訳できる",
+        "原文のフォーマット（レイアウト、書式）を保持したまま翻訳できる",
+        "一度に1つの言語にしか翻訳できない",
+        "翻訳前に手動でテキストを抽出する必要がある"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "Azure AI Translatorのドキュメント翻訳は、Word、PDF、PowerPointなど多様な形式のドキュメントを、元のフォーマット（レイアウト、書式、スタイル）を保持したまま翻訳できます。複数言語への同時翻訳もサポートしています。",
+      "tags": [
+        "azure-ai-translator",
+        "document-translation"
+      ],
+      "sources": [
+        {
+          "title": "ドキュメント翻訳",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/translator/document-translation/overview"
+        }
+      ]
+    },
+    {
+      "id": "AG-7719",
+      "domain": "NLP",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure AI Languageで提供されている事前構築済み機能をすべて選んでください。",
+      "choices": [
+        "センチメント分析（Sentiment Analysis）",
+        "音声認識（Speech Recognition）",
+        "キーフレーズ抽出（Key Phrase Extraction）",
+        "言語検出（Language Detection）",
+        "画像キャプション生成（Image Captioning）"
+      ],
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Azure AI Languageは、センチメント分析、キーフレーズ抽出、言語検出、エンティティ認識などの事前構築済みNLP機能を提供します。音声認識はAzure AI Speechのサービス、画像キャプション生成はAzure AI Visionのサービスです。",
+      "tags": [
+        "azure-ai-language",
+        "nlp-features"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Language の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/overview"
+        }
+      ]
+    },
+    {
+      "id": "AG-7720",
+      "domain": "NLP",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure AI Speechにおいて、マイクからの音声をテキストに変換する機能は {{0}} であり、テキストデータを自然な音声に変換する機能は {{1}} です。",
+      "dropdowns": [
+        {
+          "options": [
+            "テキスト読み上げ（Text-to-Speech）",
+            "音声テキスト変換（Speech-to-Text）",
+            "音声翻訳（Speech Translation）"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "テキスト読み上げ（Text-to-Speech）",
+            "音声テキスト変換（Speech-to-Text）",
+            "話者認識（Speaker Recognition）"
+          ],
+          "answer": 0
+        }
+      ],
+      "explanation": "音声テキスト変換（Speech-to-Text）はマイクや音声ファイルの音声をテキストに変換します。テキスト読み上げ（Text-to-Speech）はテキストを自然な音声に変換します。",
+      "tags": [
+        "text-to-speech",
+        "speech-to-text",
+        "azure-ai-speech"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Speech の概要",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/overview"
+        }
+      ]
+    },
+    {
+      "id": "AG-7721",
+      "domain": "NLP",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "顧客レビューのテキストから「肯定的」「否定的」「中立的」の感情を判定するには {{0}} を使用し、レビュー内の重要な語句を自動的に抽出するには {{1}} を使用します。",
+      "dropdowns": [
+        {
+          "options": [
+            "キーフレーズ抽出",
+            "センチメント分析",
+            "エンティティ認識"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "キーフレーズ抽出",
+            "センチメント分析",
+            "言語検出"
+          ],
+          "answer": 0
+        }
+      ],
+      "explanation": "センチメント分析はテキスト全体や文単位で肯定・否定・中立の感情を判定します。キーフレーズ抽出はテキスト内の重要な語句やフレーズを自動的に特定します。",
+      "tags": [
+        "azure-ai-language",
+        "sentiment-analysis",
+        "key-phrase-extraction"
+      ],
+      "sources": [
+        {
+          "title": "センチメント分析",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/sentiment-opinion-mining/overview"
+        }
+      ]
+    },
+    {
+      "id": "AG-7722",
+      "domain": "NLP",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のNLPタスクと、最も適切なAzure AIサービスの機能を正しく対応させてください。",
+      "left": [
+        "会議の録音をテキストに変換する",
+        "英語の技術文書を日本語に翻訳する",
+        "顧客の問い合わせを適切な部門に自動振り分けする",
+        "テキストを感情豊かな音声で読み上げる"
+      ],
+      "right": [
+        "Azure AI Speech（Speech-to-Text）",
+        "Azure AI Translator",
+        "Azure AI Language（カスタムテキスト分類）",
+        "Azure AI Speech（Neural TTS）"
+      ],
+      "answerMap": {
+        "会議の録音をテキストに変換する": "Azure AI Speech（Speech-to-Text）",
+        "英語の技術文書を日本語に翻訳する": "Azure AI Translator",
+        "顧客の問い合わせを適切な部門に自動振り分けする": "Azure AI Language（カスタムテキスト分類）",
+        "テキストを感情豊かな音声で読み上げる": "Azure AI Speech（Neural TTS）"
+      },
+      "explanation": "音声のテキスト変換はSpeech-to-Text、多言語翻訳はTranslator、テキストの分類はLanguageのカスタムテキスト分類、自然な音声生成はNeural TTSが最適です。",
+      "tags": [
+        "nlp-concepts",
+        "match-concepts",
+        "text-to-speech"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI サービス",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/what-are-ai-services"
+        }
+      ]
+    },
+    {
+      "id": "AG-7723",
+      "domain": "NLP",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "C社はグローバルなカスタマーサポートセンターを運営しています。以下の要件を Azure AI サービスで実現する計画です。\n\n要件1：世界各国から寄せられる電話の問い合わせを自動的にテキストに変換し、対応言語を自動検出したい。\n要件2：テキスト化された問い合わせの感情（肯定的・否定的・中立的）を自動分析し、ネガティブな問い合わせを優先的にエスカレーションしたい。\n要件3：サポート回答をテキストで作成した後、顧客の言語に合わせた自然な音声で読み上げてIVR（自動音声応答）システムに送信したい。",
+      "subQuestions": [
+        {
+          "id": "AG-7723-1",
+          "type": "single",
+          "prompt": "要件1を実現するために必要なAzure AIサービスの組み合わせとして最も適切なものはどれですか。",
+          "choices": [
+            "Azure AI Vision + Azure AI Translator",
+            "Azure AI Speech（Speech-to-Text） + Azure AI Language（言語検出）",
+            "Azure AI Language（エンティティ認識）+ Azure AI Translator",
+            "Azure AI Speech（Text-to-Speech）+ Azure AI Language（センチメント分析）"
+          ],
+          "answer": [
+            1
+          ],
+          "explanation": "電話の音声をテキストに変換するにはSpeech-to-Text、テキストの言語を自動検出するにはAzure AI Languageの言語検出機能を使用します。"
+        },
+        {
+          "id": "AG-7723-2",
+          "type": "single",
+          "prompt": "要件2の感情分析を実現するために最も適切なAzure AI Languageの機能はどれですか。",
+          "choices": [
+            "キーフレーズ抽出",
+            "センチメント分析（Sentiment Analysis）",
+            "名前付きエンティティ認識",
+            "カスタムテキスト分類"
+          ],
+          "answer": [
+            1
+          ],
+          "explanation": "センチメント分析は、テキストの肯定的・否定的・中立的な感情を判定し、信頼度スコアを返します。ネガティブな問い合わせの自動検出とエスカレーションに最適です。"
+        },
+        {
+          "id": "AG-7723-3",
+          "type": "single",
+          "prompt": "要件3を実現するために使用すべきAzure AI Speechの機能はどれですか。",
+          "choices": [
+            "音声テキスト変換（Speech-to-Text）",
+            "話者認識（Speaker Recognition）",
+            "ニューラルテキスト読み上げ（Neural Text-to-Speech）",
+            "音声翻訳（Speech Translation）"
+          ],
+          "answer": [
+            2
+          ],
+          "explanation": "ニューラルText-to-Speechは、テキストを自然で人間に近い音声に変換します。多言語対応しており、顧客の言語に合わせた音声でIVRシステムに応答を送信できます。"
+        }
+      ],
+      "explanation": "このケーススタディでは、カスタマーサポートセンターの自動化にAzure AI Speech（STT/TTS）とAzure AI Language（言語検出、センチメント分析）を組み合わせて使用するシナリオを扱います。",
+      "tags": [
+        "speech-to-text",
+        "text-to-speech",
+        "sentiment-analysis",
+        "language-detection"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Speech",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/speech-service/overview"
+        },
+        {
+          "title": "Azure AI Language",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/overview"
+        }
+      ]
+    },
+    {
+      "id": "AG-7724",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI Serviceで利用可能なGPTモデルのデプロイ方法として、スループットが保証されるデプロイタイプはどれですか。",
+      "choices": [
+        "Standard（標準）デプロイ",
+        "Provisioned Throughput（プロビジョニング済みスループット）デプロイ",
+        "Serverless（サーバーレス）デプロイ",
+        "Batch（バッチ）デプロイ"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "Provisioned Throughput（PTU）デプロイは、指定されたスループットが保証されるデプロイタイプです。一定のトークン処理能力が予約されるため、レイテンシーとスループットが安定します。Standard デプロイは共有容量であり、スループットは保証されません。",
+      "tags": [
+        "azure-openai",
+        "deployment-types"
+      ],
+      "sources": [
+        {
+          "title": "Azure OpenAI デプロイ",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/how-to/deployment-types"
+        }
+      ]
+    },
+    {
+      "id": "AG-7725",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "プロンプトエンジニアリングにおいて、モデルに期待する出力の具体例を1つ以上示してから本題の質問を行う手法は何と呼ばれますか。",
+      "choices": [
+        "ゼロショットプロンプティング",
+        "フューショットプロンプティング",
+        "チェーン・オブ・ソート（思考の連鎖）",
+        "システムプロンプト設定"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "フューショットプロンプティング（Few-shot prompting）は、モデルに期待する入出力の例を1つ以上提示してからタスクを実行させる手法です。例を示すことで、モデルが期待される形式や内容をより正確に理解できます。",
+      "tags": [
+        "prompt-engineering",
+        "few-shot"
+      ],
+      "sources": [
+        {
+          "title": "プロンプトエンジニアリング",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/prompt-engineering"
+        }
+      ]
+    },
+    {
+      "id": "AG-7726",
+      "domain": "GenAI",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Microsoft Copilot（旧Bing Chat）が Web 検索の結果を回答に組み込む際に使用しているアーキテクチャパターンはどれですか。",
+      "choices": [
+        "ファインチューニング（Fine-tuning）",
+        "転移学習（Transfer Learning）",
+        "RAG（Retrieval Augmented Generation）",
+        "蒸留（Knowledge Distillation）"
+      ],
+      "answer": [
+        2
+      ],
+      "explanation": "Microsoft CopilotはRAG（検索拡張生成）パターンを使用しています。ユーザーの質問に基づいてWeb検索を行い、取得した最新情報をプロンプトに追加してLLMに送信することで、最新かつ正確な回答を生成します。",
+      "tags": [
+        "copilot",
+        "rag",
+        "architecture"
+      ],
+      "sources": [
+        {
+          "title": "RAG パターン",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/retrieval-augmented-generation"
+        }
+      ]
+    },
+    {
+      "id": "AG-7727",
+      "domain": "GenAI",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI Serviceのコンテンツフィルタリングが検出・フィルタリングできるカテゴリをすべて選んでください。",
+      "choices": [
+        "ヘイトおよび公平性（Hate and Fairness）",
+        "暴力（Violence）",
+        "著作権侵害のコード（Copyrighted Code）",
+        "性的コンテンツ（Sexual）",
+        "自傷行為（Self-harm）"
+      ],
+      "answer": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "explanation": "Azure OpenAIのコンテンツフィルタリングは、ヘイトおよび公平性、暴力、性的コンテンツ、自傷行為の4つのカテゴリを検出・フィルタリングします。それぞれの重大度レベル（安全、低、中、高）で評価されます。",
+      "tags": [
+        "azure-openai",
+        "content-filtering",
+        "responsible-ai"
+      ],
+      "sources": [
+        {
+          "title": "コンテンツフィルタリング",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/content-filter"
+        }
+      ]
+    },
+    {
+      "id": "AG-7728",
+      "domain": "GenAI",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "生成AIの「ハルシネーション（幻覚）」を軽減するための有効なアプローチをすべて選んでください。",
+      "choices": [
+        "RAG（Retrieval Augmented Generation）で外部データソースを参照させる",
+        "モデルのtemperatureパラメータを最大値に設定する",
+        "システムプロンプトで回答のスコープを明確に制限する",
+        "グラウンディング（根拠付け）によりモデルに情報源を示させる"
+      ],
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "ハルシネーション軽減には、RAGで正確な情報を参照させる、システムプロンプトでスコープを制限する、グラウンディングで情報源を明示させることが有効です。temperatureを最大にするとランダム性が増し、ハルシネーションが悪化します。",
+      "tags": [
+        "genai-concepts",
+        "hallucination",
+        "rag",
+        "grounding"
+      ],
+      "sources": [
+        {
+          "title": "生成AIのリスク軽減",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/system-message"
+        }
+      ]
+    },
+    {
+      "id": "AG-7729",
+      "domain": "GenAI",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI Serviceのtemperatureパラメータを低く設定すると出力は {{0}} になり、top_pパラメータを低く設定すると出力の {{1}} が制限されます。",
+      "dropdowns": [
+        {
+          "options": [
+            "よりランダムで多様",
+            "より決定論的で一貫性のある",
+            "より長文"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "長さ",
+            "語彙の多様性",
+            "応答速度"
+          ],
+          "answer": 1
+        }
+      ],
+      "explanation": "temperatureを低くするとモデルの出力はより決定論的で一貫性のあるものになります。top_pを低くすると、候補となるトークンの累積確率が制限され、語彙の多様性が減り、より確実性の高い出力になります。",
+      "tags": [
+        "azure-openai",
+        "parameters",
+        "prompt-engineering"
+      ],
+      "sources": [
+        {
+          "title": "Azure OpenAI パラメータ",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/prompt-engineering"
+        }
+      ]
+    },
+    {
+      "id": "AG-7730",
+      "domain": "GenAI",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下の生成AIの概念と、その説明を正しく対応させてください。",
+      "left": [
+        "トークン",
+        "エンベディング（Embedding）",
+        "ファインチューニング",
+        "プロンプト"
+      ],
+      "right": [
+        "テキストを数値ベクトルに変換した表現",
+        "モデルが処理するテキストの最小単位",
+        "特定のタスク向けにモデルを追加学習させること",
+        "モデルに入力する指示や質問のテキスト"
+      ],
+      "answerMap": {
+        "トークン": "モデルが処理するテキストの最小単位",
+        "エンベディング（Embedding）": "テキストを数値ベクトルに変換した表現",
+        "ファインチューニング": "特定のタスク向けにモデルを追加学習させること",
+        "プロンプト": "モデルに入力する指示や質問のテキスト"
+      },
+      "explanation": "トークンはLLMが処理するテキストの基本単位（単語や部分語）、エンベディングはテキストの意味をベクトル空間に表現したもの、ファインチューニングは既存モデルに追加データで学習させること、プロンプトはモデルへの入力テキストです。",
+      "tags": [
+        "genai-concepts",
+        "match-concepts"
+      ],
+      "sources": [
+        {
+          "title": "Azure OpenAI の概念",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/models"
+        }
+      ]
+    },
+    {
+      "id": "AG-7731",
+      "domain": "GenAI",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Azure AI Searchを使用したRAG（Retrieval Augmented Generation）システムの処理フローを正しい順序に並べてください。",
+      "items": [
+        "LLMが検索結果をコンテキストとして使用し、回答を生成する",
+        "ドキュメントをチャンクに分割し、エンベディングを生成してインデックスに格納する",
+        "ユーザーのクエリをエンベディングに変換し、Azure AI Searchでベクトル検索を実行する",
+        "生成された回答をユーザーに返す"
+      ],
+      "answerOrder": [
+        1,
+        2,
+        0,
+        3
+      ],
+      "explanation": "RAGのフローは、(1)事前にドキュメントをチャンク化・エンベディング化してインデックスに格納、(2)ユーザークエリをベクトル化して類似検索、(3)検索結果をコンテキストとしてLLMに渡し回答生成、(4)回答をユーザーに返す、の順です。",
+      "tags": [
+        "rag",
+        "azure-ai-search",
+        "embedding"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Search と RAG",
+          "url": "https://learn.microsoft.com/ja-jp/azure/search/retrieval-augmented-generation-overview"
+        }
+      ]
+    },
+    {
+      "id": "AG-7732",
+      "domain": "GenAI",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "D社は社内ナレッジベースシステムをAzure OpenAI Serviceで構築しています。以下の要件があります。\n\n要件1：社内文書（PDF、Word）を検索して、従業員の質問に正確に回答したい。モデルが学習していない社内固有の情報も含む。\n要件2：回答には必ず情報源のドキュメント名とページ番号を含めたい。\n要件3：機密情報を含むドキュメントへのアクセスは、従業員の権限レベルに応じて制限したい。",
+      "subQuestions": [
+        {
+          "id": "AG-7732-1",
+          "type": "single",
+          "prompt": "要件1を実現するために最も適切なアーキテクチャパターンはどれですか。",
+          "choices": [
+            "GPTモデルを社内文書でファインチューニングする",
+            "RAG（Retrieval Augmented Generation）でAzure AI Searchと連携する",
+            "社内文書をすべてシステムプロンプトに含める",
+            "GPTモデルに社内文書のURLを指定して読み込ませる"
+          ],
+          "answer": [
+            1
+          ],
+          "explanation": "RAGパターンでAzure AI Searchと連携することで、社内文書を検索インデックスに格納し、質問に関連する部分のみをLLMに渡して正確な回答を生成できます。ファインチューニングは知識の追加には適していません。"
+        },
+        {
+          "id": "AG-7732-2",
+          "type": "single",
+          "prompt": "要件2の情報源の引用を実現するための最も適切なアプローチはどれですか。",
+          "choices": [
+            "モデルの temperature を0に設定する",
+            "検索結果のメタデータ（ドキュメント名、ページ番号）をプロンプトに含め、回答に引用を付けるよう指示する",
+            "Azure AI Content Safety でコンテンツを検証する",
+            "モデルのmax_tokensを大きく設定する"
+          ],
+          "answer": [
+            1
+          ],
+          "explanation": "RAGシステムで検索結果とともにメタデータ（ドキュメント名、ページ番号）をプロンプトに含め、システムプロンプトで回答に引用を付けるよう指示するのが最適な方法です。"
+        },
+        {
+          "id": "AG-7732-3",
+          "type": "single",
+          "prompt": "要件3のアクセス制御を実現するために最も適切な方法はどれですか。",
+          "choices": [
+            "ドキュメントごとに別のGPTモデルをデプロイする",
+            "Azure AI Searchのセキュリティフィルターを使用し、ユーザーの権限に応じて検索結果をフィルタリングする",
+            "機密文書はインデックスに含めず、手動で回答する",
+            "すべてのユーザーに同じ結果を返し、UI側で表示を制限する"
+          ],
+          "answer": [
+            1
+          ],
+          "explanation": "Azure AI Searchのセキュリティトリミング（Security Trimming）機能を使えば、ユーザーの権限（Azure ADのグループなど）に基づいて検索結果をフィルタリングでき、権限のないドキュメントがLLMに渡されることを防げます。"
+        }
+      ],
+      "explanation": "このケーススタディでは、RAGアーキテクチャを使った社内ナレッジベースの構築において、情報検索、引用付き回答、セキュリティという実務的な課題への対処方法を問います。",
+      "tags": [
+        "rag",
+        "azure-openai",
+        "azure-ai-search",
+        "security",
+        "grounding"
+      ],
+      "sources": [
+        {
+          "title": "Azure OpenAI on your data",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/use-your-data"
+        },
+        {
+          "title": "Azure AI Search セキュリティ",
+          "url": "https://learn.microsoft.com/ja-jp/azure/search/search-security-trimming-for-azure-search"
+        }
+      ]
+    }
+  ]
+}
