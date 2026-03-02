@@ -87,6 +87,7 @@ function formatTime(sec) {
 }
 
 function pct(n, d) { return d === 0 ? 0 : Math.round(n / d * 100); }
+function shuffle(arr) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
 /* ---------- Fingerprint (SHA-256) ---------- */
 async function fingerprint(q) {
@@ -394,6 +395,15 @@ async function startSession(mode = 'practice') {
   const questions = await selectQuestions();
   if (questions.length === 0) { toast('問題がありません。パックを追加してください。'); return; }
 
+  // Pre-shuffle match question right-side options so order isn't a hint
+  const shuffledRight = {};
+  questions.forEach((q, i) => {
+    const qData = q.data || q;
+    if (qData.type === 'match' && qData.right) {
+      shuffledRight[i] = shuffle(qData.right);
+    }
+  });
+
   state.session = {
     id: 'sess_' + Date.now(),
     mode,
@@ -402,6 +412,7 @@ async function startSession(mode = 'practice') {
     flags: new Set(),
     finished: false,
     graded: {},
+    shuffledRight,
     elapsed: 0,
     timeLimit: mode === 'exam' ? settings.timeLimit : 0,
     startedAt: Date.now()
@@ -1066,6 +1077,9 @@ function renderMatch(container, qData, qIndex) {
   const revealed = sess._revealed && sess._revealed.has(qIndex);
   const showResult = finished || revealed;
 
+  // Use shuffled right options to prevent order-based guessing
+  const rightOptions = (sess.shuffledRight && sess.shuffledRight[qIndex]) || qData.right;
+
   const area = el('div', { className: 'match-area' });
 
   // Use select-based matching for mobile
@@ -1092,7 +1106,7 @@ function renderMatch(container, qData, qIndex) {
       emptyOpt.value = '';
       emptyOpt.textContent = '-- 選択 --';
       sel.appendChild(emptyOpt);
-      qData.right.forEach(r => {
+      rightOptions.forEach(r => {
         const opt = document.createElement('option');
         opt.value = r;
         opt.textContent = r;
