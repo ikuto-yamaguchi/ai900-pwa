@@ -79,6 +79,8 @@ label{display:block;font-size:13px;color:var(--fg2);margin-bottom:4px;margin-top
 .order-item .order-btns{display:flex;flex-direction:column;gap:2px}
 .order-item .order-btns button{background:var(--bg3);border:none;color:var(--fg);border-radius:4px;width:36px;height:28px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .order-item .order-btns button:disabled{opacity:.25}
+.order-item.correct{border-left:3px solid var(--ok);background:rgba(76,175,80,.08)}
+.order-item.wrong{border-left:3px solid var(--err);background:rgba(244,67,54,.08)}
 /* ---- Hotarea ---- */
 .hotarea-grid{display:grid;gap:6px}
 .hotarea-cell{background:var(--bg);border:2px solid transparent;border-radius:var(--radius);padding:10px;text-align:center;cursor:pointer;font-size:14px;min-height:44px;display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s}

@@ -61,6 +61,8 @@ function el(tag, attrs, ...children) {
     else if (k === 'style' && typeof v === 'object') Object.assign(e.style, v);
     else if (k.startsWith('on')) e.addEventListener(k.slice(2).toLowerCase(), v);
     else if (k === 'html') e.innerHTML = v;
+    else if (k === 'disabled' || k === 'readonly' || k === 'checked') { if (v) e.setAttribute(k, ''); }
+    else if (v === false || v === null || v === undefined) { /* skip falsy attrs */ }
     else e.setAttribute(k, v);
   }
   for (const c of children) {
@@ -819,7 +821,17 @@ function renderSession(app) {
     el('span', { html: icons.flag }), el('span', null, 'フラグ')));
 
   if (!sess.finished) {
-    bar.appendChild(el('button', { onClick: () => { state.showExplanation = !state.showExplanation; render(); }, 'aria-label': '解説表示' },
+    bar.appendChild(el('button', { onClick: () => {
+      state.showExplanation = !state.showExplanation;
+      // Instant-grade current question when showing explanation
+      if (state.showExplanation) {
+        const correct = gradeAnswer(qItem, sess.answers[qIndex]);
+        sess.graded[qIndex] = correct;
+        sess._revealed = sess._revealed || new Set();
+        sess._revealed.add(qIndex);
+      }
+      render();
+    }, 'aria-label': '解説表示' },
       el('span', { html: icons.explain }), el('span', null, '解説')));
   } else {
     bar.appendChild(el('button', { onClick: () => showReviewMenu(), 'aria-label': '見直しメニュー' },
@@ -955,20 +967,24 @@ function setAnswer(qIndex, val) {
 
 function renderSingleMulti(container, qData, qIndex, isMulti) {
   const current = getAnswer(qIndex) || [];
-  const finished = state.session.finished;
+  const sess = state.session;
+  const finished = sess.finished;
+  const revealed = sess._revealed && sess._revealed.has(qIndex);
+  const showResult = finished || revealed;
+  const locked = finished || (revealed && state.showExplanation);
   const list = el('div', { className: 'choice-list' });
 
   qData.choices.forEach((choice, ci) => {
     const selected = current.includes(ci);
     let cls = 'choice-item';
     if (selected) cls += ' selected';
-    if (finished) {
+    if (showResult) {
       if (qData.answer.includes(ci)) cls += ' correct';
       else if (selected) cls += ' wrong';
     }
 
     const item = el('div', { className: cls, onClick: () => {
-      if (finished) return;
+      if (locked) return;
       let ans = [...(getAnswer(qIndex) || [])];
       if (isMulti) {
         if (ans.includes(ci)) ans = ans.filter(x => x !== ci);
@@ -977,8 +993,12 @@ function renderSingleMulti(container, qData, qIndex, isMulti) {
         ans = [ci];
       }
       setAnswer(qIndex, ans);
+      // Clear revealed state if user changes answer
+      if (sess._revealed) sess._revealed.delete(qIndex);
+      delete sess.graded[qIndex];
+      state.showExplanation = false;
       render();
-      if (!isMulti) triggerAutoNext(); // auto-next for single choice
+      if (!isMulti) triggerAutoNext();
     }},
       el('div', { className: 'indicator' + (isMulti ? ' check' : '') }),
       el('div', { className: 'choice-text' }, choice)
@@ -990,7 +1010,10 @@ function renderSingleMulti(container, qData, qIndex, isMulti) {
 
 function renderDropdown(container, qData, qIndex) {
   const current = getAnswer(qIndex) || qData.dropdowns.map(() => -1);
-  const finished = state.session.finished;
+  const sess = state.session;
+  const finished = sess.finished;
+  const revealed = sess._revealed && sess._revealed.has(qIndex);
+  const showResult = finished || revealed;
 
   // Split prompt by {{i}}
   let promptHtml = qData.prompt;
@@ -998,7 +1021,7 @@ function renderDropdown(container, qData, qIndex) {
     const placeholder = `{{${i}}}`;
     const selectId = `dd-${qIndex}-${i}`;
     let selectHtml;
-    if (finished) {
+    if (showResult) {
       const userVal = current[i];
       const correctVal = dd.answer;
       const isCorrect = userVal === correctVal;
@@ -1018,7 +1041,7 @@ function renderDropdown(container, qData, qIndex) {
   const promptEl = el('div', { className: 'q-prompt', html: promptHtml });
   container.appendChild(promptEl);
 
-  if (!finished) {
+  if (!showResult) {
     // Attach event listeners after render
     setTimeout(() => {
       qData.dropdowns.forEach((_, i) => {
@@ -1035,7 +1058,10 @@ function renderDropdown(container, qData, qIndex) {
 
 function renderMatch(container, qData, qIndex) {
   const current = getAnswer(qIndex) || {};
-  const finished = state.session.finished;
+  const sess = state.session;
+  const finished = sess.finished;
+  const revealed = sess._revealed && sess._revealed.has(qIndex);
+  const showResult = finished || revealed;
 
   const area = el('div', { className: 'match-area' });
 
@@ -1045,7 +1071,7 @@ function renderMatch(container, qData, qIndex) {
     const leftEl = el('div', { className: 'match-left' }, leftItem);
     const rightEl = el('div', { className: 'match-right' });
 
-    if (finished) {
+    if (showResult) {
       const userVal = current[leftItem];
       const correctVal = qData.answerMap[leftItem];
       const isCorrect = userVal === correctVal;
@@ -1088,13 +1114,16 @@ function renderMatch(container, qData, qIndex) {
 
 function renderOrder(container, qData, qIndex) {
   const current = getAnswer(qIndex) || qData.items.map((_, i) => i);
-  const finished = state.session.finished;
+  const sess = state.session;
+  const finished = sess.finished;
+  const revealed = sess._revealed && sess._revealed.has(qIndex);
+  const showResult = finished || revealed;
 
   const wrap = el('div');
   current.forEach((itemIdx, pos) => {
     const item = qData.items[itemIdx];
     let cls = 'order-item';
-    if (finished) {
+    if (showResult) {
       const correctAtPos = qData.answerOrder[pos];
       if (itemIdx === correctAtPos) cls += ' correct';
       else cls += ' wrong';
@@ -1105,7 +1134,7 @@ function renderOrder(container, qData, qIndex) {
       el('div', { className: 'order-text' }, item)
     );
 
-    if (!finished) {
+    if (!showResult) {
       const btns = el('div', { className: 'order-btns' },
         el('button', { disabled: pos === 0, onClick: () => moveOrder(qIndex, current, pos, -1), 'aria-label': '上へ移動' }, '\u25B2'),
         el('button', { disabled: pos === current.length - 1, onClick: () => moveOrder(qIndex, current, pos, 1), 'aria-label': '下へ移動' }, '\u25BC')
@@ -1115,7 +1144,7 @@ function renderOrder(container, qData, qIndex) {
     wrap.appendChild(row);
   });
 
-  if (finished) {
+  if (showResult) {
     const correctOrder = qData.answerOrder.map(i => qData.items[i]);
     wrap.appendChild(el('div', { className: 'text-muted mt-8' }, '正しい順序: ' + correctOrder.join(' → ')));
   }
@@ -1132,7 +1161,11 @@ function moveOrder(qIndex, current, pos, dir) {
 
 function renderHotarea(container, qData, qIndex) {
   const current = getAnswer(qIndex) || [];
-  const finished = state.session.finished;
+  const sess = state.session;
+  const finished = sess.finished;
+  const revealed = sess._revealed && sess._revealed.has(qIndex);
+  const showResult = finished || revealed;
+  const locked = finished || (revealed && state.showExplanation);
   const grid = qData.grid;
 
   const gridEl = el('div', {
@@ -1144,24 +1177,26 @@ function renderHotarea(container, qData, qIndex) {
     let cls = 'hotarea-cell';
     const selected = current.includes(ci);
     if (selected) cls += ' selected';
-    if (finished) {
-      if (qData.answer.includes(ci)) cls += selected ? ' correct' : '';
+    if (showResult) {
+      if (qData.answer.includes(ci)) cls += selected ? ' correct' : ' correct';
       else if (selected) cls += ' wrong';
-      if (qData.answer.includes(ci) && !selected) cls += ' correct'; // show missed correct
     }
 
     const cellEl = el('div', { className: cls, onClick: () => {
-      if (finished) return;
+      if (locked) return;
       let ans = [...(getAnswer(qIndex) || [])];
       if (ans.includes(ci)) ans = ans.filter(x => x !== ci);
       else ans.push(ci);
       setAnswer(qIndex, ans);
+      if (sess._revealed) sess._revealed.delete(qIndex);
+      delete sess.graded[qIndex];
+      state.showExplanation = false;
       render();
     }}, cell);
     gridEl.appendChild(cellEl);
   });
   container.appendChild(gridEl);
-  if (!finished) {
+  if (!locked) {
     container.appendChild(el('p', { className: 'text-muted mt-8' }, '正しいセルをタップして選択してください。'));
   }
 }
@@ -1299,11 +1334,12 @@ function renderSubQuestion(container, sq, parentQIndex, subIndex) {
 function renderExplanation(container, qData, qIndex) {
   if (qData.type === 'casestudy') return; // handled in casestudy renderer
 
-  const finished = state.session.finished;
-  const correct = finished ? state.session.graded[qIndex] : undefined;
+  const sess = state.session;
+  const graded = sess.graded[qIndex] !== undefined;
+  const correct = graded ? sess.graded[qIndex] : undefined;
 
   const expEl = el('div', { className: 'explanation' });
-  if (finished) {
+  if (graded) {
     expEl.appendChild(el('h4', { style: { color: correct ? 'var(--ok)' : 'var(--err)' } }, correct ? '正解!' : '不正解'));
   } else {
     expEl.appendChild(el('h4', null, '解説'));
