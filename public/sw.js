@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ai900-v1';
+const CACHE_NAME = 'ai900-v2';
 const APP_SHELL = [
   '/',
   '/index.html',
@@ -27,16 +27,14 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+  // Network-first: always try fresh content, fall back to cache offline
   e.respondWith(
-    caches.match(e.request).then(cached => {
-      const fetched = fetch(e.request).then(resp => {
-        if (resp && resp.ok) {
-          const clone = resp.clone();
-          caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
-        }
-        return resp;
-      }).catch(() => cached);
-      return cached || fetched;
-    })
+    fetch(e.request).then(resp => {
+      if (resp && resp.ok) {
+        const clone = resp.clone();
+        caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+      }
+      return resp;
+    }).catch(() => caches.match(e.request))
   );
 });

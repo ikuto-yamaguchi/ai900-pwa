@@ -110,15 +110,9 @@ label{display:block;font-size:13px;color:var(--fg2);margin-bottom:4px;margin-top
 .stat-row .value.mid{color:var(--warn)}
 .stat-row .value.bad{color:var(--err)}
 .tag-chip{display:inline-block;background:var(--bg3);color:var(--fg2);border-radius:12px;padding:3px 10px;font-size:12px;margin:2px}
-/* ---- Pack list ---- */
-.pack-item{display:flex;align-items:center;gap:var(--gap);padding:var(--gap);background:var(--bg);border-radius:var(--radius);margin-bottom:8px}
-.pack-item .pack-info{flex:1;min-width:0}
-.pack-item .pack-title{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pack-item .pack-meta{font-size:12px;color:var(--fg2)}
-.toggle{width:48px;height:28px;background:var(--bg3);border-radius:14px;border:none;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
-.toggle::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--fg2);transition:transform .2s,background .2s}
-.toggle.on{background:var(--accent)}
-.toggle.on::after{transform:translateX(20px);background:#fff}
+.domain-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{background:var(--bg3);color:var(--fg2);border:1px solid transparent;border-radius:16px;padding:6px 14px;font-size:13px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 /* ---- Flag indicator ---- */
 .flag-indicator{color:var(--warn);font-size:20px}
 .q-number{font-size:13px;color:var(--fg2);margin-bottom:4px}

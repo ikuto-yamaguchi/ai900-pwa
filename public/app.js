@@ -35,7 +35,8 @@ let state = {
   currentQ: 0,
   showExplanation: false,
   reviewMode: null,    // null | 'flagged' | 'wrong' | 'unanswered'
-  reviewIndices: null
+  reviewIndices: null,
+  domainFilter: null   // null | 'Workloads' | 'ML' | 'CV' | 'NLP' | 'GenAI'
 };
 
 /* ---------- Router ---------- */
@@ -88,6 +89,7 @@ function formatTime(sec) {
 
 function pct(n, d) { return d === 0 ? 0 : Math.round(n / d * 100); }
 function shuffle(arr) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function shuffleIndices(len) { return shuffle(Array.from({ length: len }, (_, i) => i)); }
 
 /* ---------- Fingerprint (SHA-256) ---------- */
 async function fingerprint(q) {
@@ -230,16 +232,18 @@ function pushRecentQids(qids) {
 }
 
 /* ---------- Question Selection Engine ---------- */
-async function selectQuestions() {
+async function selectQuestions(domainFilter = null) {
   const allQ = await IDB.getAllQuestions();
-  const packs = await IDB.getAllPacks();
-  const enabledPacks = new Set(packs.filter(p => p.enabled).map(p => p.id));
-  let pool = allQ.filter(q => enabledPacks.has(q.packId));
+  let pool = allQ;
+
+  // Apply domain filter
+  if (domainFilter) pool = pool.filter(q => q.domain === domainFilter);
 
   if (pool.length === 0) return [];
 
-  // Try AI-curated session first
-  try {
+  // Try AI-curated session first (skip if domain filter is active)
+  if (domainFilter) { /* skip curated for domain-specific */ }
+  else try {
     const res = await fetch('/api/next-session');
     const data = await res.json();
     if (data.ok && data.session && !data.session.consumed && data.session.questions) {
@@ -423,17 +427,49 @@ function startTimer() {
 function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
 
 /* ---------- Session Management ---------- */
-async function startSession(mode = 'practice') {
-  const questions = await selectQuestions();
-  if (questions.length === 0) { toast('問題がありません。パックを追加してください。'); return; }
+async function startSession(mode = 'practice', domainFilter = null) {
+  const questions = await selectQuestions(domainFilter);
+  if (questions.length === 0) { toast('問題がありません。'); return; }
 
-  // Pre-shuffle match question right-side options so order isn't a hint
-  const shuffledRight = {};
+  // Pre-compute shuffle mappings for ALL question types
+  // Each mapping stores original indices in display order.
+  // User answers always use original indices → grading unaffected.
+  const shuffles = {};
   questions.forEach((q, i) => {
-    const qData = q.data || q;
-    if (qData.type === 'match' && qData.right) {
-      shuffledRight[i] = shuffle(qData.right);
+    const d = q.data || q;
+    const s = {};
+    switch (d.type) {
+      case 'single':
+      case 'multi':
+        s.choices = shuffleIndices(d.choices.length);
+        break;
+      case 'dropdown':
+        s.dropdowns = d.dropdowns.map(dd => shuffleIndices(dd.options.length));
+        break;
+      case 'match':
+        s.left = shuffleIndices(d.left.length);
+        s.right = shuffle(d.right);
+        break;
+      case 'order':
+        s.init = shuffleIndices(d.items.length);
+        break;
+      case 'hotarea':
+        s.cells = shuffleIndices(d.grid.cells.length);
+        break;
+      case 'casestudy':
+        if (d.subQuestions) {
+          s.subs = {};
+          d.subQuestions.forEach(sq => {
+            if ((sq.type === 'single' || sq.type === 'multi') && sq.choices) {
+              s.subs[sq.id] = { choices: shuffleIndices(sq.choices.length) };
+            } else if (sq.type === 'dropdown' && sq.dropdowns) {
+              s.subs[sq.id] = { dropdowns: sq.dropdowns.map(dd => shuffleIndices(dd.options.length)) };
+            }
+          });
+        }
+        break;
     }
+    shuffles[i] = s;
   });
 
   state.session = {
@@ -444,7 +480,7 @@ async function startSession(mode = 'practice') {
     flags: new Set(),
     finished: false,
     graded: {},
-    shuffledRight,
+    shuffles,
     elapsed: 0,
     timeLimit: mode === 'exam' ? settings.timeLimit : 0,
     startedAt: Date.now()
@@ -727,7 +763,6 @@ function render() {
     case 'home': renderHome(app); break;
     case 'session': renderSession(app); break;
     case 'result': renderResult(app); break;
-    case 'packs': renderPacks(app); break;
     case 'stats': renderStats(app); break;
     case 'settings': renderSettings(app); break;
     default: renderHome(app);
@@ -738,7 +773,6 @@ function render() {
 const icons = {
   home: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>',
   play: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
-  pack: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>',
   chart: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>',
   gear: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58-1.97-3.4-2.39.96c-.5-.38-1.03-.7-1.62-.94L14.8 4h-3.6l-.38 2.1c-.59.24-1.13.56-1.62.94L6.8 6.08l-1.97 3.4 2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58 1.97 3.4 2.39-.96c.5.38 1.03.7 1.62.94L9.2 20h3.6l.38-2.1c.59-.24 1.13-.56 1.62-.94l2.39.96 1.97-3.4-2.03-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>',
   prev: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>',
@@ -756,20 +790,29 @@ function renderHome(app) {
   );
   const page = el('div', { className: 'page' });
 
+  // Domain filter
+  const domainChips = el('div', { className: 'domain-chips' },
+    el('button', { className: `chip ${!state.domainFilter ? 'active' : ''}`, onClick: () => { state.domainFilter = null; render(); } }, '全分野'),
+    ...DOMAINS.map(d => el('button', {
+      className: `chip ${state.domainFilter === d ? 'active' : ''}`,
+      onClick: () => { state.domainFilter = d; render(); }
+    }, DOMAIN_LABELS[d].split('/')[0]))
+  );
+  page.appendChild(domainChips);
+
   // Start buttons
   const startCard = el('div', { className: 'card' },
     el('div', { className: 'grid-2' },
-      el('button', { className: 'btn btn-primary btn-block', onClick: () => startSession('practice'), 'aria-label': '練習モード開始' }, '練習モード'),
-      el('button', { className: 'btn btn-warn btn-block', onClick: () => startSession('exam'), 'aria-label': '模試モード開始' }, `模試 (${settings.timeLimit}分)`)
+      el('button', { className: 'btn btn-primary btn-block', onClick: () => startSession('practice', state.domainFilter), 'aria-label': '練習モード開始' }, '練習モード'),
+      el('button', { className: 'btn btn-warn btn-block', onClick: () => startSession('exam', state.domainFilter), 'aria-label': '模試モード開始' }, `模試 (${settings.timeLimit}分)`)
     )
   );
   page.appendChild(startCard);
 
   // Pool status + coach message (loaded async)
   IDB.getAllQuestions().then(async qs => {
-    const packs = await IDB.getAllPacks();
-    const enabledIds = new Set(packs.filter(p => p.enabled).map(p => p.id));
-    const activeQ = qs.filter(q => enabledIds.has(q.packId));
+    let activeQ = qs;
+    if (state.domainFilter) activeQ = activeQ.filter(q => q.domain === state.domainFilter);
     const allHistory = await IDB.getAllHistory();
     const seenQids = new Set(allHistory.map(h => h.qid));
     const unseenCount = activeQ.filter(q => !seenQids.has(q.qid)).length;
@@ -978,10 +1021,41 @@ function toggleFlag(qIndex) {
   render();
 }
 
-function confirmLeave() {
+async function confirmLeave() {
   if (state.session && !state.session.finished) {
-    if (confirm('セッションを中断しますか？（進捗は保存されません）')) {
+    const answered = state.session.questions.map((_, i) => i).filter(i => state.session.answers[i] !== undefined);
+    const msg = answered.length > 0
+      ? `セッションを中断しますか？\n解答済み ${answered.length}問 は記録されます。`
+      : 'セッションを中断しますか？';
+    if (confirm(msg)) {
       stopTimer();
+      const sess = state.session;
+      // Grade and save answered questions
+      if (answered.length > 0) {
+        for (const i of answered) {
+          const q = sess.questions[i];
+          const correct = gradeAnswer(q, sess.answers[i]);
+          sess.graded[i] = correct;
+          await IDB.addHistory({
+            qid: q.qid, domain: q.domain, type: q.type,
+            tags: q.tags || [], correct, ts: Date.now()
+          });
+        }
+        pushRecentQids(answered.map(i => sess.questions[i].qid));
+        await IDB.saveSession({
+          id: sess.id, mode: sess.mode,
+          questionCount: answered.length,
+          correctCount: Object.values(sess.graded).filter(Boolean).length,
+          elapsed: sess.elapsed,
+          startedAt: sess.startedAt, finishedAt: Date.now(),
+          partial: true,
+          domainStats: computeDomainStats(),
+          typeStats: computeTypeStats(),
+          tagStats: computeTagStats()
+        });
+        backupProgress().catch(() => {});
+        toast(`${answered.length}問の解答を保存しました`);
+      }
       state.session = null;
       navigate('home');
     }
@@ -1048,12 +1122,16 @@ function renderSingleMulti(container, qData, qIndex, isMulti) {
   const locked = finished || (revealed && state.showExplanation);
   const list = el('div', { className: 'choice-list' });
 
-  qData.choices.forEach((choice, ci) => {
-    const selected = current.includes(ci);
+  const shuf = sess.shuffles && sess.shuffles[qIndex];
+  const choiceOrder = (shuf && shuf.choices) || qData.choices.map((_, i) => i);
+
+  choiceOrder.forEach(origIdx => {
+    const choice = qData.choices[origIdx];
+    const selected = current.includes(origIdx);
     let cls = 'choice-item';
     if (selected) cls += ' selected';
     if (showResult) {
-      if (qData.answer.includes(ci)) cls += ' correct';
+      if (qData.answer.includes(origIdx)) cls += ' correct';
       else if (selected) cls += ' wrong';
     }
 
@@ -1061,10 +1139,10 @@ function renderSingleMulti(container, qData, qIndex, isMulti) {
       if (locked) return;
       let ans = [...(getAnswer(qIndex) || [])];
       if (isMulti) {
-        if (ans.includes(ci)) ans = ans.filter(x => x !== ci);
-        else ans.push(ci);
+        if (ans.includes(origIdx)) ans = ans.filter(x => x !== origIdx);
+        else ans.push(origIdx);
       } else {
-        ans = [ci];
+        ans = [origIdx];
       }
       setAnswer(qIndex, ans);
       // Clear revealed state if user changes answer
@@ -1089,6 +1167,9 @@ function renderDropdown(container, qData, qIndex) {
   const revealed = sess._revealed && sess._revealed.has(qIndex);
   const showResult = finished || revealed;
 
+  const shuf = sess.shuffles && sess.shuffles[qIndex];
+  const ddShuffles = (shuf && shuf.dropdowns) || null;
+
   // Split prompt by {{i}}
   let promptHtml = qData.prompt;
   qData.dropdowns.forEach((dd, i) => {
@@ -1106,7 +1187,8 @@ function renderDropdown(container, qData, qIndex) {
         selectHtml += ` <span style="color:var(--ok);font-size:13px">[正解: ${dd.options[correctVal]}]</span>`;
       }
     } else {
-      const opts = dd.options.map((o, oi) => `<option value="${oi}" ${current[i] === oi ? 'selected' : ''}>${o}</option>`).join('');
+      const optOrder = (ddShuffles && ddShuffles[i]) || dd.options.map((_, oi) => oi);
+      const opts = optOrder.map(origOi => `<option value="${origOi}" ${current[i] === origOi ? 'selected' : ''}>${dd.options[origOi]}</option>`).join('');
       selectHtml = `<span class="dropdown-blank"><select id="${selectId}" data-dd="${i}"><option value="-1">-- 選択 --</option>${opts}</select></span>`;
     }
     promptHtml = promptHtml.replace(placeholder, selectHtml);
@@ -1137,13 +1219,16 @@ function renderMatch(container, qData, qIndex) {
   const revealed = sess._revealed && sess._revealed.has(qIndex);
   const showResult = finished || revealed;
 
-  // Use shuffled right options to prevent order-based guessing
-  const rightOptions = (sess.shuffledRight && sess.shuffledRight[qIndex]) || qData.right;
+  // Use shuffled orders from session.shuffles
+  const shuf = sess.shuffles && sess.shuffles[qIndex];
+  const leftOrder = (shuf && shuf.left) || qData.left.map((_, i) => i);
+  const rightOptions = (shuf && shuf.right) || qData.right;
 
   const area = el('div', { className: 'match-area' });
 
   // Use select-based matching for mobile
-  qData.left.forEach(leftItem => {
+  leftOrder.forEach(origLeftIdx => {
+    const leftItem = qData.left[origLeftIdx];
     const row = el('div', { className: 'match-row' });
     const leftEl = el('div', { className: 'match-left' }, leftItem);
     const rightEl = el('div', { className: 'match-right' });
@@ -1190,7 +1275,8 @@ function renderMatch(container, qData, qIndex) {
 }
 
 function renderOrder(container, qData, qIndex) {
-  const current = getAnswer(qIndex) || qData.items.map((_, i) => i);
+  const shuf = state.session.shuffles && state.session.shuffles[qIndex];
+  const current = getAnswer(qIndex) || (shuf && shuf.init) || qData.items.map((_, i) => i);
   const sess = state.session;
   const finished = sess.finished;
   const revealed = sess._revealed && sess._revealed.has(qIndex);
@@ -1245,25 +1331,29 @@ function renderHotarea(container, qData, qIndex) {
   const locked = finished || (revealed && state.showExplanation);
   const grid = qData.grid;
 
+  const shuf = sess.shuffles && sess.shuffles[qIndex];
+  const cellOrder = (shuf && shuf.cells) || grid.cells.map((_, i) => i);
+
   const gridEl = el('div', {
     className: 'hotarea-grid',
     style: { gridTemplateColumns: `repeat(${grid.cols}, 1fr)` }
   });
 
-  grid.cells.forEach((cell, ci) => {
+  cellOrder.forEach(origCi => {
+    const cell = grid.cells[origCi];
     let cls = 'hotarea-cell';
-    const selected = current.includes(ci);
+    const selected = current.includes(origCi);
     if (selected) cls += ' selected';
     if (showResult) {
-      if (qData.answer.includes(ci)) cls += selected ? ' correct' : ' correct';
+      if (qData.answer.includes(origCi)) cls += ' correct';
       else if (selected) cls += ' wrong';
     }
 
     const cellEl = el('div', { className: cls, onClick: () => {
       if (locked) return;
       let ans = [...(getAnswer(qIndex) || [])];
-      if (ans.includes(ci)) ans = ans.filter(x => x !== ci);
-      else ans.push(ci);
+      if (ans.includes(origCi)) ans = ans.filter(x => x !== origCi);
+      else ans.push(origCi);
       setAnswer(qIndex, ans);
       if (sess._revealed) sess._revealed.delete(qIndex);
       delete sess.graded[qIndex];
@@ -1337,18 +1427,23 @@ function renderSubQuestion(container, sq, parentQIndex, subIndex, showResult) {
   const parentAnswer = getAnswer(parentQIndex) || {};
   const current = parentAnswer[sq.id];
 
+  const parentShuf = sess.shuffles && sess.shuffles[parentQIndex];
+  const subShuf = parentShuf && parentShuf.subs && parentShuf.subs[sq.id];
+
   switch (sq.type) {
     case 'single':
     case 'multi': {
       const isMulti = sq.type === 'multi';
       const cur = current || [];
       const list = el('div', { className: 'choice-list' });
-      sq.choices.forEach((choice, ci) => {
-        const selected = cur.includes(ci);
+      const choiceOrder = (subShuf && subShuf.choices) || sq.choices.map((_, i) => i);
+      choiceOrder.forEach(origIdx => {
+        const choice = sq.choices[origIdx];
+        const selected = cur.includes(origIdx);
         let cls = 'choice-item';
         if (selected) cls += ' selected';
         if (showResult) {
-          if (sq.answer.includes(ci)) cls += ' correct';
+          if (sq.answer.includes(origIdx)) cls += ' correct';
           else if (selected) cls += ' wrong';
         }
         list.appendChild(el('div', { className: cls, onClick: () => {
@@ -1356,10 +1451,10 @@ function renderSubQuestion(container, sq, parentQIndex, subIndex, showResult) {
           const ans = { ...(getAnswer(parentQIndex) || {}) };
           let arr = [...(ans[sq.id] || [])];
           if (isMulti) {
-            if (arr.includes(ci)) arr = arr.filter(x => x !== ci);
-            else arr.push(ci);
+            if (arr.includes(origIdx)) arr = arr.filter(x => x !== origIdx);
+            else arr.push(origIdx);
           } else {
-            arr = [ci];
+            arr = [origIdx];
           }
           ans[sq.id] = arr;
           setAnswer(parentQIndex, ans);
@@ -1378,6 +1473,7 @@ function renderSubQuestion(container, sq, parentQIndex, subIndex, showResult) {
     }
     case 'dropdown': {
       const cur = current || sq.dropdowns.map(() => -1);
+      const ddShuffles = (subShuf && subShuf.dropdowns) || null;
       let html = sq.prompt;
       sq.dropdowns.forEach((dd, i) => {
         const selectId = `csdd-${parentQIndex}-${sq.id}-${i}`;
@@ -1391,7 +1487,8 @@ function renderSubQuestion(container, sq, parentQIndex, subIndex, showResult) {
           if (!ok) h += ` <span style="color:var(--ok);font-size:12px">[正解: ${dd.options[cv]}]</span>`;
           html = html.replace(`{{${i}}}`, h);
         } else {
-          const opts = dd.options.map((o, oi) => `<option value="${oi}" ${cur[i] === oi ? 'selected' : ''}>${o}</option>`).join('');
+          const optOrder = (ddShuffles && ddShuffles[i]) || dd.options.map((_, oi) => oi);
+          const opts = optOrder.map(origOi => `<option value="${origOi}" ${cur[i] === origOi ? 'selected' : ''}>${dd.options[origOi]}</option>`).join('');
           html = html.replace(`{{${i}}}`, `<span class="dropdown-blank"><select id="${selectId}"><option value="-1">-- 選択 --</option>${opts}</select></span>`);
         }
       });
@@ -1533,80 +1630,6 @@ function renderResult(app) {
   app.appendChild(page);
 }
 
-/* ---------- Packs Page ---------- */
-function renderPacks(app) {
-  const header = el('div', { className: 'header' },
-    el('h1', null, 'パック管理')
-  );
-  const page = el('div', { className: 'page' });
-
-  page.appendChild(el('button', { className: 'btn btn-block mb-8', onClick: checkUpdates }, '新しいパックを確認'));
-
-  // Pack list
-  IDB.getAllPacks().then(packs => {
-    if (packs.length === 0) {
-      page.appendChild(el('p', { className: 'text-muted text-center mt-16' }, 'パックがありません。'));
-      return;
-    }
-    packs.forEach(p => {
-      const item = el('div', { className: 'pack-item' },
-        el('div', { className: 'pack-info' },
-          el('div', { className: 'pack-title' }, p.title),
-          el('div', { className: 'pack-meta' }, `${p.questionCount}問`)
-        ),
-        el('button', {
-          className: `toggle ${p.enabled ? 'on' : ''}`,
-          onClick: async () => { p.enabled = !p.enabled; await IDB.savePack(p); render(); },
-          'aria-label': p.enabled ? '無効にする' : '有効にする'
-        })
-      );
-      page.appendChild(item);
-    });
-  });
-
-  app.appendChild(header);
-  app.appendChild(page);
-  app.appendChild(renderBottomNav('packs'));
-}
-
-async function checkUpdates() {
-  toast('更新チェック中...');
-  try {
-    const repos = await IDB.getAllRepos();
-    const urls = repos.map(r => r.url);
-    if (urls.length === 0) urls.push('/packs/index.json'); // default
-
-    let totalUpdated = 0;
-    for (const url of urls) {
-      try {
-        const resp = await fetch(url, { cache: 'no-store' });
-        if (!resp.ok) continue;
-        const idx = await resp.json();
-        if (idx.schema !== 'ai900-pack-index-v1') continue;
-
-        for (const entry of idx.packs) {
-          const existing = await IDB.getPack(entry.id);
-          if (existing && existing.version >= entry.version) continue;
-
-          const packUrl = new URL(entry.url, url).href;
-          const packResp = await fetch(packUrl);
-          if (!packResp.ok) continue;
-          const packJson = await packResp.json();
-          const result = await importPack(packJson);
-          totalUpdated++;
-          console.log(`Updated pack ${entry.id}:`, result);
-        }
-      } catch (e) { console.warn('Repo fetch error:', url, e); }
-    }
-    toast(totalUpdated > 0 ? `${totalUpdated}パック更新しました` : '全て最新です');
-    render();
-  } catch (e) {
-    toast('更新チェックに失敗しました');
-    console.error(e);
-  }
-}
-
-/* ---------- Import Page ---------- */
 /* ---------- Stats Page ---------- */
 function renderStats(app) {
   const header = el('div', { className: 'header' }, el('h1', null, '統計'));
@@ -1742,7 +1765,6 @@ function saveSettingsUI() {
 function renderBottomNav(active) {
   return el('div', { className: 'bottom-bar' },
     navBtn('home', 'ホーム', icons.home, active === 'home'),
-    navBtn('packs', 'パック', icons.pack, active === 'packs'),
     navBtn('stats', '統計', icons.chart, active === 'stats'),
     navBtn('settings', '設定', icons.gear, active === 'settings')
   );
@@ -1763,28 +1785,29 @@ async function init() {
     await restoreProgress();
   }
 
-  // Check if base pack needs loading
-  const packs = await IDB.getAllPacks();
-  if (packs.length === 0) {
-    toast('初期パックを読み込み中...');
-    try {
-      // Try from packs/index.json first
-      const idxResp = await fetch('/packs/index.json');
-      if (idxResp.ok) {
-        const idx = await idxResp.json();
-        // Save as default repo
+  // Check for new packs on every launch (auto-import missing packs)
+  try {
+    const idxResp = await fetch('/packs/index.json');
+    if (idxResp.ok) {
+      const idx = await idxResp.json();
+      const packs = await IDB.getAllPacks();
+      const installedIds = new Set(packs.map(p => p.id));
+      const newPacks = idx.packs.filter(e => !installedIds.has(e.id));
+      if (newPacks.length > 0) {
+        if (packs.length === 0) toast('初期パックを読み込み中...');
+        else toast(`新しいパック ${newPacks.length}件 を追加中...`);
         await IDB.saveRepo({ url: '/packs/index.json', addedAt: Date.now() });
-        for (const entry of idx.packs) {
+        for (const entry of newPacks) {
           const packResp = await fetch(entry.url);
           if (packResp.ok) {
             const packJson = await packResp.json();
             const result = await importPack(packJson);
-            console.log('Loaded base pack:', entry.id, result);
+            console.log('Loaded pack:', entry.id, result);
           }
         }
       }
-    } catch (e) { console.error('Failed to load base packs:', e); }
-  }
+    }
+  } catch (e) { console.error('Failed to check packs:', e); }
 
   navigate(location.hash.slice(1) || 'home');
 }

@@ -101,7 +101,8 @@ test('解説 button shows explanation with instant grading', async ({ page }) =>
   // Explanation should appear with grading
   await expect(page.locator('.explanation')).toBeVisible({ timeout: 3000 });
   const expText = await page.locator('.explanation h4').textContent();
-  expect(expText === '正解!' || expText === '不正解').toBeTruthy();
+  // Casestudy shows "設問1 正解!" format, regular shows "正解!" or "不正解"
+  expect(expText.includes('正解') || expText.includes('不正解')).toBeTruthy();
 });
 
 test('Flag button toggles', async ({ page }) => {
@@ -260,13 +261,86 @@ test('Hotarea: cells respond to tap', async ({ page }) => {
   await expect(cell).toHaveClass(/selected/);
 });
 
+test('All question types have shuffle data in session', async ({ page }) => {
+  await startPractice(page);
+
+  // Read shuffle state from browser context
+  const info = await page.evaluate(() => {
+    const sess = state.session;
+    if (!sess || !sess.shuffles) return { error: 'no shuffles' };
+    const result = {};
+    sess.questions.forEach((q, i) => {
+      const d = q.data || q;
+      const s = sess.shuffles[i];
+      if (!result[d.type]) result[d.type] = [];
+      result[d.type].push({
+        qIndex: i,
+        keys: s ? Object.keys(s) : [],
+        // For match: check left is array of indices, right is array of strings
+        leftLen: s && s.left ? s.left.length : 0,
+        rightLen: s && s.right ? s.right.length : 0,
+        choicesLen: s && s.choices ? s.choices.length : 0,
+        initLen: s && s.init ? s.init.length : 0,
+        cellsLen: s && s.cells ? s.cells.length : 0,
+        hasSubs: s && s.subs ? Object.keys(s.subs).length : 0,
+        ddLen: s && s.dropdowns ? s.dropdowns.length : 0,
+      });
+    });
+    return result;
+  });
+
+  expect(info.error).toBeUndefined();
+
+  // Verify each question type has correct shuffle fields
+  const checks = {
+    single: q => q.choicesLen > 0,
+    multi: q => q.choicesLen > 0,
+    dropdown: q => q.ddLen > 0,
+    match: q => q.leftLen > 0 && q.rightLen > 0,
+    order: q => q.initLen > 0,
+    hotarea: q => q.cellsLen > 0,
+  };
+
+  for (const [type, check] of Object.entries(checks)) {
+    if (info[type]) {
+      for (const q of info[type]) {
+        expect(check(q), `${type} q${q.qIndex} missing shuffle data (keys: ${q.keys})`).toBe(true);
+      }
+    }
+  }
+
+  // Extra: verify match shuffle data is actual arrays with correct values
+  if (info.match) {
+    for (const q of info.match) {
+      expect(q.leftLen).toBeGreaterThanOrEqual(2);
+      expect(q.rightLen).toBeGreaterThanOrEqual(2);
+    }
+  }
+});
+
+test('Match question left items are shuffled in DOM', async ({ page }) => {
+  // Run 5 sessions and check if match left items ever appear in different order
+  const orders = [];
+  for (let attempt = 0; attempt < 5; attempt++) {
+    await page.goto('/');
+    await page.waitForSelector('.btn-primary');
+    await page.locator('button:has-text("練習モード")').tap();
+    await page.waitForSelector('.session-bar', { timeout: 10000 });
+
+    const found = await navigateToType(page, 'match');
+    if (!found) { test.skip(); return; }
+
+    const leftTexts = await page.locator('.match-left').allTextContents();
+    orders.push(leftTexts.join('|'));
+  }
+  // With 5 attempts and 4 items (24 permutations), probability of ALL same = (1/24)^4 ≈ 0.0003%
+  const unique = new Set(orders);
+  expect(unique.size, `All 5 sessions had same match order: ${orders[0]}`).toBeGreaterThan(1);
+});
+
 test('Bottom nav tabs work', async ({ page }) => {
   await page.goto('/');
   await page.waitForSelector('.bottom-bar');
-
-  await page.locator('.bottom-bar button:has-text("パック")').tap();
-  await page.waitForTimeout(300);
-  await expect(page.locator('.header h1')).toHaveText('パック管理');
 
   await page.locator('.bottom-bar button:has-text("統計")').tap();
   await page.waitForTimeout(300);
