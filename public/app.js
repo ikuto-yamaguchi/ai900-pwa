@@ -238,15 +238,18 @@ async function selectQuestions() {
 
   if (pool.length === 0) return [];
 
+  // Build set of ALL question IDs the user has ever answered (not just recent)
+  const allHistory = await IDB.getAllHistory();
+  const everSeenQids = new Set(allHistory.map(h => h.qid));
   const recentSet = new Set(getRecentQids());
-  const history = await IDB.getRecentHistory(settings.weaknessDays);
 
-  // Compute weakness
+  // Weakness from recent history
+  const recentHistory = await IDB.getRecentHistory(settings.weaknessDays);
   const domainStats = {}, typeStats = {}, tagStats = {};
   for (const d of DOMAINS) domainStats[d] = { correct: 0, total: 0 };
   for (const t of TYPES) typeStats[t] = { correct: 0, total: 0 };
 
-  for (const h of history) {
+  for (const h of recentHistory) {
     if (domainStats[h.domain]) { domainStats[h.domain].total++; if (h.correct) domainStats[h.domain].correct++; }
     if (typeStats[h.type]) { typeStats[h.type].total++; if (h.correct) typeStats[h.type].correct++; }
     if (h.tags) for (const tag of h.tags) {
@@ -261,6 +264,11 @@ async function selectQuestions() {
     return Math.min(settings.weaknessBoostMax, (1 - rate) * 0.5);
   }
 
+  // Separate pool into unseen and seen
+  const unseenPool = pool.filter(q => !everSeenQids.has(q.qid));
+  const seenPool = pool.filter(q => everSeenQids.has(q.qid));
+  console.log(`Question pool: ${unseenPool.length} unseen / ${seenPool.length} seen / ${pool.length} total`);
+
   // Score each question
   function scoreQ(q) {
     let s = 1;
@@ -268,7 +276,9 @@ async function selectQuestions() {
     s *= (1 + weakness(typeStats[q.type]));
     const topTag = (q.tags || [])[0];
     if (topTag && tagStats[topTag]) s *= (1 + weakness(tagStats[topTag]));
-    if (recentSet.has(q.qid)) s *= 0.01; // heavily penalize recent
+    // Strongly prefer unseen questions, then penalize very recent ones
+    if (!everSeenQids.has(q.qid)) s *= 5;
+    else if (recentSet.has(q.qid)) s *= 0.01;
     return s + Math.random() * 0.3;
   }
 
