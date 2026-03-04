@@ -1,0 +1,528 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.auto.20260305003041",
+    "version": "2026-03-05",
+    "title": "自動補充パック (15問)",
+    "description": "Claude Code自動生成",
+    "language": "ja-JP",
+    "createdAt": "2026-03-05T00:30:41+09:00",
+    "domains": [
+      "Workloads",
+      "ML",
+      "CV",
+      "NLP",
+      "GenAI"
+    ]
+  },
+  "questions": [
+    {
+      "id": "AG-6177",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learningでモデルをトレーニングした後、そのモデルをDockerコンテナとしてパッケージ化してデプロイする際に使用されるサービスはどれですか。",
+      "choices": [
+        "Azure Blob Storage",
+        "Azure Container Instances（ACI）",
+        "Azure Event Grid",
+        "Azure Logic Apps"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "Azure Container Instances（ACI）は、トレーニング済みモデルをDockerコンテナとしてデプロイするために使用されます。開発・テスト用の軽量なリアルタイム推論エンドポイントとして適しています。本番環境ではAzure Kubernetes Service（AKS）が推奨されます。",
+      "tags": [
+        "container",
+        "model-export",
+        "compute-options"
+      ],
+      "sources": [
+        {
+          "title": "Azure Machine Learning でのモデルのデプロイ",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-endpoints"
+        }
+      ]
+    },
+    {
+      "id": "AG-6178",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "混同行列（Confusion Matrix）において、実際には陽性であるデータを陰性と誤って予測した場合、これは何と呼ばれますか。",
+      "choices": [
+        "真陽性（True Positive）",
+        "偽陽性（False Positive）",
+        "偽陰性（False Negative）",
+        "真陰性（True Negative）"
+      ],
+      "answer": [
+        2
+      ],
+      "explanation": "偽陰性（False Negative）は、実際に陽性であるサンプルをモデルが陰性と誤って分類した場合を指します。医療診断では、病気の患者を健康と判定してしまう危険なケースに該当します。",
+      "tags": [
+        "confusion-matrix",
+        "model-evaluation"
+      ],
+      "sources": [
+        {
+          "title": "Azure Machine Learning のモデル評価メトリック",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "AG-6179",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 3,
+      "prompt": "二項分類モデルの性能を評価する際、AUC-ROC曲線のAUC値が0.5であった場合、これは何を意味しますか。",
+      "choices": [
+        "モデルが完璧に分類できている",
+        "モデルがランダムな予測と同等の性能である",
+        "モデルが常に陽性と予測している",
+        "モデルが常に陰性と予測している"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "AUC（Area Under the Curve）値が0.5の場合、モデルの予測能力はランダムな推測と変わりません。AUCが1.0に近いほど良い分類性能を示し、0.5以下はモデルに改善の余地があることを意味します。",
+      "tags": [
+        "auc-roc",
+        "model-evaluation"
+      ],
+      "sources": [
+        {
+          "title": "AUC-ROC メトリック",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "AG-6180",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "データセットに含まれる特徴量が非常に多く、モデルのトレーニング時間が長くなっている場合、最も適切な対処法はどれですか。",
+      "choices": [
+        "トレーニングデータの行数を増やす",
+        "次元削減（Dimensionality Reduction）を適用する",
+        "学習率を上げる",
+        "バッチサイズを1にする"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "次元削減は、特徴量の数を減らしつつ重要な情報を保持する手法です。PCA（主成分分析）などの技術により、計算コストを削減しモデルの過学習を防ぐ効果もあります。",
+      "tags": [
+        "dimensionality-reduction",
+        "feature-engineering"
+      ],
+      "sources": [
+        {
+          "title": "Azure Machine Learning の特徴エンジニアリング",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "AG-6181",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "特徴エンジニアリングにおいて、カテゴリ変数（例：色＝赤・青・緑）を機械学習モデルが扱える形式に変換する手法として最も一般的なものはどれですか。",
+      "choices": [
+        "正規化（Normalization）",
+        "ワンホットエンコーディング（One-Hot Encoding）",
+        "主成分分析（PCA）",
+        "交差検証（Cross-Validation）"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "ワンホットエンコーディングは、カテゴリ変数を0と1のバイナリベクトルに変換する手法です。各カテゴリ値に対応する列を作成し、該当する場合は1、それ以外は0とします。多くの機械学習アルゴリズムは数値入力を要求するため、この変換が必要です。",
+      "tags": [
+        "feature-engineering",
+        "data-preprocessing"
+      ],
+      "sources": [
+        {
+          "title": "データ変換と特徴エンジニアリング",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "AG-6182",
+      "domain": "Workloads",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure AIサービスを使用する際、責任あるAIの「包括性（Inclusiveness）」の原則を実践するための取り組みとして最も適切なものはどれですか。",
+      "choices": [
+        "モデルの予測結果を暗号化して保存する",
+        "視覚障害のあるユーザーでも利用できるようアクセシビリティ機能を実装する",
+        "モデルのトレーニングに使用したデータセットを一般公開する",
+        "AIの判断にヒューマン・イン・ザ・ループを導入する"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "包括性の原則は、AIシステムがあらゆる人々にとってアクセスしやすく利用可能であることを求めます。視覚障害者向けのアクセシビリティ機能の実装は、この原則の代表的な実践例です。",
+      "tags": [
+        "inclusiveness",
+        "responsible-ai"
+      ],
+      "sources": [
+        {
+          "title": "Microsoft の責任ある AI の原則",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai"
+        }
+      ]
+    },
+    {
+      "id": "AG-6183",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "混同行列（Confusion Matrix）から直接読み取れる値をすべて選んでください。",
+      "choices": [
+        "真陽性（TP）の件数",
+        "偽陽性（FP）の件数",
+        "AUC-ROC値",
+        "偽陰性（FN）の件数",
+        "学習率"
+      ],
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "混同行列は、真陽性（TP）、偽陽性（FP）、偽陰性（FN）、真陰性（TN）の4つの値を直接表示します。AUC-ROC値や学習率は混同行列からは直接読み取れません。AUC-ROCは閾値を変化させたときのTPR-FPR曲線の面積です。",
+      "tags": [
+        "confusion-matrix",
+        "model-evaluation"
+      ],
+      "sources": [
+        {
+          "title": "分類メトリックの理解",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "AG-6184",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "クラス不均衡（Class Imbalance）問題に対処するための有効な手法をすべて選んでください。",
+      "choices": [
+        "少数クラスのオーバーサンプリング（SMOTE等）",
+        "多数クラスのアンダーサンプリング",
+        "特徴量の正規化",
+        "クラスの重み付け（Class Weighting）",
+        "学習率の増加"
+      ],
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "クラス不均衡への対処法として、少数クラスのオーバーサンプリング（SMOTE等で合成データ生成）、多数クラスのアンダーサンプリング（データ削減）、損失関数でのクラス重み付けが有効です。特徴量の正規化や学習率の変更はクラス不均衡の直接的な対処法ではありません。",
+      "tags": [
+        "class-imbalance",
+        "data-preprocessing"
+      ],
+      "sources": [
+        {
+          "title": "自動 ML のクラス不均衡データの処理",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "AG-6185",
+      "domain": "CV",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure AI Vision（旧Computer Vision）のOCR機能で実現できるシナリオをすべて選んでください。",
+      "choices": [
+        "スキャンした請求書からテキストを抽出する",
+        "手書きのメモを文字起こしする",
+        "画像内の人物の感情を分析する",
+        "車のナンバープレートの文字を読み取る"
+      ],
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Azure AI VisionのOCR機能は、印刷テキストと手書きテキストの両方を認識できます。請求書のテキスト抽出、手書きメモの文字起こし、ナンバープレートの読み取りはすべてOCRのユースケースです。感情分析はFace APIの機能です。",
+      "tags": [
+        "ocr",
+        "azure-ai-vision"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Vision の OCR",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-ocr"
+        }
+      ]
+    },
+    {
+      "id": "AG-6186",
+      "domain": "NLP",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure AI Languageにおいて、テキストから人名・地名・組織名などの固有表現を抽出する機能は {{0}} であり、テキストが肯定的か否定的かを判定する機能は {{1}} です。",
+      "dropdowns": [
+        {
+          "options": [
+            "キーフレーズ抽出",
+            "固有表現認識（NER）",
+            "言語検出"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "感情分析（Sentiment Analysis）",
+            "テキスト要約",
+            "エンティティリンク"
+          ],
+          "answer": 0
+        }
+      ],
+      "explanation": "固有表現認識（Named Entity Recognition / NER）は、テキストから人名、地名、組織名などのエンティティを検出・分類します。感情分析（Sentiment Analysis）は、テキストの全体的なトーンが肯定的、否定的、または中立的かを判定します。",
+      "tags": [
+        "ner",
+        "sentiment-analysis",
+        "azure-ai-language"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Language の機能",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/language-service/overview"
+        }
+      ]
+    },
+    {
+      "id": "AG-6187",
+      "domain": "GenAI",
+      "type": "dropdown",
+      "difficulty": 2,
+      "prompt": "Azure OpenAI Serviceにおいて、モデルが生成する応答のランダム性を制御するパラメーターは {{0}} であり、値を低くすると {{1}} な出力になります。",
+      "dropdowns": [
+        {
+          "options": [
+            "max_tokens",
+            "temperature",
+            "frequency_penalty"
+          ],
+          "answer": 1
+        },
+        {
+          "options": [
+            "より創造的",
+            "より決定論的（一貫性のある）",
+            "より長い"
+          ],
+          "answer": 1
+        }
+      ],
+      "explanation": "temperatureパラメーターはモデル出力のランダム性を制御します。温度を低く（0に近く）すると、モデルは最も確率の高いトークンを選択しやすくなり、出力がより決定論的で一貫したものになります。温度を高くすると、よりランダムで創造的な出力が得られます。",
+      "tags": [
+        "azure-openai",
+        "parameters"
+      ],
+      "sources": [
+        {
+          "title": "Azure OpenAI Service のパラメーター",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/concepts/advanced-prompt-engineering"
+        }
+      ]
+    },
+    {
+      "id": "AG-6188",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下の機械学習のモデルライフサイクルのステップと、各ステップで行う作業を対応させてください。",
+      "left": [
+        "データ準備",
+        "モデルトレーニング",
+        "モデル検証",
+        "モデルデプロイ"
+      ],
+      "right": [
+        "欠損値の処理や特徴量の選択を行う",
+        "アルゴリズムを選択しデータからパターンを学習させる",
+        "テストデータで精度やAUC等の指標を評価する",
+        "エンドポイントを作成しアプリケーションから呼び出せるようにする"
+      ],
+      "answerMap": {
+        "データ準備": "欠損値の処理や特徴量の選択を行う",
+        "モデルトレーニング": "アルゴリズムを選択しデータからパターンを学習させる",
+        "モデル検証": "テストデータで精度やAUC等の指標を評価する",
+        "モデルデプロイ": "エンドポイントを作成しアプリケーションから呼び出せるようにする"
+      },
+      "explanation": "MLライフサイクルでは、まずデータ準備で欠損値処理や特徴量エンジニアリングを行い、次にモデルトレーニングでアルゴリズムを適用し、モデル検証でテストデータによる評価を行い、最後にモデルデプロイでAPIエンドポイントとして公開します。",
+      "tags": [
+        "model-lifecycle",
+        "feature-engineering"
+      ],
+      "sources": [
+        {
+          "title": "Azure ML のモデル管理",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-model-management-and-deployment"
+        }
+      ]
+    },
+    {
+      "id": "AG-6189",
+      "domain": "CV",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のAzure AIサービスと、各サービスのモデルエクスポート機能の特徴を対応させてください。",
+      "left": [
+        "Custom Vision（エクスポート）",
+        "Azure AI Vision（事前構築済み）",
+        "Azure AI Document Intelligence",
+        "Azure AI Video Indexer"
+      ],
+      "right": [
+        "ONNXやTensorFlow形式でエッジデバイスにデプロイ可能",
+        "APIベースでクラウド上で画像分析を実行",
+        "フォームやレシートから構造化データを抽出",
+        "動画のインデックスを作成し検索可能にする"
+      ],
+      "answerMap": {
+        "Custom Vision（エクスポート）": "ONNXやTensorFlow形式でエッジデバイスにデプロイ可能",
+        "Azure AI Vision（事前構築済み）": "APIベースでクラウド上で画像分析を実行",
+        "Azure AI Document Intelligence": "フォームやレシートから構造化データを抽出",
+        "Azure AI Video Indexer": "動画のインデックスを作成し検索可能にする"
+      },
+      "explanation": "Custom Visionはトレーニング済みモデルをONNX、TensorFlow、CoreML等の形式でエクスポートしてエッジデバイスで実行できます。Azure AI Visionは事前構築済みモデルをクラウドAPIとして提供し、Document Intelligenceはドキュメントからデータを抽出、Video Indexerは動画の内容分析を行います。",
+      "tags": [
+        "model-export",
+        "custom-vision",
+        "azure-ai-services"
+      ],
+      "sources": [
+        {
+          "title": "Custom Vision モデルのエクスポート",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/export-your-model"
+        }
+      ]
+    },
+    {
+      "id": "AG-6190",
+      "domain": "Workloads",
+      "type": "order",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learningでモデルを本番環境にデプロイするまでの一般的な手順を、正しい順序に並べてください。",
+      "items": [
+        "モデルをAzure ML ワークスペースに登録する",
+        "トレーニング済みモデルをONNX等の形式でエクスポートする",
+        "推論スクリプトと環境設定を準備する",
+        "マネージドオンラインエンドポイントにデプロイする"
+      ],
+      "answerOrder": [
+        1,
+        0,
+        2,
+        3
+      ],
+      "explanation": "まずトレーニング済みモデルをエクスポートし、次にワークスペースにモデルを登録します。その後、推論スクリプト（スコアリングスクリプト）と実行環境の設定を準備し、最後にマネージドオンラインエンドポイントにデプロイしてAPIとして公開します。",
+      "tags": [
+        "model-export",
+        "model-lifecycle",
+        "compute-options"
+      ],
+      "sources": [
+        {
+          "title": "Azure ML でのモデルのデプロイ",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-endpoints"
+        }
+      ]
+    },
+    {
+      "id": "AG-6191",
+      "domain": "ML",
+      "type": "casestudy",
+      "difficulty": 3,
+      "prompt": "C社は金融機関で、クレジットカードの不正利用検出システムをAzure Machine Learningで構築しています。過去1年間の取引データ100万件のうち、不正取引はわずか0.5%（5,000件）です。データサイエンスチームはAutomated MLを使用してモデルをトレーニングしましたが、全体の精度（Accuracy）は99.2%であるにもかかわらず、実際の不正取引の多くを見逃していることが判明しました。",
+      "subQuestions": [
+        {
+          "id": "AG-6191-1",
+          "type": "single",
+          "prompt": "このモデルが高い精度を示しながら不正取引を見逃す主な原因として、最も適切なものはどれですか。",
+          "choices": [
+            "特徴量が多すぎるため過学習が発生している",
+            "クラス不均衡により、モデルが多数派クラス（正常取引）に偏った予測をしている",
+            "トレーニングデータが少なすぎるため学習が不十分である",
+            "テストデータが汚染されている"
+          ],
+          "answer": [
+            1
+          ],
+          "explanation": "不正取引が0.5%しかないクラス不均衡データでは、すべてを「正常」と予測するだけで99.5%の精度が達成できます。モデルは少数派クラス（不正取引）のパターンを十分に学習できていない可能性が高いです。"
+        },
+        {
+          "id": "AG-6191-2",
+          "type": "multi",
+          "prompt": "この状況を改善するために有効なアプローチをすべて選んでください。",
+          "choices": [
+            "精度（Accuracy）の代わりにAUC-ROCやF1スコアを評価指標にする",
+            "不正取引データをオーバーサンプリングする",
+            "正常取引データをすべて削除する",
+            "損失関数でクラスの重み付けを行う"
+          ],
+          "answer": [
+            0,
+            1,
+            3
+          ],
+          "explanation": "AUC-ROCやF1スコアはクラス不均衡に対してより適切な評価指標です。オーバーサンプリングでデータバランスを改善し、クラス重み付けで少数派クラスの誤分類ペナルティを大きくすることが有効です。正常取引をすべて削除すると学習データが失われます。"
+        },
+        {
+          "id": "AG-6191-3",
+          "type": "dropdown",
+          "prompt": "改善後のモデルを評価する際、混同行列の {{0}} が高いことは不正取引の見逃しが少ないことを意味し、{{1}} が高いことは正常取引を誤って不正と判定するケースが少ないことを意味します。",
+          "dropdowns": [
+            {
+              "options": [
+                "精度（Accuracy）",
+                "再現率（Recall）",
+                "特異度（Specificity）"
+              ],
+              "answer": 1
+            },
+            {
+              "options": [
+                "再現率（Recall）",
+                "適合率（Precision）",
+                "感度（Sensitivity）"
+              ],
+              "answer": 1
+            }
+          ],
+          "explanation": "再現率（Recall）は実際の陽性サンプル（不正取引）のうち正しく検出された割合で、高い再現率は見逃しが少ないことを意味します。適合率（Precision）は陽性と予測したサンプルのうち実際に陽性だった割合で、高い適合率は誤検知が少ないことを示します。"
+        }
+      ],
+      "explanation": "このケーススタディでは、金融分野でよくあるクラス不均衡問題とその対処法を総合的に問います。精度だけでなくAUC-ROCや再現率など適切な評価指標の選択、オーバーサンプリングやクラス重み付けによるデータバランスの改善、混同行列の各指標の意味の理解が求められます。",
+      "tags": [
+        "class-imbalance",
+        "auc-roc",
+        "confusion-matrix",
+        "model-evaluation",
+        "feature-engineering"
+      ],
+      "sources": [
+        {
+          "title": "自動 ML の分類メトリック",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"
+        }
+      ]
+    }
+  ]
+}
