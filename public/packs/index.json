@@ -1,6 +1,6 @@
 {
   "schema": "ai900-pack-index-v1",
-  "updatedAt": "2026-03-04T14:46:18.381Z",
+  "updatedAt": "2026-03-04T15:24:42.402Z",
   "packs": [
     {
       "id": "ai900.auto.20260302",
@@ -114,6 +114,26 @@
         "hotarea",
         "multi",
         "match",
+        "single"
+      ],
+      "minAppVersion": "1.0.0"
+    },
+    {
+      "id": "ai900.coach.20260305000906",
+      "title": "コーチ生成 (30問)",
+      "version": "2026-03-05",
+      "url": "/packs/ai900.coach.20260305000906_2026-03-05.json",
+      "questionCount": 30,
+      "domains": [
+        "Workloads",
+        "ML",
+        "CV",
+        "NLP",
+        "GenAI"
+      ],
+      "types": [
+        "hotarea",
+        "multi",
         "single"
       ],
       "minAppVersion": "1.0.0"
