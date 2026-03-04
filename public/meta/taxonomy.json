@@ -1,0 +1,65 @@
+{
+  "schema": "exam-taxonomy-v1",
+  "exam": "AI-900",
+  "domains": {
+    "Workloads": {
+      "weight": 19.5,
+      "subtopics": [
+        { "id": "workload-types", "label": "AIワークロード種類" },
+        { "id": "responsible-ai", "label": "責任あるAI原則" },
+        { "id": "fairness", "label": "公平性" },
+        { "id": "transparency", "label": "透明性" },
+        { "id": "accountability", "label": "アカウンタビリティ" },
+        { "id": "privacy", "label": "プライバシー・セキュリティ" },
+        { "id": "inclusiveness", "label": "包括性" }
+      ]
+    },
+    "ML": {
+      "weight": 19.5,
+      "subtopics": [
+        { "id": "supervised-learning", "label": "教師あり学習" },
+        { "id": "unsupervised-learning", "label": "教師なし学習" },
+        { "id": "classification", "label": "分類" },
+        { "id": "regression", "label": "回帰" },
+        { "id": "clustering", "label": "クラスタリング" },
+        { "id": "evaluation-metrics", "label": "評価指標" },
+        { "id": "azure-ml", "label": "Azure Machine Learning" }
+      ]
+    },
+    "CV": {
+      "weight": 19.5,
+      "subtopics": [
+        { "id": "image-classification", "label": "画像分類" },
+        { "id": "object-detection", "label": "物体検出" },
+        { "id": "face-detection", "label": "顔検出" },
+        { "id": "ocr", "label": "OCR" },
+        { "id": "azure-vision", "label": "Azure AI Vision" },
+        { "id": "custom-vision", "label": "Custom Vision" }
+      ]
+    },
+    "NLP": {
+      "weight": 19.5,
+      "subtopics": [
+        { "id": "sentiment-analysis", "label": "感情分析" },
+        { "id": "entity-recognition", "label": "エンティティ認識" },
+        { "id": "key-phrase-extraction", "label": "キーフレーズ抽出" },
+        { "id": "language-detection", "label": "言語検出" },
+        { "id": "translation", "label": "翻訳" },
+        { "id": "speech-services", "label": "音声サービス" },
+        { "id": "conversational-ai", "label": "会話AI" }
+      ]
+    },
+    "GenAI": {
+      "weight": 22,
+      "subtopics": [
+        { "id": "genai-concepts", "label": "生成AI概念" },
+        { "id": "azure-openai", "label": "Azure OpenAI Service" },
+        { "id": "prompt-engineering", "label": "プロンプトエンジニアリング" },
+        { "id": "rag", "label": "RAG" },
+        { "id": "content-filtering", "label": "コンテンツフィルタリング" },
+        { "id": "copilot", "label": "Copilot" },
+        { "id": "model-selection", "label": "モデル選択" }
+      ]
+    }
+  }
+}

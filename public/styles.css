@@ -142,3 +142,6 @@ label{display:block;font-size:13px;color:var(--fg2);margin-bottom:4px;margin-top
 .gap-8{gap:8px}.gap-4{gap:4px}
 .hidden{display:none!important}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+/* ---- Flag Reason Picker ---- */
+.flag-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
+.flag-menu{width:100%;max-width:360px}

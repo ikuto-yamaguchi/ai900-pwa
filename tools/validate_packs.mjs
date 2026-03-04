@@ -18,6 +18,58 @@ function error(msg) {
   totalErrors++;
 }
 
+export function validateQuestionStruct(q, packId) {
+  const errors = [];
+  if (!q.id) { errors.push('Missing question id'); return errors; }
+  const prefix = `[${packId}::${q.id}]`;
+  if (!q.type) { errors.push(`${prefix} Missing type`); return errors; }
+  if (!TYPES.includes(q.type)) errors.push(`${prefix} Unknown type: ${q.type}`);
+  if (!q.prompt) errors.push(`${prefix} Missing prompt`);
+  if (!q.domain) errors.push(`${prefix} Missing domain`);
+  if (q.domain && !DOMAINS.includes(q.domain)) errors.push(`${prefix} Unknown domain: ${q.domain}`);
+
+  switch (q.type) {
+    case 'single':
+    case 'multi':
+      if (!Array.isArray(q.choices) || q.choices.length < 2) errors.push(`${prefix} choices must have >=2 items`);
+      if (!Array.isArray(q.answer)) { errors.push(`${prefix} answer must be array`); break; }
+      for (const a of q.answer) {
+        if (a < 0 || a >= (q.choices || []).length) errors.push(`${prefix} answer index ${a} out of range`);
+      }
+      if (q.type === 'single' && q.answer.length !== 1) errors.push(`${prefix} single must have exactly 1 answer`);
+      if (q.type === 'multi' && q.answer.length < 2) errors.push(`${prefix} multi should have >=2 answers`);
+      break;
+    case 'dropdown':
+      if (!Array.isArray(q.dropdowns)) { errors.push(`${prefix} Missing dropdowns`); break; }
+      q.dropdowns.forEach((d, i) => {
+        if (!Array.isArray(d.options) || d.options.length < 2) errors.push(`${prefix} dropdown[${i}] needs >=2 options`);
+        if (typeof d.answer !== 'number' || d.answer < 0 || d.answer >= (d.options || []).length) errors.push(`${prefix} dropdown[${i}] answer out of range`);
+        if (!q.prompt.includes(`{{${i}}}`)) errors.push(`${prefix} prompt missing {{${i}}}`);
+      });
+      break;
+    case 'match':
+      if (!Array.isArray(q.left) || !Array.isArray(q.right) || !q.answerMap) { errors.push(`${prefix} Missing match fields`); break; }
+      for (const l of q.left) { if (!(l in q.answerMap)) errors.push(`${prefix} answerMap missing key "${l}"`); }
+      for (const v of Object.values(q.answerMap)) { if (!q.right.includes(v)) errors.push(`${prefix} answerMap value "${v}" not in right`); }
+      break;
+    case 'order':
+      if (!Array.isArray(q.items) || !Array.isArray(q.answerOrder)) { errors.push(`${prefix} Missing order fields`); break; }
+      if (q.answerOrder.length !== q.items.length) errors.push(`${prefix} answerOrder length mismatch`);
+      break;
+    case 'hotarea':
+      if (!q.grid || !Array.isArray(q.grid.cells) || !Array.isArray(q.answer)) { errors.push(`${prefix} Missing hotarea fields`); break; }
+      for (const a of q.answer) { if (a < 0 || a >= q.grid.cells.length) errors.push(`${prefix} hotarea answer ${a} out of range`); }
+      break;
+    case 'casestudy':
+      if (!Array.isArray(q.subQuestions) || q.subQuestions.length === 0) { errors.push(`${prefix} casestudy needs subQuestions`); break; }
+      for (const sq of q.subQuestions) {
+        errors.push(...validateQuestionStruct({ ...sq, domain: q.domain }, packId));
+      }
+      break;
+  }
+  return errors;
+}
+
 function validateQuestion(q, packId) {
   if (!q.id) { error('Missing question id'); return; }
   const prefix = `[${packId}::${q.id}]`;

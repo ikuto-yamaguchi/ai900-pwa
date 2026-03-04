@@ -231,6 +231,23 @@ function pushRecentQids(qids) {
   localStorage.setItem('ai900_recent', JSON.stringify(recent));
 }
 
+/* ---------- Quality Metadata Cache ---------- */
+let _qualityCache = null;
+let _qualityCacheTs = 0;
+async function getQualityMetadata() {
+  if (_qualityCache && Date.now() - _qualityCacheTs < 600000) return _qualityCache;
+  try {
+    const res = await fetch('/api/quality');
+    const data = await res.json();
+    if (data.ok && data.quality) {
+      _qualityCache = data.quality;
+      _qualityCacheTs = Date.now();
+      return data.quality;
+    }
+  } catch {}
+  return null;
+}
+
 /* ---------- Question Selection Engine ---------- */
 async function selectQuestions(domainFilter = null) {
   const allQ = await IDB.getAllQuestions();
@@ -239,11 +256,19 @@ async function selectQuestions(domainFilter = null) {
   // Apply domain filter
   if (domainFilter) pool = pool.filter(q => q.domain === domainFilter);
 
+  // Apply quality-based filtering
+  const quality = await getQualityMetadata();
+  if (quality && quality.questions) {
+    pool = pool.filter(q => {
+      const qm = quality.questions[q.qid];
+      return !qm || qm.quality_state !== 'retired' && qm.quality_state !== 'invalid';
+    });
+  }
+
   if (pool.length === 0) return [];
 
-  // Try AI-curated session first (skip if domain filter is active)
-  if (domainFilter) { /* skip curated for domain-specific */ }
-  else try {
+  // Try AI-curated session (skip if domain filter is active)
+  if (!domainFilter) try {
     const res = await fetch('/api/next-session');
     const data = await res.json();
     if (data.ok && data.session && !data.session.consumed && data.session.questions) {
@@ -254,16 +279,22 @@ async function selectQuestions(domainFilter = null) {
           const q = pool.find(p => p.qid === item.qid);
           if (q) curated.push(q);
         }
-        if (curated.length >= settings.questionCount * 0.7) {
-          console.log(`Using AI-curated session: ${curated.length} questions (${data.session.sessionType})`);
-          // Mark as consumed
+        if (curated.length >= settings.questionCount) {
+          console.log(`AI session: ${curated.length} questions (${data.session.sessionType})`);
           fetch('/api/next-session', { method: 'POST' }).catch(() => {});
-          return curated;
+          // Shuffle and return — AI selected all questions
+          const result = curated.slice(0, settings.questionCount);
+          for (let i = result.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [result[i], result[j]] = [result[j], result[i]];
+          }
+          return result;
         }
       }
     }
-  } catch { /* fall through to weighted random */ }
+  } catch { /* fall through to client-side selection */ }
 
+  // No AI session available — full client-side selection
   // Build set of ALL question IDs the user has ever answered (not just recent)
   const allHistory = await IDB.getAllHistory();
   const everSeenQids = new Set(allHistory.map(h => h.qid));
@@ -305,6 +336,11 @@ async function selectQuestions(domainFilter = null) {
     // Strongly prefer unseen questions, then penalize very recent ones
     if (!everSeenQids.has(q.qid)) s *= 5;
     else if (recentSet.has(q.qid)) s *= 0.01;
+    // Quality-based weight reduction
+    if (quality && quality.questions) {
+      const qm = quality.questions[q.qid];
+      if (qm && qm.quality_state === 'needs_review') s *= 0.5;
+    }
     return s + Math.random() * 0.3;
   }
 
@@ -477,13 +513,15 @@ async function startSession(mode = 'practice', domainFilter = null) {
     mode,
     questions,
     answers: {},
-    flags: new Set(),
+    flags: new Map(),
     finished: false,
     graded: {},
     shuffles,
     elapsed: 0,
     timeLimit: mode === 'exam' ? settings.timeLimit : 0,
-    startedAt: Date.now()
+    startedAt: Date.now(),
+    _qStartedAt: Date.now(),
+    questionTimes: {}
   };
   state.currentQ = 0;
   state.showExplanation = false;
@@ -499,31 +537,44 @@ async function finishSession() {
   state.session.finished = true;
   stopTimer();
 
+  // Flush time for current question
+  const sess = state.session;
+  if (sess._qStartedAt) {
+    const indices = state.reviewIndices || sess.questions.map((_, i) => i);
+    const qIdx = indices[state.currentQ];
+    sess.questionTimes[qIdx] = (sess.questionTimes[qIdx] || 0) + (Date.now() - sess._qStartedAt);
+    sess._qStartedAt = null;
+  }
+
   // Grade all
-  for (let i = 0; i < state.session.questions.length; i++) {
-    const q = state.session.questions[i];
-    const ua = state.session.answers[i];
+  for (let i = 0; i < sess.questions.length; i++) {
+    const q = sess.questions[i];
+    const ua = sess.answers[i];
     const correct = gradeAnswer(q, ua);
-    state.session.graded[i] = correct;
+    sess.graded[i] = correct;
 
     // Save history
-    await IDB.addHistory({
+    const histEntry = {
       qid: q.qid,
       domain: q.domain,
       type: q.type,
       tags: q.tags || [],
       correct,
-      ts: Date.now()
-    });
+      ts: Date.now(),
+      timeSpent: sess.questionTimes[i] || 0
+    };
+    const flagData = sess.flags.get(i);
+    if (flagData) histEntry.flagReason = flagData.reason;
+    await IDB.addHistory(histEntry);
   }
 
   // Push recent
-  pushRecentQids(state.session.questions.map(q => q.qid));
+  pushRecentQids(sess.questions.map(q => q.qid));
 
   // Save session
   await IDB.saveSession({
-    id: state.session.id,
-    mode: state.session.mode,
+    id: sess.id,
+    mode: sess.mode,
     questionCount: state.session.questions.length,
     correctCount: Object.values(state.session.graded).filter(Boolean).length,
     elapsed: state.session.elapsed,
@@ -534,12 +585,31 @@ async function finishSession() {
     tagStats: computeTagStats()
   });
 
-  // Background: sync weakness, check pool health, backup progress
+  // Background: sync weakness, check pool health, backup progress, upload flags
   syncWeaknessToServer().catch(e => console.warn('Weakness sync failed:', e));
   checkPoolHealth().catch(e => console.warn('Pool health check failed:', e));
   backupProgress().catch(e => console.warn('Backup failed:', e));
+  syncFlags(sess).catch(e => console.warn('Flag sync failed:', e));
 
   navigate('result');
+}
+
+/* -- Sync structured flags to KV -- */
+async function syncFlags(sess) {
+  if (sess.flags.size === 0) return;
+  const flags = [];
+  for (const [idx, data] of sess.flags) {
+    const q = sess.questions[idx];
+    if (q) flags.push({ qid: q.qid, reason: data.reason, ts: Date.now() });
+  }
+  if (flags.length === 0) return;
+  try {
+    await fetch('/api/flags', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ flags })
+    });
+  } catch { /* silent */ }
 }
 
 /* -- Sync weakness data to Cloudflare KV for Claude Code -- */
@@ -973,10 +1043,17 @@ function renderSession(app) {
 }
 
 function sessionNav(dir) {
-  const indices = state.reviewIndices || state.session.questions.map((_, i) => i);
+  const sess = state.session;
+  const indices = state.reviewIndices || sess.questions.map((_, i) => i);
   const next = state.currentQ + dir;
   if (next >= 0 && next < indices.length) {
+    // Track time spent on current question
+    if (sess._qStartedAt && !sess.finished) {
+      const qIdx = indices[state.currentQ];
+      sess.questionTimes[qIdx] = (sess.questionTimes[qIdx] || 0) + (Date.now() - sess._qStartedAt);
+    }
     state.currentQ = next;
+    sess._qStartedAt = Date.now();
     state.showExplanation = false;
     render();
     window.scrollTo(0, 0);
@@ -1015,10 +1092,42 @@ function triggerAutoNext() {
   _autoNextTimer = setTimeout(() => sessionNav(1), settings.autoNextDelay);
 }
 
+const FLAG_REASONS = [
+  { id: 'wrong_answer', label: '正答が間違い' },
+  { id: 'ambiguous', label: '曖昧・複数解釈可能' },
+  { id: 'outdated', label: '情報が古い' },
+  { id: 'too_hard', label: '難しすぎる' },
+  { id: 'typo', label: '誤字・表記ミス' },
+  { id: 'other', label: 'その他' }
+];
+
 function toggleFlag(qIndex) {
-  if (state.session.flags.has(qIndex)) state.session.flags.delete(qIndex);
-  else state.session.flags.add(qIndex);
-  render();
+  if (state.session.flags.has(qIndex)) {
+    state.session.flags.delete(qIndex);
+    render();
+  } else {
+    showFlagReasonPicker(qIndex);
+  }
+}
+
+function showFlagReasonPicker(qIndex) {
+  const overlay = el('div', {
+    className: 'flag-overlay',
+    onClick: e => { if (e.target === overlay) overlay.remove(); }
+  });
+  const menu = el('div', { className: 'flag-menu card' },
+    el('h2', null, 'フラグの理由'),
+    ...FLAG_REASONS.map(r =>
+      el('button', { className: 'btn btn-block mb-8', onClick: () => {
+        state.session.flags.set(qIndex, { reason: r.id });
+        overlay.remove();
+        render();
+      }}, r.label)
+    ),
+    el('button', { className: 'btn btn-block', style: { opacity: '0.6' }, onClick: () => overlay.remove() }, 'キャンセル')
+  );
+  overlay.appendChild(menu);
+  document.body.appendChild(overlay);
 }
 
 async function confirmLeave() {
@@ -1031,15 +1140,26 @@ async function confirmLeave() {
       stopTimer();
       const sess = state.session;
       // Grade and save answered questions
+      // Flush time for current question before leaving
+      if (sess._qStartedAt) {
+        const indices = state.reviewIndices || sess.questions.map((_, i) => i);
+        const qIdx = indices[state.currentQ];
+        sess.questionTimes[qIdx] = (sess.questionTimes[qIdx] || 0) + (Date.now() - sess._qStartedAt);
+        sess._qStartedAt = null;
+      }
       if (answered.length > 0) {
         for (const i of answered) {
           const q = sess.questions[i];
           const correct = gradeAnswer(q, sess.answers[i]);
           sess.graded[i] = correct;
-          await IDB.addHistory({
+          const histEntry = {
             qid: q.qid, domain: q.domain, type: q.type,
-            tags: q.tags || [], correct, ts: Date.now()
-          });
+            tags: q.tags || [], correct, ts: Date.now(),
+            timeSpent: sess.questionTimes[i] || 0
+          };
+          const flagData = sess.flags.get(i);
+          if (flagData) histEntry.flagReason = flagData.reason;
+          await IDB.addHistory(histEntry);
         }
         pushRecentQids(answered.map(i => sess.questions[i].qid));
         await IDB.saveSession({
@@ -1067,7 +1187,7 @@ async function confirmLeave() {
 
 function showReviewMenu() {
   const sess = state.session;
-  const flagged = [...sess.flags].sort((a, b) => a - b);
+  const flagged = [...sess.flags.keys()].sort((a, b) => a - b);
   const wrong = Object.entries(sess.graded).filter(([, v]) => !v).map(([k]) => parseInt(k)).sort((a, b) => a - b);
   const unanswered = sess.questions.map((_, i) => i).filter(i => sess.answers[i] === undefined);
 

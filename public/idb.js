@@ -3,7 +3,7 @@
 
 const IDB = (() => {
   const DB_NAME = 'ai900app';
-  const DB_VERSION = 2;
+  const DB_VERSION = 3;
 
   let _db = null;
 
@@ -13,6 +13,7 @@ const IDB = (() => {
       const req = indexedDB.open(DB_NAME, DB_VERSION);
       req.onupgradeneeded = e => {
         const db = e.target.result;
+        const oldVersion = e.oldVersion;
         if (!db.objectStoreNames.contains('packs')) {
           db.createObjectStore('packs', { keyPath: 'id' });
         }
@@ -36,6 +37,13 @@ const IDB = (() => {
         }
         if (!db.objectStoreNames.contains('fingerprints')) {
           db.createObjectStore('fingerprints', { keyPath: 'hash' });
+        }
+        // v3: add flagReason index to history
+        if (oldVersion < 3 && db.objectStoreNames.contains('history')) {
+          const historyStore = e.target.transaction.objectStore('history');
+          if (!historyStore.indexNames.contains('flagReason')) {
+            historyStore.createIndex('flagReason', 'flagReason', { unique: false });
+          }
         }
       };
       req.onsuccess = e => { _db = e.target.result; resolve(_db); };
