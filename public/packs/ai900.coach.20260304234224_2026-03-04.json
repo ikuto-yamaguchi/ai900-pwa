@@ -1,0 +1,1056 @@
+{
+  "schema": "ai900-pack-v1",
+  "pack": {
+    "id": "ai900.coach.20260304234224",
+    "version": "2026-03-04",
+    "title": "コーチ生成 (30問)",
+    "description": "AIコーチ分析に基づく自動生成",
+    "language": "ja-JP",
+    "createdAt": "2026-03-04T23:42:24+09:00",
+    "domains": [
+      "Workloads",
+      "ML",
+      "CV",
+      "NLP",
+      "GenAI"
+    ]
+  },
+  "questions": [
+    {
+      "id": "PC-001",
+      "domain": "ML",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下の機械学習タスクのうち、「回帰」に分類されるものをすべて選んでください。",
+      "grid": {
+        "cols": 2,
+        "rows": 3,
+        "cells": [
+          "明日の気温を予測する",
+          "メールがスパムかどうかを判定する",
+          "来月の売上金額を予測する",
+          "画像に写っている動物の種類を分類する",
+          "中古住宅の販売価格を予測する",
+          "顧客が解約するかどうかを予測する"
+        ]
+      },
+      "answer": [
+        0,
+        2,
+        4
+      ],
+      "explanation": "回帰は連続的な数値を予測するタスクです。気温・売上金額・住宅価格はいずれも連続値であり回帰タスクです。スパム判定・動物分類・解約予測は「はい/いいえ」やカテゴリを予測する分類タスクです。",
+      "tags": [
+        "regression",
+        "classification",
+        "ml-fundamentals"
+      ],
+      "sources": [
+        {
+          "title": "回帰と分類の違い",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PC-002",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learning デザイナーでモデルをトレーニングする際に必要な手順として正しいものをすべて選んでください。",
+      "choices": [
+        "データセットをパイプラインにドラッグする",
+        "トレーニングモジュールを接続する",
+        "Pythonコードを手動で記述する",
+        "コンピューティングターゲットを指定する",
+        "モデルの評価モジュールを追加する",
+        "Azure DevOpsパイプラインを構成する"
+      ],
+      "answer": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "explanation": "Azure ML デザイナーはノーコード/ローコードのドラッグ＆ドロップ環境です。データセットの追加、トレーニングモジュールの接続、コンピューティングの指定、評価モジュールの追加が標準的な手順です。Pythonコードの手動記述やAzure DevOpsパイプラインの構成は必須ではありません。",
+      "tags": [
+        "azure-ml-designer",
+        "pipeline",
+        "no-code"
+      ],
+      "sources": [
+        {
+          "title": "Azure ML デザイナー",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-designer"
+        }
+      ]
+    },
+    {
+      "id": "PC-003",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下の機械学習の評価指標と、その説明を正しく対応させてください。",
+      "left": [
+        "精度 (Accuracy)",
+        "適合率 (Precision)",
+        "再現率 (Recall)",
+        "F1スコア"
+      ],
+      "right": [
+        "全予測のうち正しかった割合",
+        "陽性と予測したもののうち実際に陽性だった割合",
+        "実際に陽性のもののうち正しく検出できた割合",
+        "適合率と再現率の調和平均"
+      ],
+      "answerMap": {
+        "精度 (Accuracy)": "全予測のうち正しかった割合",
+        "適合率 (Precision)": "陽性と予測したもののうち実際に陽性だった割合",
+        "再現率 (Recall)": "実際に陽性のもののうち正しく検出できた割合",
+        "F1スコア": "適合率と再現率の調和平均"
+      },
+      "explanation": "Accuracyは全体の正解率、Precisionは陽性予測の正確さ、Recallは陽性の網羅率、F1スコアはPrecisionとRecallのバランスを示す調和平均です。",
+      "tags": [
+        "evaluation-metrics",
+        "classification",
+        "ml-fundamentals"
+      ],
+      "sources": [
+        {
+          "title": "分類モデルの評価",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PC-004",
+      "domain": "ML",
+      "type": "hotarea",
+      "difficulty": 3,
+      "prompt": "以下のシナリオのうち、「教師なし学習」が最も適切なものをすべて選んでください。",
+      "grid": {
+        "cols": 2,
+        "rows": 3,
+        "cells": [
+          "購買履歴に基づいて顧客をグループに分ける",
+          "ラベル付き画像データで犬と猫を分類する",
+          "異常検知のために通常パターンからの逸脱を検出する",
+          "過去の販売データから将来の売上を予測する",
+          "類似する文書をトピック別にまとめる",
+          "患者データから病気の有無を判定する"
+        ]
+      },
+      "answer": [
+        0,
+        2,
+        4
+      ],
+      "explanation": "教師なし学習はラベルなしデータからパターンを発見します。顧客のクラスタリング、異常検知、文書のトピック分類は教師なし学習です。犬猫の分類・売上予測・病気判定はラベル付きデータを使う教師あり学習です。",
+      "tags": [
+        "unsupervised-learning",
+        "clustering",
+        "anomaly-detection"
+      ],
+      "sources": [
+        {
+          "title": "教師あり学習と教師なし学習",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PC-005",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "自動機械学習 (AutoML) の特徴として正しいものをすべて選んでください。",
+      "choices": [
+        "複数のアルゴリズムを自動的に試行する",
+        "特徴量エンジニアリングを自動的に行う",
+        "トレーニングデータの収集を自動化する",
+        "最適なハイパーパラメーターを探索する",
+        "モデルの説明可能性レポートを生成できる"
+      ],
+      "answer": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "explanation": "AutoMLは複数アルゴリズムの自動試行、自動特徴量エンジニアリング、ハイパーパラメーター最適化、モデル説明可能性レポートの生成を行います。ただしトレーニングデータの収集は自動化されず、ユーザーが準備する必要があります。",
+      "tags": [
+        "automl",
+        "azure-ml",
+        "automation"
+      ],
+      "sources": [
+        {
+          "title": "自動機械学習とは",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PC-006",
+      "domain": "CV",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下のタスクのうち、Azure AI Vision の「画像分析」機能で実現できるものをすべて選んでください。",
+      "grid": {
+        "cols": 2,
+        "rows": 3,
+        "cells": [
+          "画像内のオブジェクトを検出し境界ボックスを表示する",
+          "画像の内容を自然言語で説明するキャプションを生成する",
+          "画像からテキストをOCRで読み取る",
+          "画像に写っている特定の個人を識別する",
+          "画像にスマートクロップのサムネイルを生成する",
+          "画像内の顔の感情を分析する"
+        ]
+      },
+      "answer": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "explanation": "Azure AI Vision の画像分析 (Image Analysis 4.0) は、オブジェクト検出、キャプション生成、OCR、スマートクロップに対応しています。特定個人の識別はFace APIの機能であり、顔の感情分析はFace APIで提供されていましたが現在は制限されています。",
+      "tags": [
+        "azure-ai-vision",
+        "image-analysis",
+        "ocr"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Vision 画像分析",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-image-analysis"
+        }
+      ]
+    },
+    {
+      "id": "PC-007",
+      "domain": "CV",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のComputer Visionタスクと、最も適切な説明を正しく対応させてください。",
+      "left": [
+        "画像分類",
+        "物体検出",
+        "セマンティックセグメンテーション",
+        "OCR"
+      ],
+      "right": [
+        "画像全体にカテゴリラベルを割り当てる",
+        "画像内の各オブジェクトの位置と種類を特定する",
+        "画像の各ピクセルをカテゴリに分類する",
+        "画像からテキスト文字を抽出する"
+      ],
+      "answerMap": {
+        "画像分類": "画像全体にカテゴリラベルを割り当てる",
+        "物体検出": "画像内の各オブジェクトの位置と種類を特定する",
+        "セマンティックセグメンテーション": "画像の各ピクセルをカテゴリに分類する",
+        "OCR": "画像からテキスト文字を抽出する"
+      },
+      "explanation": "画像分類は画像全体のラベル付け、物体検出は位置＋分類、セマンティックセグメンテーションはピクセル単位の分類、OCRはテキスト抽出を行います。",
+      "tags": [
+        "cv-tasks",
+        "image-classification",
+        "object-detection",
+        "segmentation",
+        "ocr"
+      ],
+      "sources": [
+        {
+          "title": "Computer Vision の概念",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview"
+        }
+      ]
+    },
+    {
+      "id": "PC-008",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learning で、トレーニング済みモデルをリアルタイム推論用にデプロイする場合、最も適切な方法はどれですか。",
+      "choices": [
+        "バッチエンドポイントを作成する",
+        "マネージドオンラインエンドポイントを作成する",
+        "Azure Data Factory パイプラインを使用する",
+        "Azure Logic Apps でワークフローを構成する"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "リアルタイム推論にはマネージドオンラインエンドポイントが最適です。リクエストごとに即座に応答を返します。バッチエンドポイントは大量データの一括処理用であり、Data FactoryやLogic Appsは推論デプロイ用のサービスではありません。",
+      "tags": [
+        "deployment",
+        "online-endpoint",
+        "real-time-inference"
+      ],
+      "sources": [
+        {
+          "title": "オンラインエンドポイント",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-endpoints-online"
+        }
+      ]
+    },
+    {
+      "id": "PC-009",
+      "domain": "CV",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure Custom Vision サービスの特徴として正しいものをすべて選んでください。",
+      "choices": [
+        "少量の画像でもモデルをトレーニングできる",
+        "画像分類と物体検出の両方に対応している",
+        "トレーニングしたモデルをエッジデバイスにエクスポートできる",
+        "モデルのトレーニングにはGPUクラスターの手動構成が必要である"
+      ],
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Custom Visionは少量の画像（最低15枚程度）でトレーニング可能で、画像分類と物体検出の両方をサポートし、ONNX・TensorFlow・CoreMLなどの形式でエッジデバイスにエクスポートできます。GPUクラスターの手動構成は不要で、サービスが自動的にトレーニングを実行します。",
+      "tags": [
+        "custom-vision",
+        "transfer-learning",
+        "edge-export"
+      ],
+      "sources": [
+        {
+          "title": "Custom Vision とは",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/overview"
+        }
+      ]
+    },
+    {
+      "id": "PC-010",
+      "domain": "ML",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下のAzure Machine Learningの機能のうち、「責任あるAI」ダッシュボードで提供されるものをすべて選んでください。",
+      "grid": {
+        "cols": 2,
+        "rows": 3,
+        "cells": [
+          "モデルの説明可能性（特徴量の重要度）",
+          "データのドリフト検出",
+          "公平性の評価（グループ間の性能差）",
+          "自動的なモデル再トレーニング",
+          "エラー分析（誤分類パターンの特定）",
+          "因果推論（What-if分析）"
+        ]
+      },
+      "answer": [
+        0,
+        2,
+        4,
+        5
+      ],
+      "explanation": "責任あるAIダッシュボードは、モデルの説明可能性、公平性評価、エラー分析、因果推論の4つのコンポーネントを提供します。データドリフト検出はモニタリング機能、自動再トレーニングはMLOpsパイプラインの機能であり、責任あるAIダッシュボードには含まれません。",
+      "tags": [
+        "responsible-ai",
+        "explainability",
+        "fairness",
+        "error-analysis"
+      ],
+      "sources": [
+        {
+          "title": "責任あるAIダッシュボード",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-responsible-ai-dashboard"
+        }
+      ]
+    },
+    {
+      "id": "PC-011",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下の機械学習アルゴリズムと、最も適切な使用シナリオを正しく対応させてください。",
+      "left": [
+        "線形回帰",
+        "デシジョンツリー",
+        "K-meansクラスタリング",
+        "時系列予測"
+      ],
+      "right": [
+        "連続値の数値予測で特徴量と目的変数に線形関係がある場合",
+        "ルールベースの判断を視覚的に理解しやすい形で行う場合",
+        "ラベルなしデータを類似グループに自動分割する場合",
+        "過去の時間的パターンから将来の値を予測する場合"
+      ],
+      "answerMap": {
+        "線形回帰": "連続値の数値予測で特徴量と目的変数に線形関係がある場合",
+        "デシジョンツリー": "ルールベースの判断を視覚的に理解しやすい形で行う場合",
+        "K-meansクラスタリング": "ラベルなしデータを類似グループに自動分割する場合",
+        "時系列予測": "過去の時間的パターンから将来の値を予測する場合"
+      },
+      "explanation": "線形回帰は線形関係のある数値予測、デシジョンツリーは解釈しやすいルールベース判断、K-meansはラベルなしデータのクラスタリング、時系列予測は時間的パターンに基づく予測に適しています。",
+      "tags": [
+        "algorithms",
+        "linear-regression",
+        "decision-tree",
+        "k-means",
+        "time-series"
+      ],
+      "sources": [
+        {
+          "title": "機械学習アルゴリズム",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/algorithm-cheat-sheet"
+        }
+      ]
+    },
+    {
+      "id": "PC-012",
+      "domain": "CV",
+      "type": "hotarea",
+      "difficulty": 3,
+      "prompt": "以下のシナリオのうち、Azure AI Face サービスの利用に「Limited Access」（制限付きアクセス）の申請が必要なものをすべて選んでください。",
+      "grid": {
+        "cols": 2,
+        "rows": 3,
+        "cells": [
+          "画像内の顔の位置を検出する",
+          "顔の特徴に基づいて個人を識別する",
+          "2つの顔が同一人物かどうかを検証する",
+          "画像内にぼかし処理を適用する",
+          "顔の属性（年齢推定など）を取得する",
+          "大規模な顔認識データベースを構築する"
+        ]
+      },
+      "answer": [
+        1,
+        2,
+        5
+      ],
+      "explanation": "Microsoft は責任あるAIの観点から、顔識別（Identification）、顔検証（Verification）、大規模な顔認識はLimited Accessポリシーの対象としています。顔の検出（位置特定）、ぼかし処理、基本的な属性取得は制限なく利用できます。",
+      "tags": [
+        "face-api",
+        "limited-access",
+        "responsible-ai",
+        "identification"
+      ],
+      "sources": [
+        {
+          "title": "Face API Limited Access",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-identity"
+        }
+      ]
+    },
+    {
+      "id": "PC-013",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "機械学習モデルの「過学習（オーバーフィッティング）」を防ぐ手法として正しいものをすべて選んでください。",
+      "choices": [
+        "トレーニングデータを増やす",
+        "モデルの複雑さを減らす（正則化）",
+        "検証データセットを使って性能を監視する",
+        "トレーニングのエポック数を増やし続ける",
+        "交差検証（クロスバリデーション）を使用する"
+      ],
+      "answer": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "explanation": "過学習を防ぐには、データの増量、正則化による複雑さの制御、検証データでの監視、交差検証が有効です。エポック数を増やし続けるとトレーニングデータへの適合が進み、むしろ過学習が悪化します。",
+      "tags": [
+        "overfitting",
+        "regularization",
+        "cross-validation",
+        "ml-fundamentals"
+      ],
+      "sources": [
+        {
+          "title": "過学習と対策",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-manage-ml-pitfalls"
+        }
+      ]
+    },
+    {
+      "id": "PC-014",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "小売店で棚の商品配置を自動的にチェックし、欠品を検出するシステムを構築する場合、最も適切なAzure AIサービスはどれですか。",
+      "choices": [
+        "Azure AI Vision の画像分類",
+        "Azure Custom Vision の物体検出",
+        "Azure AI Face",
+        "Azure AI Language"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "棚の商品の位置と種類を特定し欠品を検出するには、物体検出が必要です。Custom Visionの物体検出を使えば、特定の商品を検出するモデルをカスタムトレーニングできます。画像分類は画像全体のラベル付けのみで位置は特定できません。",
+      "tags": [
+        "custom-vision",
+        "object-detection",
+        "retail"
+      ],
+      "sources": [
+        {
+          "title": "Custom Vision 物体検出",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/get-started-build-detector"
+        }
+      ]
+    },
+    {
+      "id": "PC-015",
+      "domain": "ML",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下のうち、機械学習の「特徴量（フィーチャー）」の説明として正しいものをすべて選んでください。",
+      "grid": {
+        "cols": 2,
+        "rows": 3,
+        "cells": [
+          "モデルの予測に使用される入力変数",
+          "モデルが予測しようとする目的変数",
+          "データの各行（サンプル）を記述する属性",
+          "モデルのハイパーパラメーター",
+          "カテゴリ変数を数値に変換したもの（エンコーディング）",
+          "モデルのトレーニングアルゴリズム"
+        ]
+      },
+      "answer": [
+        0,
+        2,
+        4
+      ],
+      "explanation": "特徴量はモデルへの入力変数であり、各サンプルを記述する属性です。カテゴリ変数のエンコーディング（例：ワンホットエンコーディング）も特徴量エンジニアリングの一部です。目的変数（ラベル）、ハイパーパラメーター、アルゴリズムは特徴量ではありません。",
+      "tags": [
+        "features",
+        "feature-engineering",
+        "ml-fundamentals"
+      ],
+      "sources": [
+        {
+          "title": "特徴量エンジニアリング",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PC-016",
+      "domain": "CV",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下のAzure AI Vision の機能と、対応するユースケースを正しく対応させてください。",
+      "left": [
+        "スマートクロップ",
+        "空間分析",
+        "画像キャプション",
+        "背景除去"
+      ],
+      "right": [
+        "SNS投稿用に人物が中心になるサムネイルを自動生成する",
+        "店舗内の人数カウントと動線分析を行う",
+        "視覚障碍者向けに画像の内容を音声で説明する",
+        "EC サイトの商品画像から背景を取り除く"
+      ],
+      "answerMap": {
+        "スマートクロップ": "SNS投稿用に人物が中心になるサムネイルを自動生成する",
+        "空間分析": "店舗内の人数カウントと動線分析を行う",
+        "画像キャプション": "視覚障碍者向けに画像の内容を音声で説明する",
+        "背景除去": "EC サイトの商品画像から背景を取り除く"
+      },
+      "explanation": "スマートクロップは関心領域を中心に切り抜き、空間分析はビデオからの人物追跡・カウント、画像キャプションは画像の自然言語記述、背景除去は前景のみを抽出する機能です。",
+      "tags": [
+        "azure-ai-vision",
+        "smart-crop",
+        "spatial-analysis",
+        "captioning"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Vision 機能一覧",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview"
+        }
+      ]
+    },
+    {
+      "id": "PC-017",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure Machine Learning のパイプラインを使用する利点として正しいものをすべて選んでください。",
+      "choices": [
+        "データ準備からモデルデプロイまでのワークフローを自動化できる",
+        "各ステップを独立して再実行できる",
+        "パイプラインのスケジュール実行ができる",
+        "パイプラインを使用するとモデルの精度が自動的に向上する"
+      ],
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "MLパイプラインはワークフローの自動化、ステップの独立実行・キャッシュ、スケジュール実行に対応しています。ただし、パイプライン自体がモデル精度を向上させるわけではなく、精度はデータとアルゴリズムに依存します。",
+      "tags": [
+        "ml-pipeline",
+        "automation",
+        "mlops"
+      ],
+      "sources": [
+        {
+          "title": "Azure ML パイプライン",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-ml-pipelines"
+        }
+      ]
+    },
+    {
+      "id": "PC-018",
+      "domain": "CV",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下のシナリオのうち、Azure AI Video Indexer で分析できるものをすべて選んでください。",
+      "grid": {
+        "cols": 2,
+        "rows": 3,
+        "cells": [
+          "動画内の話者を識別する",
+          "動画の音声をテキストに書き起こす",
+          "動画内のブランドロゴを検出する",
+          "リアルタイムでビデオストリームを処理する",
+          "動画のキーフレームとシーンを抽出する",
+          "動画内の感情（ポジティブ/ネガティブ）を分析する"
+        ]
+      },
+      "answer": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "explanation": "Azure AI Video Indexer は、話者識別、音声書き起こし、ブランド検出、キーフレーム・シーン抽出、感情分析に対応しています。ただし、リアルタイムストリーミング処理は対応しておらず、録画済み動画のバッチ分析が主な用途です。",
+      "tags": [
+        "video-indexer",
+        "video-analysis",
+        "transcription"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Video Indexer",
+          "url": "https://learn.microsoft.com/ja-jp/azure/azure-video-indexer/video-indexer-overview"
+        }
+      ]
+    },
+    {
+      "id": "PC-019",
+      "domain": "ML",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "機械学習でモデルをトレーニングする前に、データセットを「トレーニングセット」と「テストセット」に分割する主な理由はどれですか。",
+      "choices": [
+        "トレーニング時間を短縮するため",
+        "モデルの未知のデータに対する汎化性能を評価するため",
+        "データストレージのコストを削減するため",
+        "特徴量の数を減らすため"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "データを分割する主な目的は、モデルが学習に使っていないデータ（テストセット）で性能を評価し、未知データへの汎化能力を確認することです。これにより過学習の検出も可能になります。",
+      "tags": [
+        "train-test-split",
+        "generalization",
+        "ml-fundamentals"
+      ],
+      "sources": [
+        {
+          "title": "モデルの評価",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PC-020",
+      "domain": "CV",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "Azure AI Document Intelligence（旧 Form Recognizer）の事前構築済みモデルが対応しているドキュメントタイプとして正しいものをすべて選んでください。",
+      "choices": [
+        "請求書（Invoice）",
+        "領収書（Receipt）",
+        "名刺（Business Card）",
+        "音声ファイル（Audio）",
+        "身分証明書（ID Document）",
+        "手書きメモの自動翻訳"
+      ],
+      "answer": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "explanation": "Document Intelligence の事前構築済みモデルは請求書、領収書、名刺、身分証明書などの定型ドキュメントに対応しています。音声ファイルの処理や翻訳機能は含まれていません。",
+      "tags": [
+        "document-intelligence",
+        "form-recognizer",
+        "prebuilt-models"
+      ],
+      "sources": [
+        {
+          "title": "Document Intelligence モデル",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/document-intelligence/overview"
+        }
+      ]
+    },
+    {
+      "id": "PC-021",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下の機械学習のデータ前処理手法と、その目的を正しく対応させてください。",
+      "left": [
+        "正規化（Normalization）",
+        "ワンホットエンコーディング",
+        "欠損値の補完",
+        "特徴量選択"
+      ],
+      "right": [
+        "数値特徴量のスケールを統一する",
+        "カテゴリ変数を数値表現に変換する",
+        "データの不完全なレコードを処理する",
+        "予測に有用な変数のみを残す"
+      ],
+      "answerMap": {
+        "正規化（Normalization）": "数値特徴量のスケールを統一する",
+        "ワンホットエンコーディング": "カテゴリ変数を数値表現に変換する",
+        "欠損値の補完": "データの不完全なレコードを処理する",
+        "特徴量選択": "予測に有用な変数のみを残す"
+      },
+      "explanation": "正規化は異なるスケールの特徴量を統一し、ワンホットエンコーディングはカテゴリをバイナリベクトルに変換し、欠損値補完はデータの完全性を確保し、特徴量選択は不要な変数を除外して性能を向上させます。",
+      "tags": [
+        "data-preprocessing",
+        "normalization",
+        "encoding",
+        "feature-selection"
+      ],
+      "sources": [
+        {
+          "title": "データ前処理",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PC-022",
+      "domain": "CV",
+      "type": "hotarea",
+      "difficulty": 2,
+      "prompt": "以下のうち、Custom Vision の「画像分類」プロジェクトを作成する際に選択できる分類タイプをすべて選んでください。",
+      "grid": {
+        "cols": 2,
+        "rows": 2,
+        "cells": [
+          "マルチクラス（1つの画像に1つのラベル）",
+          "マルチラベル（1つの画像に複数のラベル）",
+          "バイナリ分類（2クラスのみ）",
+          "階層的分類（親子関係のあるラベル）"
+        ]
+      },
+      "answer": [
+        0,
+        1
+      ],
+      "explanation": "Custom Visionの画像分類では「マルチクラス」（画像ごとに1つのラベル）と「マルチラベル」（画像ごとに複数のラベル）の2種類が選択できます。バイナリ分類や階層的分類は専用のオプションとしては提供されていません。",
+      "tags": [
+        "custom-vision",
+        "image-classification",
+        "multiclass",
+        "multilabel"
+      ],
+      "sources": [
+        {
+          "title": "Custom Vision 分類タイプ",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/getting-started-build-a-classifier"
+        }
+      ]
+    },
+    {
+      "id": "PC-023",
+      "domain": "ML",
+      "type": "hotarea",
+      "difficulty": 3,
+      "prompt": "以下のシナリオのうち、Azure Machine Learning の「自動機械学習（AutoML）」が直接サポートするタスクタイプをすべて選んでください。",
+      "grid": {
+        "cols": 2,
+        "rows": 3,
+        "cells": [
+          "分類（Classification）",
+          "回帰（Regression）",
+          "時系列予測（Forecasting）",
+          "画像分類（Image Classification）",
+          "自然言語処理（NLP）テキスト分類",
+          "強化学習（Reinforcement Learning）"
+        ]
+      },
+      "answer": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "explanation": "Azure AutoMLは分類、回帰、時系列予測に加え、画像分類やNLPテキスト分類もサポートしています。強化学習はAutoMLでは直接サポートされていません。",
+      "tags": [
+        "automl",
+        "task-types",
+        "classification",
+        "regression",
+        "forecasting"
+      ],
+      "sources": [
+        {
+          "title": "AutoML タスクタイプ",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PC-024",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "回帰モデルの性能を評価するための指標として正しいものをすべて選んでください。",
+      "choices": [
+        "平均絶対誤差（MAE）",
+        "決定係数（R²）",
+        "AUC（曲線下面積）",
+        "二乗平均平方根誤差（RMSE）",
+        "混同行列"
+      ],
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "MAE、R²、RMSEは回帰モデルの評価指標です。AUC（曲線下面積）と混同行列は分類モデルの評価に使用される指標であり、回帰タスクには適用されません。",
+      "tags": [
+        "regression-metrics",
+        "mae",
+        "r-squared",
+        "rmse"
+      ],
+      "sources": [
+        {
+          "title": "回帰モデルの評価",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-understand-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PC-025",
+      "domain": "CV",
+      "type": "match",
+      "difficulty": 3,
+      "prompt": "以下のAzure AI サービスと、それぞれが提供する主なComputer Vision機能を正しく対応させてください。",
+      "left": [
+        "Azure AI Vision",
+        "Azure Custom Vision",
+        "Azure AI Face",
+        "Azure AI Document Intelligence"
+      ],
+      "right": [
+        "汎用的な画像分析・OCR・キャプション生成",
+        "カスタム画像分類・物体検出モデルのトレーニング",
+        "顔の検出・検証・識別",
+        "構造化ドキュメントからのデータ抽出"
+      ],
+      "answerMap": {
+        "Azure AI Vision": "汎用的な画像分析・OCR・キャプション生成",
+        "Azure Custom Vision": "カスタム画像分類・物体検出モデルのトレーニング",
+        "Azure AI Face": "顔の検出・検証・識別",
+        "Azure AI Document Intelligence": "構造化ドキュメントからのデータ抽出"
+      },
+      "explanation": "Azure AI Visionは汎用画像分析、Custom Visionはカスタムモデル構築、Face APIは顔関連の機能、Document Intelligenceはドキュメント解析を担当する、それぞれ専門性の異なるサービスです。",
+      "tags": [
+        "azure-services",
+        "vision-services",
+        "comparison"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI サービス一覧",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/what-are-ai-services"
+        }
+      ]
+    },
+    {
+      "id": "PC-026",
+      "domain": "ML",
+      "type": "multi",
+      "difficulty": 3,
+      "prompt": "Azure Machine Learning の「データドリフト」モニタリングについて正しいものをすべて選んでください。",
+      "choices": [
+        "本番環境のデータがトレーニングデータと統計的に異なることを検出できる",
+        "データドリフトが検出されると自動的にモデルが再トレーニングされる",
+        "データドリフトの検出にはベースラインデータセットが必要である",
+        "データドリフトモニターはスケジュール実行できる"
+      ],
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "データドリフトモニタリングは本番データとトレーニングデータの統計的差異を検出します。ベースラインデータセットとの比較で動作し、スケジュール実行が可能です。ただし、ドリフト検出時の自動再トレーニングは別途パイプラインを構成する必要があります。",
+      "tags": [
+        "data-drift",
+        "monitoring",
+        "mlops",
+        "baseline"
+      ],
+      "sources": [
+        {
+          "title": "データドリフト",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/how-to-monitor-datasets"
+        }
+      ]
+    },
+    {
+      "id": "PC-027",
+      "domain": "CV",
+      "type": "single",
+      "difficulty": 2,
+      "prompt": "製造ラインの製品画像から欠陥品を検出するAIシステムを構築したい。自社の製品に特化したモデルが必要な場合、最も適切なサービスはどれですか。",
+      "choices": [
+        "Azure AI Vision の汎用画像分析API",
+        "Azure Custom Vision で物体検出モデルをトレーニングする",
+        "Azure OpenAI Service の GPT-4 Vision を使用する",
+        "Azure AI Video Indexer で分析する"
+      ],
+      "answer": [
+        1
+      ],
+      "explanation": "自社製品の欠陥品検出には、自社のデータでカスタムトレーニングしたモデルが必要です。Custom Visionの物体検出を使えば、正常品と欠陥品の画像でトレーニングし、欠陥の位置と種類を検出できます。汎用APIでは製品固有の欠陥を認識できません。",
+      "tags": [
+        "custom-vision",
+        "defect-detection",
+        "manufacturing",
+        "object-detection"
+      ],
+      "sources": [
+        {
+          "title": "Custom Vision 物体検出",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/custom-vision-service/get-started-build-detector"
+        }
+      ]
+    },
+    {
+      "id": "PC-028",
+      "domain": "ML",
+      "type": "match",
+      "difficulty": 2,
+      "prompt": "以下の機械学習の概念と、その説明を正しく対応させてください。",
+      "left": [
+        "トレーニングデータ",
+        "検証データ",
+        "テストデータ",
+        "推論"
+      ],
+      "right": [
+        "モデルのパラメーターを学習するために使用するデータ",
+        "トレーニング中にハイパーパラメーターの調整に使用するデータ",
+        "最終的なモデル性能の評価に使用する未使用のデータ",
+        "トレーニング済みモデルで新しいデータの予測を行うこと"
+      ],
+      "answerMap": {
+        "トレーニングデータ": "モデルのパラメーターを学習するために使用するデータ",
+        "検証データ": "トレーニング中にハイパーパラメーターの調整に使用するデータ",
+        "テストデータ": "最終的なモデル性能の評価に使用する未使用のデータ",
+        "推論": "トレーニング済みモデルで新しいデータの予測を行うこと"
+      },
+      "explanation": "トレーニングデータはモデル学習用、検証データはハイパーパラメーター調整とモデル選択用、テストデータは最終評価用（モデル構築中は使用しない）、推論はデプロイ後の予測実行を指します。",
+      "tags": [
+        "train-validation-test",
+        "inference",
+        "ml-fundamentals"
+      ],
+      "sources": [
+        {
+          "title": "データ分割の基本",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PC-029",
+      "domain": "ML",
+      "type": "hotarea",
+      "difficulty": 3,
+      "prompt": "以下のシナリオのうち、「分類」タスクに該当するものをすべて選んでください。",
+      "grid": {
+        "cols": 2,
+        "rows": 3,
+        "cells": [
+          "製品レビューがポジティブかネガティブかを判定する",
+          "患者の検査データから病気のリスクを高・中・低に分類する",
+          "来年の株価を予測する",
+          "MRI画像から腫瘍の有無を判定する",
+          "工場の機器が故障するまでの残り日数を予測する",
+          "クレジットカード取引が不正かどうかを判定する"
+        ]
+      },
+      "answer": [
+        0,
+        1,
+        3,
+        5
+      ],
+      "explanation": "分類タスクはカテゴリ（離散値）を予測します。ポジティブ/ネガティブ判定、リスク分類（高/中/低）、腫瘍の有無判定、不正取引判定はいずれもカテゴリ予測です。株価予測と故障までの残り日数予測は連続値を予測する回帰タスクです。",
+      "tags": [
+        "classification",
+        "regression",
+        "ml-fundamentals",
+        "binary",
+        "multiclass"
+      ],
+      "sources": [
+        {
+          "title": "分類と回帰",
+          "url": "https://learn.microsoft.com/ja-jp/azure/machine-learning/concept-automated-ml"
+        }
+      ]
+    },
+    {
+      "id": "PC-030",
+      "domain": "CV",
+      "type": "multi",
+      "difficulty": 2,
+      "prompt": "Azure AI Vision の OCR（光学文字認識）機能について正しいものをすべて選んでください。",
+      "choices": [
+        "手書きテキストと印刷テキストの両方を認識できる",
+        "複数の言語を同時に認識できる",
+        "テキストの位置情報（バウンディングボックス）を返す",
+        "PDFファイルからのテキスト抽出にも対応している",
+        "認識したテキストを自動的に翻訳する"
+      ],
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Azure AI VisionのOCRは手書き・印刷テキスト両方に対応し、多言語同時認識、テキスト位置情報の返却、PDFからの抽出をサポートしています。自動翻訳機能は含まれておらず、翻訳にはAzure AI Translatorを別途使用する必要があります。",
+      "tags": [
+        "ocr",
+        "text-recognition",
+        "multilingual",
+        "pdf"
+      ],
+      "sources": [
+        {
+          "title": "Azure AI Vision OCR",
+          "url": "https://learn.microsoft.com/ja-jp/azure/ai-services/computer-vision/overview-ocr"
+        }
+      ]
+    }
+  ]
+}
